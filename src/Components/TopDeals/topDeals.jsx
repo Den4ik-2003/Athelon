@@ -5,7 +5,7 @@ import StarFill from "../../assets/Icons/starFill.svg"
 import StarHalf from "../../assets/Icons/starHalf.svg"
 import Like from "../../assets/Icons/like.svg"
 import LikeFill from "../../assets/Icons/likeFill.svg"
-import "./TopDeals.css"
+import "./topDeals.css"
 
 export const TopDeals = () => {
   const [products, setProducts] = useState([])
