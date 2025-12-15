@@ -1,4 +1,4 @@
-import Video from "../../assets/video/video.mp4";
+import Video from "../../assets/Video/video.mp4";
 import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
