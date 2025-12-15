@@ -27,7 +27,7 @@ export default function ProductInfo() {
 
   useEffect(() => {
     setLoading(true)
-    fetch("http://localhost:5001/api/products")
+    fetch("https://athelonservers.onrender.com/api/products")
       .then(res => res.json())
       .then(allProducts => {
         const data = allProducts.find(p => String(p.id) === id)

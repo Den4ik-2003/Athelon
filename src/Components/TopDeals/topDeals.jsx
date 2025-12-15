@@ -11,7 +11,7 @@ export const TopDeals = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/products")
+    fetch("https://athelonservers.onrender.com/api/products")
       .then(res => res.json())
       .then(data => {
         const discounted = data.filter(item => item.oldPrice > item.newPrice)

@@ -12,7 +12,7 @@ export default function Liked() {
 
   useEffect(() => {
     const likedItems = JSON.parse(localStorage.getItem("likedItems")) || []
-    fetch("http://localhost:5001/api/products")
+    fetch("https://athelonservers.onrender.com/api/products")
       .then(res => res.json())
       .then(data => {
         const likedProducts = data

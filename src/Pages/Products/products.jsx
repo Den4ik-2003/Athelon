@@ -27,7 +27,7 @@ export default function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/products");
+        const res = await fetch("https://athelonservers.onrender.com/api/products");
         const data = await res.json();
         setProducts(data);
         const uniqueCategories = Array.from(new Set(data.map(p => p.category).filter(Boolean)));

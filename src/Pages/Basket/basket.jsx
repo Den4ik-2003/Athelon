@@ -16,7 +16,7 @@ export default function Basket() {
       return;
     }
 
-    fetch("http://localhost:5001/api/products", { cache: "no-store" })
+    fetch("https://athelonservers.onrender.com/api/products", { cache: "no-store" })
       .then(res => res.json())
       .then(data => {
         const filtered = cartItems

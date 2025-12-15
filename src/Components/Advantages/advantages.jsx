@@ -14,7 +14,7 @@ export default function Advantages() {
   const timerRef = useRef(null)
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/products")
+    fetch("https://athelonservers.onrender.com/api/products")
       .then(res => res.json())
       .then(data => {
         const allReviews = data.map(p => p.reviews).flat().slice(0, 7)
