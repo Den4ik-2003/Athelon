@@ -1,0 +1,125 @@
+.reviews-carousel {
+  padding: 50px 0;
+  background: #111;
+  color: #fff;
+  overflow: hidden;
+}
+
+.reviews-carousel h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-green);
+}
+
+.carousel-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-btn {
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+
+.reviews-display {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-card2 {
+  width: 300px;
+  height: 200px;
+  background: #222;
+  border-radius: 16px;
+  padding: 20px;
+  opacity: .5;
+  transform: scale(.9);
+  transition: transform .5s ease, opacity .5s ease;
+}
+
+.review-card2.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (max-width: 1050px) {
+  .reviews-display {
+    height: 30vh;
+    position: relative;
+  }
+
+  .review-card2 {
+    position: absolute;
+    opacity: 0;
+    transform: translateY(80px) rotate(-15deg) scale(.8);
+  }
+
+  .review-card2.show {
+    opacity: 1;
+    animation: cardJumpIn 0.9s ease-out forwards;
+  }
+
+  .review-card2.hide {
+    opacity: 1;
+    animation: cardJumpOut 0.7s ease-in forwards;
+  }
+}
+
+@keyframes cardJumpIn {
+  0% {
+    transform: translateY(120px) rotate(-25deg) scale(.7);
+  }
+  60% {
+    transform: translateY(-10px) rotate(5deg) scale(1.05);
+  }
+  80% {
+    transform: translateY(5px) rotate(-3deg) scale(.98);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes cardJumpOut {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  100% {
+    transform: translateY(-120px) rotate(25deg) scale(.6);
+    opacity: 0;
+  }
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info {
+  margin-left: 15px;
+}
+
+.stars {
+  display: flex;
+}
+
+.stars img {
+  width: 18px;
+}
+
+.review-text {
+  font-size: .9rem;
+}

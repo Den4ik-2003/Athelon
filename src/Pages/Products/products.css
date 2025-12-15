@@ -1,0 +1,88 @@
+.top-deals {
+  margin-bottom: 2rem;
+}
+
+/* ===== FILTERS ===== */
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.filters select,
+.filters input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, #1f1f1f, #161616);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.filters select:hover,
+.filters input:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.filters select:focus,
+.filters input:focus {
+  border-color: #00ff66;
+  box-shadow: 0 0 0 2px rgba(98, 255, 117, 0.25);
+  background: #1c1c1c;
+}
+
+.filters select {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23ffffff' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 10px;
+}
+
+.filters input[type="number"]::-webkit-outer-spin-button,
+.filters input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.filters input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ===== PRICE SLIDER (якщо знадобиться) ===== */
+.price-slider {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.price-values {
+  min-width: 80px;
+  text-align: center;
+  color: #fff;
+}
+
+/* ===== LOAD MORE ===== */
+.load-more {
+  display: block;
+  margin: 2rem auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .price-slider {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+}

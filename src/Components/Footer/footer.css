@@ -1,0 +1,77 @@
+.footer {
+  background: #0b0b0b;
+  color: #ccc;
+  padding: 40px 0;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-col h3 {
+  font-family: "Oswald", sans-serif;
+  color: var(--color-green);
+  font-weight: 700;
+  font-size: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.footer-col h4 {
+  color: #fff;
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.footer-col p {
+  color: #999;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+  color: #bbb;
+  font-size: 0.95rem;
+}
+
+.links ul li a {
+  color: #bbb;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.links ul li a:hover {
+  color: #27ae60;
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 1.3rem;
+}
+
+.social-icons a img {
+  transition: 0.3s;
+}
+
+.social-icons a img {
+  width: 25px;
+}
+
+.footer-bottom {
+  border-top: 1px solid #111;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 0.9rem;
+  color: #777;
+}

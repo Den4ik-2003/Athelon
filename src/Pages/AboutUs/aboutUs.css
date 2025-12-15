@@ -1,0 +1,196 @@
+.aboutUs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  font-family: "Arial", sans-serif;
+  color: #222;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #00ff66;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* --- Основні секції --- */
+.story-section,
+.mission-section,
+.products-section {
+  margin-bottom: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: nowrap;
+}
+
+.section-img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  display: block;
+}
+
+.story-section h2,
+.mission-section h2,
+.products-section h2,
+.closing-section h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #00ff66;
+}
+
+.story-section p,
+.mission-section p,
+.products-section p,
+.closing-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* --- Products list --- */
+.products-section ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #fff;
+  opacity: .8;
+}
+
+.products-section li {
+  margin-bottom: 10px;
+}
+
+.closing-section {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.mission-section img {
+  order: 2;
+}
+
+.mission-section div {
+  order: 1;
+}
+
+@media (max-width: 950px) {
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-section p {
+    font-size: 1.1rem;
+  }
+
+  .story-section,
+  .mission-section,
+  .products-section {
+    flex-wrap: wrap;
+  }
+
+  .story-section img,
+  .mission-section img,
+  .products-section img {
+    max-width: 450px;
+    margin: 0 auto;
+  }
+
+  .story-section h2,
+  .mission-section h2,
+  .products-section h2,
+  .closing-section h2 {
+    font-size: 1.8rem;
+  }
+
+  .story-section p,
+  .mission-section p,
+  .products-section p,
+  .closing-section p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .aboutUs {
+    padding: 20px 15px;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+  }
+
+  .section-img {
+    max-width: 250px;
+  }
+
+  .story-section h2,
+  .mission-section h2,
+  .products-section h2,
+  .closing-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .story-section p,
+  .mission-section p,
+  .products-section p,
+  .closing-section p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+/* --- До 500px (телефони) --- */
+@media (max-width: 500px) {
+  .hero-section h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero-section p {
+    font-size: 0.9rem;
+  }
+
+  .section-img {
+    max-width: 250px;
+    margin: 0 auto;
+  }
+
+  .story-section h2,
+  .mission-section h2,
+  .products-section h2,
+  .closing-section h2 {
+    font-size: 1.3rem;
+  }
+
+  .story-section p,
+  .mission-section p,
+  .products-section p,
+  .closing-section p {
+    font-size: 0.9rem;
+  }
+
+  .products-section ul {
+    padding-left: 15px;
+  }
+
+  .closing-section {
+    margin-bottom: 30px;
+  }
+}
