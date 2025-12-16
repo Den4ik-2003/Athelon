@@ -344,7 +344,7 @@ select {
   .deal-card {
     max-width: 100%;
     padding: 0.7rem;
-    height: 65vh;
+    height: 430px;
   }
 
   .deal-card h3 {
@@ -365,6 +365,6 @@ select {
   }
 
   .deal-card {
-    height: 75vh;
+    height: 400px;
   }
 }
