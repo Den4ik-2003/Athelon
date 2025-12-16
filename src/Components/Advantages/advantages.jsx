@@ -4,6 +4,7 @@ import StarFill from "../../assets/Icons/starFill.svg"
 import StarHalf from "../../assets/Icons/starHalf.svg"
 import ArrowLeft from "../../assets/Icons/arrowLeft.svg"
 import ArrowRight from "../../assets/Icons/arrowRight.svg"
+import Loader from "../Loader/loader"
 import "./advantages.css"
 
 export default function Advantages() {
@@ -11,14 +12,26 @@ export default function Advantages() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isMobile, setIsMobile] = useState(false)
   const [phase, setPhase] = useState("show")
+  const [loading, setLoading] = useState(true)
   const timerRef = useRef(null)
 
   useEffect(() => {
+    setLoading(true)
+
     fetch("https://athelonservers.onrender.com/api/products")
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Network error")
+        return res.json()
+      })
       .then(data => {
         const allReviews = data.map(p => p.reviews).flat().slice(0, 7)
-        setReviews(allReviews)
+        if (allReviews.length) {
+          setReviews(allReviews)
+          setLoading(false)
+        }
+      })
+      .catch(() => {
+        setLoading(true)
       })
   }, [])
 
@@ -32,29 +45,24 @@ export default function Advantages() {
   useEffect(() => {
     if (!isMobile || !reviews.length) return
 
-    const run = () => {
-      setPhase("show")
+    timerRef.current = setTimeout(() => {
+      setPhase("hide")
 
-      timerRef.current = setTimeout(() => {
-        setPhase("hide")
+      setTimeout(() => {
+        setCurrentIndex(i => (i + 1) % reviews.length)
+        setPhase("show")
+      }, 700)
+    }, 5000)
 
-        timerRef.current = setTimeout(() => {
-          setCurrentIndex(i => (i + 1) % reviews.length)
-          setPhase("show")
-        }, 2000)
-      }, 5000)
-    }
-
-    run()
     return () => clearTimeout(timerRef.current)
   }, [currentIndex, isMobile, reviews.length])
 
   const prevSlide = () => {
-    setCurrentIndex(p => (p === 0 ? reviews.length - 1 : p - 1))
+    setCurrentIndex(i => (i === 0 ? reviews.length - 1 : i - 1))
   }
 
   const nextSlide = () => {
-    setCurrentIndex(p => (p === reviews.length - 1 ? 0 : p + 1))
+    setCurrentIndex(i => (i === reviews.length - 1 ? 0 : i + 1))
   }
 
   const renderStars = rating =>
@@ -63,11 +71,6 @@ export default function Advantages() {
       if (i + 1 - rating < 1) return <img key={i} src={StarHalf} />
       return <img key={i} src={Star} />
     })
-
-  if (!reviews.length) return null
-
-  const prev = currentIndex === 0 ? reviews.length - 1 : currentIndex - 1
-  const next = currentIndex === reviews.length - 1 ? 0 : currentIndex + 1
 
   const Card = ({ review, active }) => (
     <div className={`review-card2 ${active ? "active" : ""} ${isMobile ? phase : ""}`}>
@@ -82,24 +85,38 @@ export default function Advantages() {
     </div>
   )
 
+  const prev = currentIndex === 0 ? reviews.length - 1 : currentIndex - 1
+  const next = currentIndex === reviews.length - 1 ? 0 : currentIndex + 1
+
   return (
     <section className="reviews-carousel">
       <h2>Відгуки наших клієнтів</h2>
-      <div className="carousel-wrapper">
-        {!isMobile && <img src={ArrowLeft} className="carousel-btn left" onClick={prevSlide} />}
-        <div className="reviews-display">
-          {isMobile ? (
-            <Card review={reviews[currentIndex]} active />
-          ) : (
-            <>
-              <Card review={reviews[prev]} />
+
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="carousel-wrapper">
+          {!isMobile && (
+            <img src={ArrowLeft} className="carousel-btn left" onClick={prevSlide} />
+          )}
+
+          <div className="reviews-display">
+            {isMobile ? (
               <Card review={reviews[currentIndex]} active />
-              <Card review={reviews[next]} />
-            </>
+            ) : (
+              <>
+                <Card review={reviews[prev]} />
+                <Card review={reviews[currentIndex]} active />
+                <Card review={reviews[next]} />
+              </>
+            )}
+          </div>
+
+          {!isMobile && (
+            <img src={ArrowRight} className="carousel-btn right" onClick={nextSlide} />
           )}
         </div>
-        {!isMobile && <img src={ArrowRight} className="carousel-btn right" onClick={nextSlide} />}
-      </div>
+      )}
     </section>
   )
 }
