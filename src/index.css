@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 *,
 *::before,
@@ -118,14 +118,13 @@ select {
 
 @media screen and (max-width: 768px) {
   .button {
- 
-  padding: 0.3rem .6rem;
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.5s;
-}
+    padding: 0.5rem 0.9rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.5s;
+  }
 }
 
 .container {
@@ -197,7 +196,8 @@ select {
   margin: 0 auto;
 }
 
-.top-deals h2, .stats h2 {
+.top-deals h2,
+.stats h2 {
   font-size: 2rem;
   margin: 2rem 0;
   color: var(--color-green);
@@ -308,8 +308,8 @@ select {
 }
 
 .card-icons img {
-  width: 28px;
-  height: 28px;
+  width: 35px;
+  height: 35px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -337,13 +337,19 @@ select {
 
 @media (max-width: 500px) {
   .deals-grid {
-    /* grid-template-columns: repeat(1, 1fr); */
     justify-items: center;
     gap: 1.5rem;
   }
 
   .deal-card {
     max-width: 100%;
+    padding: 0.7rem;
+    height: 65vh;
+  }
+
+  .deal-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 7px;
   }
 }
 
@@ -351,8 +357,14 @@ select {
   .deal-img {
     aspect-ratio: 1/1;
   }
+}
 
-  .deal-card h3 {
-    font-size: 0.9rem;
+@media (max-width: 400px) {
+  .deals-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .deal-card {
+    height: 75vh;
   }
 }

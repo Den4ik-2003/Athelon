@@ -65,7 +65,7 @@ export default function Liked() {
       ) : products.length === 0 ? (
         <div className="empty-state">
           <p>Поки немає лайкнутих товарів</p>
-          <NavLink to="/products" className="view-products-btn">
+          <NavLink to="/products" className="basket-btn2">
             Переглянути товари
           </NavLink>
         </div>
@@ -85,7 +85,7 @@ export default function Liked() {
                   <span className="new">{item.newPrice} грн</span>
                 </p>
                 <div className="card-footer">
-                  <button className="buy-btn">Купити</button>
+                  <button className="button">Купити</button>
                   <div className="card-icons">
                     <img
                       src={item.liked ? LikeFill : Like}

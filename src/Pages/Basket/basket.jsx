@@ -122,7 +122,7 @@ export default function Basket() {
                   Розмір: <strong>{item.size}</strong>
                 </p>
 
-                <div className="card-footer">
+                <div className="card-footer2">
                   <div className="basket-quantity">
                     <button onClick={() => changeQuantity(item.id, item.size, -1)}>-</button>
                     <span>{item.quantity}</span>

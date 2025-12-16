@@ -24,7 +24,7 @@ export default function Order() {
       email,
       city,
       department,
-      totalPrice
+      totalPrice,
     };
     console.log("Замовлення:", orderData);
 
@@ -34,55 +34,59 @@ export default function Order() {
   };
 
   return (
-    <div className="order">
-      <h2>Оформлення замовлення</h2>
-      <p>Сума замовлення: <strong className="basket-price">{totalPrice} грн</strong></p>
-      
-      <form className="order-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Ім’я"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          required
-        />
-        <input
-          type="tel"
-          placeholder="Телефон"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
-          required
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Місто"
-          value={city}
-          onChange={e => setCity(e.target.value)}
-          required
-        />
-        <input
-          type="text"
-          placeholder="Відділення"
-          value={department}
-          onChange={e => setDepartment(e.target.value)}
-          required
-        />
-        <button type="submit" className="order-btn">Оформити замовлення</button>
-      </form>
+    <div className="container">
+      <div className="order">
+        <h2>Оформлення замовлення</h2>
+        <p>
+          Сума замовлення:{" "}
+          <strong className="basket-price">{totalPrice} грн</strong>
+        </p>
 
-      <button
-        className="order-back-btn"
-        onClick={() => navigate("/cart")}
-      >
-        Повернутися до кошика
-      </button>
+        <form className="order-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Ім’я"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="tel"
+            placeholder="Телефон"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Місто"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
+          />
+          <input
+            type="text"
+            placeholder="Відділення"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+            required
+          />
+          <button type="submit" className="order-btn">
+            Оформити замовлення
+          </button>
+        </form>
+
+        <button className="order-back-btn" onClick={() => navigate("/cart")}>
+          Повернутися до кошика
+        </button>
+      </div>
     </div>
   );
 }

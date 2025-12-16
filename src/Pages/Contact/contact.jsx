@@ -7,6 +7,7 @@ export default function Contact() {
     email: "",
     message: "",
   });
+
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
 
@@ -41,7 +42,12 @@ export default function Contact() {
 
       if (result.success) {
         setSubmitted(true);
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
       } else {
         setError("Сталася помилка при відправці форми.");
       }
@@ -66,8 +72,9 @@ export default function Contact() {
 
       <div className="contact-form-section">
         <h2>Напишіть нам повідомлення</h2>
-        {submitted && <p className="form-success">Дякуємо! Ваше повідомлення надіслано.</p>}
+
         {error && <p className="form-error">{error}</p>}
+
         <form className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
@@ -76,7 +83,10 @@ export default function Contact() {
             value={formData.name}
             onChange={handleChange}
             required
+            pattern=".{2,}"
+            title="Мінімум 2 символи"
           />
+
           <input
             type="email"
             name="email"
@@ -91,10 +101,28 @@ export default function Contact() {
             value={formData.message}
             onChange={handleChange}
             required
+            pattern=".{5,}"
+            title="Мінімум 5 символів"
           />
+
           <button type="submit">Відправити</button>
         </form>
       </div>
+
+      {submitted && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Дякуємо!</h3>
+            <p>Ваше повідомлення успішно надіслано.</p>
+            <button
+              className="button"
+              onClick={() => setSubmitted(false)}
+            >
+              Закрити
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
