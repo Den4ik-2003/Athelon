@@ -13,7 +13,6 @@ import "./productInfo.css";
 export default function ProductInfo() {
   const { id } = useParams();
   const navigate = useNavigate();
-
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState("");
@@ -23,7 +22,6 @@ export default function ProductInfo() {
   const [recommended, setRecommended] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showAddedModal, setShowAddedModal] = useState(false);
-
   const mainImageRef = useRef(null);
 
   useEffect(() => {
@@ -40,16 +38,12 @@ export default function ProductInfo() {
           setLoading(false);
           return;
         }
-
         setProduct(data);
         setMainImage(data.images?.[0] || "");
-
         const likedItems = JSON.parse(localStorage.getItem("likedItems")) || [];
         const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
         setLiked(likedItems.includes(data.id));
         setInCart(cartItems.some((i) => i.id === data.id));
-
         if (data.category) {
           const rec = allProducts
             .filter((p) => p.id !== data.id && p.category === data.category)
@@ -62,7 +56,6 @@ export default function ProductInfo() {
             }));
           setRecommended(rec);
         }
-
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -77,14 +70,18 @@ export default function ProductInfo() {
 
   const updateCartLocalStorage = (productId, size, add = true) => {
     let items = JSON.parse(localStorage.getItem("cartItems")) || [];
-
     if (add) {
       const existing = items.find((i) => i.id === productId && i.size === size);
       if (existing) existing.quantity = (existing.quantity || 1) + 1;
-      else items.push({ id: productId, size, quantity: 1 });
+      else items.push({
+        id: productId,
+        size,
+        quantity: 1,
+        name: product.name,
+        price: product.newPrice,
+      });
       updateTotalPrice(product.newPrice);
     }
-
     localStorage.setItem("cartItems", JSON.stringify(items));
     window.dispatchEvent(new Event("localStorageUpdate"));
   };
@@ -111,7 +108,6 @@ export default function ProductInfo() {
       setShowModal(true);
       return;
     }
-
     if (selectedSize) {
       updateCartLocalStorage(product.id, selectedSize, true);
       setInCart(true);
@@ -147,29 +143,10 @@ export default function ProductInfo() {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating))
-        stars.push(
-          <img
-            key={i}
-            src={StarFill}
-            className="star-icon"
-            alt=""
-            loading="lazy"
-          />
-        );
+        stars.push(<img key={i} src={StarFill} className="star-icon" alt="" loading="lazy" />);
       else if (i - rating >= 0.25 && i - rating < 0.75)
-        stars.push(
-          <img
-            key={i}
-            src={StarHalf}
-            className="star-icon"
-            alt=""
-            loading="lazy"
-          />
-        );
-      else
-        stars.push(
-          <img key={i} src={Star} className="star-icon" alt="" loading="lazy" />
-        );
+        stars.push(<img key={i} src={StarHalf} className="star-icon" alt="" loading="lazy" />);
+      else stars.push(<img key={i} src={Star} className="star-icon" alt="" loading="lazy" />);
     }
     return stars;
   };
@@ -183,8 +160,7 @@ export default function ProductInfo() {
       </div>
     );
 
-  const showOldPrice =
-    product.oldPrice && product.oldPrice !== product.newPrice;
+  const showOldPrice = product.oldPrice && product.oldPrice !== product.newPrice;
 
   return (
     <div className="product-page container">
@@ -193,9 +169,7 @@ export default function ProductInfo() {
           <div className="modal-window" onClick={(e) => e.stopPropagation()}>
             <h3>Будь ласка, оберіть розмір 🏷️</h3>
             <p>Щоб продовжити, потрібно вибрати розмір товару.</p>
-            <button className="button" onClick={() => setShowModal(false)}>
-              Закрити
-            </button>
+            <button className="button" onClick={() => setShowModal(false)}>Закрити</button>
           </div>
         </div>
       )}
@@ -210,14 +184,7 @@ export default function ProductInfo() {
 
       <div className="product-top">
         <div className="image-section">
-          <img
-            ref={mainImageRef}
-            src={mainImage}
-            alt={product.name}
-            className="main-img"
-            loading="lazy"
-          />
-
+          <img ref={mainImageRef} src={mainImage} alt={product.name} className="main-img" loading="lazy" />
           <div className="side-images">
             {product.images?.slice(0, 4).map((img, i) => (
               <img
@@ -235,66 +202,31 @@ export default function ProductInfo() {
 
         <div className="info-section">
           <h2 className="product-name">{product.name}</h2>
-
           <div className="price-row">
             <div className="price-block">
-              {showOldPrice && (
-                <span className="old-price">{product.oldPrice} грн</span>
-              )}
+              {showOldPrice && <span className="old-price">{product.oldPrice} грн</span>}
               <span className="new-price">{product.newPrice} грн</span>
             </div>
-
             <div className="icon-group">
-              <img
-                src={liked ? LikeFill : Like}
-                alt="like"
-                className={`icon heart ${liked ? "active" : ""}`}
-                onClick={toggleLike}
-                loading="lazy"
-              />
-              <img
-                src={inCart ? BasketFill : Basket}
-                alt="basket"
-                className={`icon basket ${inCart ? "active" : ""}`}
-                onClick={toggleCart}
-                loading="lazy"
-              />
+              <img src={liked ? LikeFill : Like} alt="like" className={`icon heart ${liked ? "active" : ""}`} onClick={toggleLike} loading="lazy" />
+              <img src={inCart ? BasketFill : Basket} alt="basket" className={`icon basket ${inCart ? "active" : ""}`} onClick={toggleCart} loading="lazy" />
             </div>
           </div>
-
           <div className="rating">{renderStars(product.rating)}</div>
-
-          <p
-            className="description2"
-            dangerouslySetInnerHTML={{ __html: product.description }}
-          />
-
+          <p className="description2" dangerouslySetInnerHTML={{ __html: product.description }} />
           {product.sizes?.length > 0 && (
             <div className="size-block">
               <h4>Оберіть розмір:</h4>
               <div className="sizes">
                 {product.sizes.map((size) => (
-                  <button
-                    key={size}
-                    className={`size-btn ${
-                      selectedSize === size ? "active" : ""
-                    }`}
-                    onClick={() => setSelectedSize(size)}
-                  >
-                    {size}
-                  </button>
+                  <button key={size} className={`size-btn ${selectedSize === size ? "active" : ""}`} onClick={() => setSelectedSize(size)}>{size}</button>
                 ))}
               </div>
             </div>
           )}
-
           <div className="buttons">
-            <button className="buy-btn3" onClick={toggleCart}>
-              Додати в кошик
-            </button>
-            <button className="cart-btn" onClick={handleBuyNow}>
-              Купити
-            </button>
+            <button className="buy-btn3" onClick={toggleCart}>Додати в кошик</button>
+            <button className="cart-btn" onClick={handleBuyNow}>Купити</button>
           </div>
         </div>
       </div>
@@ -302,51 +234,25 @@ export default function ProductInfo() {
       {recommended.length > 0 ? (
         <div className="recommended-section container">
           <h2>Подібні товари</h2>
-
           <div className="deals-grid">
             {recommended.map((item) => {
-              const showRecOld =
-                item.oldPrice && item.oldPrice !== item.newPrice;
+              const showRecOld = item.oldPrice && item.oldPrice !== item.newPrice;
               return (
-                <NavLink
-                  key={item.id}
-                  to={`/product/${item.id}`}
-                  className="deal-card-link"
-                >
+                <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
                   <div className="deal-card deal-card-top">
                     <div className="deal-img">
                       <img src={item.image} alt={item.name} loading="lazy" />
                     </div>
-
                     <h3>{item.name}</h3>
-
-                    {/* <p
-                      className="description"
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    /> */}
-
                     <div className="rating">{renderStars(item.rating)}</div>
-
                     <p className="price">
-                      {showRecOld && (
-                        <span className="old">{item.oldPrice} грн</span>
-                      )}
+                      {showRecOld && <span className="old">{item.oldPrice} грн</span>}
                       <span className="new">{item.newPrice} грн</span>
                     </p>
-
                     <div className="card-footer">
                       <button className="button">Купити</button>
                       <div className="card-icons">
-                        <img
-                          src={item.liked ? LikeFill : Like}
-                          alt="heart"
-                          className={`icon heart ${item.liked ? "active" : ""}`}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            toggleRecLike(item.id);
-                          }}
-                          loading="lazy"
-                        />
+                        <img src={item.liked ? LikeFill : Like} alt="heart" className={`icon heart ${item.liked ? "active" : ""}`} onClick={(e) => { e.preventDefault(); toggleRecLike(item.id); }} loading="lazy" />
                       </div>
                     </div>
                   </div>

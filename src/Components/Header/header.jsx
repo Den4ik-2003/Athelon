@@ -24,14 +24,9 @@ export default function Header() {
 
   useEffect(() => {
     updateCounts();
-
     const handleLocalUpdate = () => updateCounts();
-
     window.addEventListener("localStorageUpdate", handleLocalUpdate);
-
-    return () => {
-      window.removeEventListener("localStorageUpdate", handleLocalUpdate);
-    };
+    return () => window.removeEventListener("localStorageUpdate", handleLocalUpdate);
   }, []);
 
   useEffect(() => {
@@ -55,13 +50,10 @@ export default function Header() {
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchText(value);
-
     if (location.pathname === "/products") {
       const params = new URLSearchParams(location.search);
-
       if (value.trim()) params.set("search", value);
       else params.delete("search");
-
       navigate({ pathname: "/products", search: params.toString() }, { replace: true });
     }
   };
@@ -72,7 +64,6 @@ export default function Header() {
     } else {
       navigate("/products");
     }
-
     if (window.innerWidth <= 950) setMenuOpen(false);
   };
 
@@ -81,14 +72,8 @@ export default function Header() {
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
-
-  const handleNavLinkClick = () => {
-    if (window.innerWidth <= 950) setMenuOpen(false);
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const handleNavLinkClick = () => { if (window.innerWidth <= 950) setMenuOpen(false); };
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <>
@@ -105,18 +90,10 @@ export default function Header() {
           </div>
 
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
-            <NavLink className="nav-link" to="/home" onClick={handleNavLinkClick}>
-              Головна
-            </NavLink>
-            <NavLink className="nav-link" to="/products" onClick={handleNavLinkClick}>
-              Товари
-            </NavLink>
-            <NavLink className="nav-link" to="/about" onClick={handleNavLinkClick}>
-              Про нас
-            </NavLink>
-            <NavLink className="nav-link" to="/contact" onClick={handleNavLinkClick}>
-              Контакти
-            </NavLink>
+            <NavLink className="nav-link" to="/home" onClick={handleNavLinkClick}>Головна</NavLink>
+            <NavLink className="nav-link" to="/products" onClick={handleNavLinkClick}>Товари</NavLink>
+            <NavLink className="nav-link" to="/about" onClick={handleNavLinkClick}>Про нас</NavLink>
+            <NavLink className="nav-link" to="/contact" onClick={handleNavLinkClick}>Контакти</NavLink>
 
             <div className="mobile-menu-extra">
               <div className="search">
