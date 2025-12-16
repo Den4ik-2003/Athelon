@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ethers } from "ethers"; 
 import "./contact.css";
 
 export default function Contact() {
@@ -7,22 +8,12 @@ export default function Contact() {
     email: "",
     message: "",
   });
-
   const [submitted, setSubmitted] = useState(false);
 
   const contacts = [
-    {
-      type: "Instagram",
-      value: "@athelon.store",
-    },
-    {
-      type: "Електронна пошта",
-      value: "athelonstore@gmail.com",
-    },
-    {
-      type: "Графік роботи",
-      value: "Пн-Пт 9:00 - 18:00",
-    },
+    { type: "Instagram", value: "@athelon.store" },
+    { type: "Електронна пошта", value: "athelonstore@gmail.com" },
+    { type: "Графік роботи", value: "Пн-Пт 9:00 - 18:00" },
   ];
 
   const handleChange = (e) => {
@@ -30,11 +21,31 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Форма відправлена:", formData);
-    setSubmitted(true);
-    setFormData({ name: "", email: "", message: "" });
+
+    if (!window.ethereum) {
+      alert("Встановіть MetaMask!");
+      return;
+    }
+
+    try {
+      await window.ethereum.request({ method: "eth_requestAccounts" });
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      const message = `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`;
+      const signature = await signer.signMessage(message);
+
+      console.log("Підписане повідомлення:", message);
+      console.log("Signature:", signature);
+
+      setSubmitted(true);
+      setFormData({ name: "", email: "", message: "" });
+    } catch (err) {
+      console.error(err);
+      alert("Сталася помилка при підписі повідомлення.");
+    }
   };
 
   return (
@@ -52,7 +63,7 @@ export default function Contact() {
 
       <div className="contact-form-section">
         <h2>Напишіть нам повідомлення</h2>
-        {submitted && <p className="form-success">Дякуємо! Ваше повідомлення надіслано.</p>}
+        {submitted && <p className="form-success">Дякуємо! Ваше повідомлення підписано.</p>}
         <form className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
