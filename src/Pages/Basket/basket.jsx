@@ -107,7 +107,7 @@ export default function Basket() {
         <>
           <div className="deals-grid">
             {cartProducts.map(item => (
-              <div key={`${item.id}-${item.size}`} className="deal-card">
+              <div key={`${item.id}-${item.size}`} className="deal-card basket-card">
                 <NavLink to={`/product/${item.id}`} className="deal-img">
                   <img src={item.image} alt={item.name} />
                 </NavLink>
@@ -118,7 +118,7 @@ export default function Basket() {
                   <span className="new">{item.newPrice} грн</span>
                 </p>
 
-                <p className="description">
+                <p className="description2">
                   Розмір: <strong>{item.size}</strong>
                 </p>
 

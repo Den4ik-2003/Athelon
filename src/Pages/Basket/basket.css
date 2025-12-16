@@ -23,6 +23,10 @@
   gap: 15px;
 }
 
+.description2 {
+  min-height: 25px !important;
+}
+
 .basket-empty2 p {
   margin-bottom: 1rem;
   color: var(--color-text);

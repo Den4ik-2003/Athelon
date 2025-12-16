@@ -78,7 +78,7 @@ export default function Liked() {
                   <img src={item.image} alt={item.name} />
                 </div>
                 <h3>{item.name}</h3>
-                <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p>
+                {/* <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p> */}
                 <div className="rating">{renderStars(item.rating)}</div>
                 <p className="price">
                   <span className="old">{item.oldPrice} грн</span>

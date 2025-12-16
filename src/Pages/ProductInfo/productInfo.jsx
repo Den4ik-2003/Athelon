@@ -320,10 +320,10 @@ export default function ProductInfo() {
 
                     <h3>{item.name}</h3>
 
-                    <p
+                    {/* <p
                       className="description"
                       dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
+                    /> */}
 
                     <div className="rating">{renderStars(item.rating)}</div>
 

@@ -217,6 +217,10 @@ select {
   color: inherit;
 }
 
+.deal-card p {
+  min-height: 50px;
+}
+
 .deal-card {
   border-radius: 10px;
   padding: 1rem;
@@ -231,7 +235,6 @@ select {
 .deal-img {
   width: 100%;
   aspect-ratio: 4/3;
-  overflow: hidden;
   border-radius: 6px;
   margin-bottom: 1rem;
   display: flex;
@@ -241,15 +244,15 @@ select {
 
 .deal-img img {
   width: 100%;
-  height: 100%;
   object-fit: contain;
 }
 
 .deal-card h3 {
   font-size: 1.1rem;
   margin-bottom: 0.4rem;
+  min-height: 65px;
+  height: 100%;
   color: #e0e0e0;
-  min-height: 50px;
 }
 
 .description {
@@ -292,12 +295,18 @@ select {
   text-decoration: line-through;
   color: #888;
   margin-right: 0.5rem;
+  
+}
+
+.price {
+  min-height: 20px !important;
 }
 
 .price .new {
   color: var(--color-green);
   font-weight: 700;
   font-size: 1.2rem;
+  height: auto;
 }
 
 .card-footer {
@@ -344,7 +353,11 @@ select {
   .deal-card {
     max-width: 100%;
     padding: 0.7rem;
-    height: 430px;
+    height: 420px;
+  }
+
+  .basket-card {
+    height: 500px !important;
   }
 
   .deal-card h3 {
@@ -356,6 +369,12 @@ select {
 @media (max-width: 480px) {
   .deal-img {
     aspect-ratio: 1/1;
+  }
+  .price .old {
+    font-size: 14px;
+  }
+  .price .new {
+    font-size: 1rem;
   }
 }
 

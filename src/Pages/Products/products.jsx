@@ -169,7 +169,7 @@ export default function Products() {
 
                     <h3>{item.name}</h3>
 
-                    <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p>
+                    {/* <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p> */}
 
                     <div className="rating">{renderStars(item.rating)}</div>
 
