@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ethers } from "ethers"; 
 import "./contact.css";
 
 export default function Contact() {
@@ -9,6 +8,7 @@ export default function Contact() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const contacts = [
     { type: "Instagram", value: "@athelon.store" },
@@ -23,28 +23,31 @@ export default function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!window.ethereum) {
-      alert("Встановіть MetaMask!");
-      return;
-    }
+    setError("");
 
     try {
-      await window.ethereum.request({ method: "eth_requestAccounts" });
-      const provider = new ethers.BrowserProvider(window.ethereum);
-      const signer = await provider.getSigner();
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "a9274740-ad3b-4138-b4ee-d800da84ddda",
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
 
-      const message = `Name: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`;
-      const signature = await signer.signMessage(message);
+      const result = await response.json();
 
-      console.log("Підписане повідомлення:", message);
-      console.log("Signature:", signature);
-
-      setSubmitted(true);
-      setFormData({ name: "", email: "", message: "" });
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setError("Сталася помилка при відправці форми.");
+      }
     } catch (err) {
       console.error(err);
-      alert("Сталася помилка при підписі повідомлення.");
+      setError("Сталася помилка при відправці форми.");
     }
   };
 
@@ -63,7 +66,8 @@ export default function Contact() {
 
       <div className="contact-form-section">
         <h2>Напишіть нам повідомлення</h2>
-        {submitted && <p className="form-success">Дякуємо! Ваше повідомлення підписано.</p>}
+        {submitted && <p className="form-success">Дякуємо! Ваше повідомлення надіслано.</p>}
+        {error && <p className="form-error">{error}</p>}
         <form className="contact-form" onSubmit={handleSubmit}>
           <input
             type="text"
