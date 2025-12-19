@@ -226,8 +226,7 @@ export default function ProductInfo() {
             </div>
             <div className="icon-group">
               <img src={liked ? LikeFill : Like} alt="like" className={`icon heart ${liked ? "active" : ""}`} onClick={toggleLike} loading="lazy" />
-              <img src={inCart ? BasketFill : Basket} alt="basket" className={`icon basket ${inCart ? "active" : ""}`} onClick={toggleCart} loading="lazy" />
-            </div>
+           </div>
           </div>
           <div className="rating">{renderStars(product.rating)}</div>
           <p className="description2" dangerouslySetInnerHTML={{ __html: product.description }} />
