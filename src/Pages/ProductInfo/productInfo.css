@@ -275,7 +275,7 @@
   }
 
   .small-img  {
-    height: max-content !important;
+    height: 120px;
   }
 
   .main-img {
@@ -287,14 +287,14 @@
     flex-direction: row;
     gap: 10px;
     width: 100%;
-    height: max-content !important;
+    height: 120px;
     justify-content: space-between;
     flex: 0 0 auto;
   }
 
   .small-img {
     width: calc((100% - 30px)/4);
-    height: max-content !important;
+    height: 120px;
   }
 }
 
