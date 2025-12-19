@@ -14,7 +14,7 @@ export default function Order() {
   const [department, setDepartment] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,15 +25,17 @@ export default function Order() {
   }, []);
 
   const validateForm = () => {
-    const phoneRegex = /^\+380\d{9}$/;
+    const phoneRegex = /^(\+380\d{9}|380\d{9}|0\d{9})$/;
     const deptRegex = /^\d+$/;
 
     if (!name.trim()) return "Ім’я не може бути пустим";
     if (!surname.trim()) return "Прізвище не може бути пустим";
     if (!patronymic.trim()) return "По батькові не може бути пустим";
-    if (!phoneRegex.test(phone)) return "Телефон повинен бути у форматі +380XXXXXXXXX";
+    if (!phoneRegex.test(phone))
+      return "Телефон повинен починатись з +380, 380 або 0";
     if (!city.trim()) return "Місто не може бути пустим";
-    if (!deptRegex.test(department)) return "Відділення повинно містити тільки цифри";
+    if (!deptRegex.test(department))
+      return "Відділення повинно містити тільки цифри";
     return null;
   };
 
@@ -48,12 +50,12 @@ export default function Order() {
 
     setLoading(true);
 
-const message = cartItems
-  .map(
-    (item, index) =>
-      `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price}\nКількість: ${item.quantity}\nРозмір: ${item.size}`
-  )
-  .join("\n\n");
+    const message = cartItems
+      .map(
+        (item, index) =>
+          `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price}\nКількість: ${item.quantity}\nРозмір: ${item.size}`
+      )
+      .join("\n\n");
 
     const formData = new FormData();
     formData.append("access_key", "88a6e90e-2834-4510-91c0-0ff59e95aec0");
@@ -92,10 +94,9 @@ const message = cartItems
         setDepartment("");
         window.dispatchEvent(new Event("localStorageUpdate"));
       }
-    } catch (error) {
+    } catch {
       setErrorMessage("Сталася помилка при відправці замовлення");
       setShowModal(true);
-      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -141,7 +142,7 @@ const message = cartItems
           />
           <input
             type="tel"
-            placeholder="+380XXXXXXXXX"
+            placeholder="+380 / 380 / 0XXXXXXXXX"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
