@@ -287,7 +287,7 @@
     flex-direction: row;
     gap: 10px;
     width: 80%;
-    height: auto;
+    height: max-content !important;
     justify-content: space-between;
   }
 
