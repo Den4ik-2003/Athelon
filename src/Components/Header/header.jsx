@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import Like from "../../assets/Icons/likeFill.svg";
 import Basket from "../../assets/Icons/basket.svg";
-import SearchIcon from "../../assets/Icons/search.svg";
 import GoTopIcon from "../../assets/Icons/goTop.svg";
 import "./header.css";
 
 export default function Header() {
   const [likeCount, setLikeCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
-  const [searchText, setSearchText] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const navigate = useNavigate();
@@ -30,11 +28,6 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    setSearchText(params.get("search") || "");
-  }, [location.search]);
-
-  useEffect(() => {
     const handleScroll = () => setShowScrollTop(window.scrollY > 300);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -46,31 +39,6 @@ export default function Header() {
   }, [menuOpen]);
 
   const displayCount = (count) => (count > 9 ? "9+" : count);
-
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchText(value);
-    if (location.pathname === "/products") {
-      const params = new URLSearchParams(location.search);
-      if (value.trim()) params.set("search", value);
-      else params.delete("search");
-      navigate({ pathname: "/products", search: params.toString() }, { replace: true });
-    }
-  };
-
-  const handleSearchSubmit = () => {
-    if (searchText.trim()) {
-      navigate(`/products?search=${encodeURIComponent(searchText.trim())}`);
-    } else {
-      navigate("/products");
-    }
-    if (window.innerWidth <= 950) setMenuOpen(false);
-  };
-
-  const handleSearchKey = (e) => {
-    if (e.key === "Enter") handleSearchSubmit();
-  };
-
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const handleNavLinkClick = () => { if (window.innerWidth <= 950) setMenuOpen(false); };
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -94,46 +62,9 @@ export default function Header() {
             <NavLink className="nav-link" to="/products" onClick={handleNavLinkClick}>Товари</NavLink>
             <NavLink className="nav-link" to="/about" onClick={handleNavLinkClick}>Про нас</NavLink>
             <NavLink className="nav-link" to="/contact" onClick={handleNavLinkClick}>Контакти</NavLink>
-
-            <div className="mobile-menu-extra">
-              <div className="search">
-                <input
-                  type="text"
-                  placeholder="Пошук..."
-                  value={searchText}
-                  onChange={handleSearchChange}
-                  onKeyDown={handleSearchKey}
-                />
-                <button type="button" className="search-btn" onClick={handleSearchSubmit}>
-                  <img src={SearchIcon} alt="Search" />
-                </button>
-              </div>
-              <div className="icons-mobile">
-                <NavLink onClick={handleNavLinkClick} to="/like" className="cart">
-                  <img src={Like} alt="Like" />
-                  <span className="cart-count">{displayCount(likeCount)}</span>
-                </NavLink>
-                <NavLink onClick={handleNavLinkClick} to="/cart" className="cart cart-end">
-                  <img src={Basket} alt="Basket" />
-                  <span className="cart-count">{displayCount(cartCount)}</span>
-                </NavLink>
-              </div>
-            </div>
           </nav>
 
           <div className="header-actions">
-            <div className="search">
-              <input
-                type="text"
-                placeholder="Пошук..."
-                value={searchText}
-                onChange={handleSearchChange}
-                onKeyDown={handleSearchKey}
-              />
-              <button type="button" className="search-btn" onClick={handleSearchSubmit}>
-                <img src={SearchIcon} alt="Search" />
-              </button>
-            </div>
             <NavLink to="/like" className="cart">
               <img src={Like} alt="Like" />
               <span className="cart-count">{displayCount(likeCount)}</span>
@@ -142,6 +73,7 @@ export default function Header() {
               <img src={Basket} alt="Basket" />
               <span className="cart-count">{displayCount(cartCount)}</span>
             </NavLink>
+            <button className="button" onClick={() => navigate("/products")}>Купити</button>
           </div>
         </div>
       </header>

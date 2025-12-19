@@ -44,9 +44,11 @@ export default function ProductInfo() {
         const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
         setLiked(likedItems.includes(data.id));
         setInCart(cartItems.some((i) => i.id === data.id));
-        if (data.category) {
-          const rec = allProducts
-            .filter((p) => p.id !== data.id && p.category === data.category)
+
+        let rec = [];
+        if (data.brand) {
+          rec = allProducts
+            .filter((p) => p.id !== data.id && p.brand === data.brand)
             .slice(0, 8)
             .map((p) => ({
               ...p,
@@ -54,8 +56,23 @@ export default function ProductInfo() {
               inCart: cartItems.some((i) => i.id === p.id),
               image: p.images?.[0] || "",
             }));
-          setRecommended(rec);
         }
+
+        if (rec.length < 8 && data.category) {
+          const needed = 8 - rec.length;
+          const categoryRec = allProducts
+            .filter((p) => p.id !== data.id && p.category === data.category && !rec.some(r => r.id === p.id))
+            .slice(0, needed)
+            .map((p) => ({
+              ...p,
+              liked: likedItems.includes(p.id),
+              inCart: cartItems.some((i) => i.id === p.id),
+              image: p.images?.[0] || "",
+            }));
+          rec = [...rec, ...categoryRec];
+        }
+
+        setRecommended(rec);
         setLoading(false);
       })
       .catch(() => setLoading(false));

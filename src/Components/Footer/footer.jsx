@@ -1,20 +1,19 @@
-import "./footer.css";
-import { NavLink } from "react-router-dom";
-import Instagram from "../../assets/Icons/instagram.webp";
-import Telegram from "../../assets/Icons/telegram.webp";
-import TikTok from "../../assets/Icons/tiktok.png";
+import "./footer.css"
+import { NavLink } from "react-router-dom"
+import Instagram from "../../assets/Icons/instagram.webp"
+import Telegram from "../../assets/Icons/telegram.webp"
+import TikTok from "../../assets/Icons/tiktok.png"
 
 export default function Footer() {
-  const contacts = [
-    {
-      title: "Email",
+  const contacts = {
+    email: {
       value: "athelonstore@gmail.com",
-      link: "https://mail.google.com/mail/u/0/#search/athelonstore%40gmail.com",
+      link: "mailto:athelonstore@gmail.com",
     },
-    { title: "Instagram", value: "https://instagram.com/athleon" },
-    { title: "Telegram", value: "https://t.me/athleonshop" },
-    { title: "TikTok", value: "https://tiktok.com/@athleon" },
-  ];
+    instagram: "https://instagram.com/athelon.store",
+    telegram: "https://t.me/athelonstore",
+    // tiktok: "",
+  }
 
   return (
     <footer className="footer">
@@ -25,8 +24,7 @@ export default function Footer() {
             Ми — команда, яка живе стилем та сучасною чоловічою модою. У нас ви
             знайдете все необхідне для створення бездоганного образу — від одягу
             та взуття до вишуканих аксесуарів. Ми працюємо онлайн, щоб ви могли
-            легко замовити оригінальний брендовий одяг з будь-якої точки
-            України.
+            легко замовити оригінальний брендовий одяг з будь-якої точки України.
           </p>
         </div>
 
@@ -51,13 +49,11 @@ export default function Footer() {
         <div className="footer-col contact">
           <h4>Контакти</h4>
           <ul>
-            {contacts.slice(0, 1).map((item, i) => (
-              <li key={i}>
-                <a href={item.link} target="_blank" rel="noopener noreferrer">
-                  {item.value}
-                </a>
-              </li>
-            ))}
+            <li>
+              <a href={contacts.email.link}>
+                {contacts.email.value}
+              </a>
+            </li>
             <li>Україна, онлайн-магазин</li>
           </ul>
         </div>
@@ -66,26 +62,26 @@ export default function Footer() {
           <h4>Ми в соцмережах</h4>
           <div className="social-icons">
             <a
-              href={contacts[1].value}
+              href={contacts.instagram}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img src={Instagram} alt="Instagram" />
             </a>
             <a
-              href={contacts[2].value}
+              href={contacts.telegram}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img src={Telegram} alt="Telegram" />
             </a>
-            <a
-              href={contacts[3].value}
+            {/* <a
+              href={contacts.tiktok}
               target="_blank"
               rel="noopener noreferrer"
             >
               <img src={TikTok} alt="TikTok" />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
@@ -94,5 +90,5 @@ export default function Footer() {
         <p>© {new Date().getFullYear()} Athelon. Всі права захищено.</p>
       </div>
     </footer>
-  );
+  )
 }
