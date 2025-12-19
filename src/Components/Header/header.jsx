@@ -39,6 +39,10 @@ export default function Header() {
 
   const displayCount = (count) => (count > 9 ? "9+" : count);
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const handleNavigate = (path) => {
+    navigate(path);
+    setMenuOpen(false);
+  };
 
   return (
     <>
@@ -55,35 +59,35 @@ export default function Header() {
           </div>
 
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
-            <NavLink className="nav-link" to="/home" onClick={toggleMenu}>Головна</NavLink>
-            <NavLink className="nav-link" to="/products" onClick={toggleMenu}>Товари</NavLink>
-            <NavLink className="nav-link" to="/about" onClick={toggleMenu}>Про нас</NavLink>
-            <NavLink className="nav-link" to="/contact" onClick={toggleMenu}>Контакти</NavLink>
+            <NavLink className="nav-link" to="/home" onClick={() => setMenuOpen(false)}>Головна</NavLink>
+            <NavLink className="nav-link" to="/products" onClick={() => setMenuOpen(false)}>Товари</NavLink>
+            <NavLink className="nav-link" to="/about" onClick={() => setMenuOpen(false)}>Про нас</NavLink>
+            <NavLink className="nav-link" to="/contact" onClick={() => setMenuOpen(false)}>Контакти</NavLink>
             <div className="mobile-menu-extra">
               <div className="mobile-icons">
-                <NavLink to="/like" className="cart">
+                <button className="cart" onClick={() => handleNavigate("/like")}>
                   <img src={Like} alt="Like" />
                   <span className="cart-count">{displayCount(likeCount)}</span>
-                </NavLink>
-                <NavLink to="/cart" className="cart">
+                </button>
+                <button className="cart" onClick={() => handleNavigate("/cart")}>
                   <img src={Basket} alt="Basket" />
                   <span className="cart-count">{displayCount(cartCount)}</span>
-                </NavLink>
+                </button>
               </div>
-              <button className="button" onClick={() => navigate("/products")}>Купити</button>
+              <button className="button" onClick={() => handleNavigate("/products")}>Купити</button>
             </div>
           </nav>
 
           <div className="header-actions">
-            <NavLink to="/like" className="cart">
+            <button className="cart" onClick={() => handleNavigate("/like")}>
               <img src={Like} alt="Like" />
               <span className="cart-count">{displayCount(likeCount)}</span>
-            </NavLink>
-            <NavLink to="/cart" className="cart">
+            </button>
+            <button className="cart" onClick={() => handleNavigate("/cart")}>
               <img src={Basket} alt="Basket" />
               <span className="cart-count">{displayCount(cartCount)}</span>
-            </NavLink>
-            <button className="button" onClick={() => navigate("/products")}>Купити</button>
+            </button>
+            <button className="button" onClick={() => handleNavigate("/products")}>Купити</button>
           </div>
         </div>
       </header>
