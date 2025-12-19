@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Like from "../../assets/Icons/likeFill.svg";
 import Basket from "../../assets/Icons/basket.svg";
 import GoTopIcon from "../../assets/Icons/goTop.svg";
@@ -11,7 +11,6 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const updateCounts = () => {
     const likedItems = JSON.parse(localStorage.getItem("likedItems")) || [];
@@ -40,8 +39,6 @@ export default function Header() {
 
   const displayCount = (count) => (count > 9 ? "9+" : count);
   const toggleMenu = () => setMenuOpen(!menuOpen);
-  const handleNavLinkClick = () => { if (window.innerWidth <= 950) setMenuOpen(false); };
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
     <>
@@ -58,10 +55,23 @@ export default function Header() {
           </div>
 
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
-            <NavLink className="nav-link" to="/home" onClick={handleNavLinkClick}>Головна</NavLink>
-            <NavLink className="nav-link" to="/products" onClick={handleNavLinkClick}>Товари</NavLink>
-            <NavLink className="nav-link" to="/about" onClick={handleNavLinkClick}>Про нас</NavLink>
-            <NavLink className="nav-link" to="/contact" onClick={handleNavLinkClick}>Контакти</NavLink>
+            <NavLink className="nav-link" to="/home" onClick={toggleMenu}>Головна</NavLink>
+            <NavLink className="nav-link" to="/products" onClick={toggleMenu}>Товари</NavLink>
+            <NavLink className="nav-link" to="/about" onClick={toggleMenu}>Про нас</NavLink>
+            <NavLink className="nav-link" to="/contact" onClick={toggleMenu}>Контакти</NavLink>
+            <div className="mobile-menu-extra">
+              <div className="mobile-icons">
+                <NavLink to="/like" className="cart">
+                  <img src={Like} alt="Like" />
+                  <span className="cart-count">{displayCount(likeCount)}</span>
+                </NavLink>
+                <NavLink to="/cart" className="cart">
+                  <img src={Basket} alt="Basket" />
+                  <span className="cart-count">{displayCount(cartCount)}</span>
+                </NavLink>
+              </div>
+              <button className="button" onClick={() => navigate("/products")}>Купити</button>
+            </div>
           </nav>
 
           <div className="header-actions">
@@ -79,7 +89,7 @@ export default function Header() {
       </header>
 
       {showScrollTop && (
-        <button className="scroll-top-btn" onClick={scrollToTop}>
+        <button className="scroll-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <img src={GoTopIcon} alt="Go Top" />
         </button>
       )}
