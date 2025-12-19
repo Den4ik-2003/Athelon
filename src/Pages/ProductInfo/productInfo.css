@@ -279,14 +279,14 @@
   }
 
   .main-img {
-    width: 80%;
+    width: 100%;
     height: auto;
   }
 
   .side-images {
     flex-direction: row;
     gap: 10px;
-    width: 80%;
+    width: 100%;
     height: max-content !important;
     justify-content: space-between;
     flex: 0 0 auto;
@@ -301,7 +301,6 @@
 @media (max-width: 768px) {
   .info-section {
     max-width: 100%;
-    padding: 0 20px;
   }
 
   .buttons {
