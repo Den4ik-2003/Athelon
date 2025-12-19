@@ -293,7 +293,7 @@
 
   .small-img {
     width: calc((100% - 30px)/4);
-    height: auto;
+    height: max-content !important;
   }
 }
 
