@@ -270,6 +270,10 @@
     margin: 0 auto;
   }
 
+  .info-section {
+    width: 100%;
+  }
+
   .small-img  {
     height: max-content !important;
   }

@@ -217,7 +217,7 @@ export default function ProductInfo() {
           </div>
         </div>
 
-        <div className="info-section">
+        <div className="info-section container">
           <h2 className="product-name">{product.name}</h2>
           <div className="price-row">
             <div className="price-block">
