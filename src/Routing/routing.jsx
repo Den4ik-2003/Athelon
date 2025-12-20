@@ -9,6 +9,7 @@ import Contact from "../Pages/Contact/contact";
 import Footer from "../Components/Footer/footer";
 import Basket from "../Pages/Basket/basket";
 import Order from "../Pages/Order/order";
+import NotFound from "../Pages/NotFound/notgound";
 
 export default function Routing() {
   return (
@@ -25,6 +26,7 @@ export default function Routing() {
           <Route path="/like" element={<Liked />} />
           <Route path="/cart" element={<Basket />} />
           <Route path="/order" element={<Order />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </Router>

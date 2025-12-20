@@ -13,31 +13,26 @@ export const TopDeals = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
-
     fetch("https://athelonservers.onrender.com/api/products")
-      .then(res => {
-        if (!res.ok) throw new Error("Network error")
-        return res.json()
-      })
+      .then(res => res.json())
       .then(data => {
-        const discounted = data.filter(item => item.oldPrice > item.newPrice)
         const likedItems = JSON.parse(localStorage.getItem("likedItems")) || []
 
-        const mapped = discounted.slice(0, 8).map(p => ({
-          ...p,
-          liked: likedItems.includes(p.id),
-          image: p.images && p.images.length ? p.images[0] : ""
-        }))
+        const mapped = data
+          .filter(item => Number(item.oldPrice) > Number(item.newPrice))
+          .sort((a, b) => Number(a.id) - Number(b.id))
+          .slice(-8)
+          .reverse()
+          .map(p => ({
+            ...p,
+            liked: likedItems.includes(p.id),
+            image: p.images?.[0] || ""
+          }))
 
-        if (mapped.length) {
-          setProducts(mapped)
-          setLoading(false)
-        }
+        setProducts(mapped)
+        setLoading(false)
       })
-      .catch(() => {
-        setLoading(true)
-      })
+      .catch(() => setLoading(false))
   }, [])
 
   const updateLocalStorage = (key, id, add) => {
@@ -87,7 +82,6 @@ export const TopDeals = () => {
                 </div>
 
                 <h3>{item.name}</h3>
-                {/* <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p> */}
 
                 <div className="rating">{renderStars(item.rating)}</div>
 

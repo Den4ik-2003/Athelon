@@ -1,0 +1,43 @@
+.notfound {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  padding: 20px;
+}
+
+.notfound-box {
+  text-align: center;
+  background: #111;
+  padding: 60px 50px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.notfound-box h1 {
+  font-size: 120px;
+  font-weight: 700;
+  color: #00ff66;
+  margin-bottom: 10px;
+}
+
+.notfound-box p {
+  font-size: 20px;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+@media (max-width: 600px) {
+  .notfound-box {
+    padding: 40px 25px;
+  }
+
+  .notfound-box h1 {
+    font-size: 80px;
+  }
+
+  .notfound-box p {
+    font-size: 16px;
+  }
+}
