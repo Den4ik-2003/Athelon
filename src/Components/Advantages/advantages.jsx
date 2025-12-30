@@ -5,6 +5,16 @@ import StarHalf from "../../assets/Icons/starHalf.svg"
 import ArrowLeft from "../../assets/Icons/arrowLeft.svg"
 import ArrowRight from "../../assets/Icons/arrowRight.svg"
 import Loader from "../Loader/loader"
+import Avatar1 from "../../assets/Avatars/ava1.jpg"
+import Avatar2 from "../../assets/Avatars/ava2.jpg"
+import Avatar3 from "../../assets/Avatars/ava3.jpg"
+import Avatar4 from "../../assets/Avatars/ava4.jpg"
+import Avatar5 from "../../assets/Avatars/ava5.jpg"
+import Avatar6 from "../../assets/Avatars/ava6.jpg"
+import Avatar7 from "../../assets/Avatars/ava7.jpg"
+import Avatar8 from "../../assets/Avatars/ava8.jpg"
+import Avatar9 from "../../assets/Avatars/ava9.jpg"
+import Avatar10 from "../../assets/Avatars/ava10.jpg"
 import "./advantages.css"
 
 export default function Advantages() {
@@ -15,24 +25,25 @@ export default function Advantages() {
   const [loading, setLoading] = useState(true)
   const timerRef = useRef(null)
 
+  const mockReviews = [
+    { user: "Олександра", rating: 5, comment: "Дуже якісний сервіс, швидка доставка!", avatar: Avatar1 },
+    { user: "Степан", rating: 4.8, comment: "Замовляю вже не вперше — все супер.", avatar: Avatar2 },
+    { user: "Оксана", rating: 4.9, comment: "Якість перевершила очікування.", avatar: Avatar3 },
+    { user: "Юлія", rating: 4.7, comment: "Хороший магазин, рекомендую.", avatar: Avatar4 },
+    { user: "Денис", rating: 5, comment: "Дуже задоволена покупкою ❤️", avatar: Avatar5 },
+    { user: "Дмитро", rating: 4.8, comment: "Все прийшло швидко і без проблем.", avatar: Avatar6 },
+    { user: "Богдан", rating: 4.9, comment: "Підтримка відповідає миттєво.", avatar: Avatar7 },
+    { user: "Владислав", rating: 5, comment: "Один з кращих сервісів, що пробував.", avatar: Avatar8 },
+    { user: "Назар", rating: 4.7, comment: "Дуже зручно користуватись сайтом.", avatar: Avatar9 },
+    { user: "Богдан", rating: 4.9, comment: "Точно повернусь ще 👍", avatar: Avatar10 },
+  ]
+
   useEffect(() => {
     setLoading(true)
-
-    fetch("https://athelonservers.onrender.com/api/products")
-      .then(res => {
-        if (!res.ok) throw new Error("Network error")
-        return res.json()
-      })
-      .then(data => {
-        const allReviews = data.map(p => p.reviews).flat().slice(0, 7)
-        if (allReviews.length) {
-          setReviews(allReviews)
-          setLoading(false)
-        }
-      })
-      .catch(() => {
-        setLoading(true)
-      })
+    setTimeout(() => {
+      setReviews(mockReviews)
+      setLoading(false)
+    }, 300)
   }, [])
 
   useEffect(() => {
@@ -47,7 +58,6 @@ export default function Advantages() {
 
     timerRef.current = setTimeout(() => {
       setPhase("hide")
-
       setTimeout(() => {
         setCurrentIndex(i => (i + 1) % reviews.length)
         setPhase("show")
