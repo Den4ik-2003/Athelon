@@ -39,7 +39,7 @@
 
 .small-img {
   width: 100px;
-  height: calc((545px - 3 * 8px) / 4); 
+  height: 545px !important; 
   object-position: center;
   border-radius: 8px;
   border: 2px solid transparent;
@@ -262,7 +262,7 @@
   min-height: 200px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1224px) {
   .image-section {
     flex-direction: column;
     align-items: center;
@@ -274,7 +274,7 @@
   }
 
   .small-img  {
-    height: 120px !important;
+    height: 170px !important;
   }
 
   .main-img {
@@ -293,7 +293,6 @@
 
   .small-img {
     width: calc((100% - 30px)/4);
-    height: 120px !important;
   }
 }
 
@@ -311,4 +310,8 @@
   .buy-btn3 {
     width: 100%;
   }
+
+  .small-img {
+        height: 120px !important;
+    }
 }
