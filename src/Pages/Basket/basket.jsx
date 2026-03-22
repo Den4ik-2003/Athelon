@@ -70,7 +70,14 @@ export default function Basket() {
         }
         return p
       })
-      updateLocalStorage(updated.map(p => ({ id: p.id, size: p.size, quantity: p.quantity })))
+      updateLocalStorage(updated.map(p => ({
+  id: p.id,
+  name: p.name,
+  price: p.newPrice,
+  size: p.size,
+  quantity: p.quantity,
+  sezon: p.sezon
+})))
       calculateTotal(updated)
       return updated
     })
