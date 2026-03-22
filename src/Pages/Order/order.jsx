@@ -17,6 +17,9 @@ export default function Order() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const TELEGRAM_TOKEN = "8769225799:AAGi1WWB-D17mmHd5Mm3EqekK4_HcbPmoGY";
+  const TELEGRAM_CHAT_ID = "2129690062";
+
   useEffect(() => {
     const savedTotal = JSON.parse(localStorage.getItem("totalPrice")) || 0;
     const savedCart = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -53,9 +56,11 @@ export default function Order() {
     const message = cartItems
       .map(
         (item, index) =>
-          `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price}\nКількість: ${item.quantity}\nРозмір: ${item.size}`
+          `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price} грн\nКількість: ${item.quantity}\nРозмір: ${item.size}`
       )
       .join("\n\n");
+
+    const fullMessage = `🛒 НОВЕ ЗАМОВЛЕННЯ\n\n${message}\n\n👤 ${surname} ${name} ${patronymic}\n📞 ${phone}\n📦 ${mail}\n🏙 ${city}\n🏤 Відділення: ${department}\n💰 Сума: ${totalPrice} грн`;
 
     const formData = new FormData();
     formData.append("access_key", "88a6e90e-2834-4510-91c0-0ff59e95aec0");
@@ -66,18 +71,27 @@ export default function Order() {
     formData.append("mail", mail);
     formData.append("city", city);
     formData.append("department", department);
-    formData.append(
-      "message",
-      `Замовлення:\n\n${message}\n\nІм’я: ${name}\nПрізвище: ${surname}\nПо батькові: ${patronymic}\nТелефон: ${phone}\nПошта: ${mail}\nМісто: ${city}\nВідділення: ${department}\nЗагальна сума: ${totalPrice} грн`
-    );
+    formData.append("message", fullMessage);
 
     try {
+      await fetch("https://api.telegram.org/bot" + "8769225799:AAGi1WWB-D17mmHd5Mm3EqekK4_HcbPmoGY" + "/sendMessage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: fullMessage
+        })
+      });
+
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData,
+        body: formData
       });
 
       const result = await response.json();
+
       if (result.success) {
         setErrorMessage("Дякуємо! Замовлення прийнято.");
         setShowModal(true);
