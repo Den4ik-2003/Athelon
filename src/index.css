@@ -227,6 +227,7 @@ select {
   display: flex;
   flex-direction: column;
   transition: 0.25s;
+  background-color: #110B0F;
   max-width: 270px !important;
   -webkit-box-shadow: 1px 2px 20px 3px #000000;
   box-shadow: 1px 2px 20px 3px #000000;
