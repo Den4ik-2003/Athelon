@@ -2,7 +2,6 @@ import "./footer.css"
 import { NavLink } from "react-router-dom"
 import Instagram from "../../assets/Icons/instagram.webp"
 import Telegram from "../../assets/Icons/telegram.webp"
-import TikTok from "../../assets/Icons/tiktok.png"
 
 export default function Footer() {
   const contacts = {
@@ -12,7 +11,6 @@ export default function Footer() {
     },
     instagram: "https://instagram.com/athelon.store",
     telegram: "https://t.me/athelonstore",
-    // tiktok: "",
   }
 
   return (
@@ -21,11 +19,8 @@ export default function Footer() {
         <div className="footer-col about">
           <h3>Athelon</h3>
           <p>
-            Ми — команда, яка живе стилем та сучасною чоловічою модою. У нас ви
-            знайдете все необхідне для створення бездоганного образу — від одягу
-            та взуття до вишуканих аксесуарів. Ми працюємо онлайн, щоб ви могли
-            легко замовити оригінальний брендовий одяг з будь-якої точки України.
-          </p>
+    Ми — команда, яка живе футболом та сучасним спортивним стилем. У нас ви знайдете все необхідне для бездоганного футбольного образу — від форм та бутсів до стильних аксесуарів для тренувань і матчів. Ми працюємо онлайн, щоб ви могли легко замовити оригінальне спортивне екіпірування з будь-якої точки України.
+</p>
         </div>
 
         <div className="footer-col links">

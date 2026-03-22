@@ -30,7 +30,7 @@ export default function Advantages() {
     { user: "Степан", rating: 4.8, comment: "Замовляю вже не вперше — все супер.", avatar: Avatar2 },
     { user: "Оксана", rating: 4.9, comment: "Якість перевершила очікування.", avatar: Avatar3 },
     { user: "Юлія", rating: 4.7, comment: "Хороший магазин, рекомендую.", avatar: Avatar4 },
-    { user: "Денис", rating: 5, comment: "Дуже задоволена покупкою ❤️", avatar: Avatar5 },
+    { user: "Денис", rating: 5, comment: "Дуже задоволений покупкою ❤️", avatar: Avatar5 },
     { user: "Дмитро", rating: 4.8, comment: "Все прийшло швидко і без проблем.", avatar: Avatar6 },
     { user: "Богдан", rating: 4.9, comment: "Підтримка відповідає миттєво.", avatar: Avatar7 },
     { user: "Владислав", rating: 5, comment: "Один з кращих сервісів, що пробував.", avatar: Avatar8 },

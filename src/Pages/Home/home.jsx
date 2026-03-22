@@ -3,7 +3,6 @@ import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
 import "./home.css";
-import Stats from "../../Components/Stats/stats";
 
 export default function Home() {
   return (
@@ -14,10 +13,10 @@ export default function Home() {
         <div className="hero-content">
           <h1>Athelon</h1>
           <p>
-            Athelon — це сучасний одяг для тих, хто обирає стиль, комфорт і характер.
-Кожна деталь, кожен крій і кожен образ створені, щоб підкреслити твою індивідуальність.
-Одягни стиль, який говорить без слів.
-          </p>
+    Athleon — це сучасне екіпірування для футболу та спорту, для тих, хто обирає стиль, комфорт і результативність.  
+    Кожна футбольна форма, кожні бутси та аксесуари створені, щоб підкреслити твою індивідуальність на полі.  
+    Одягни стиль та екіпірування, яке говорить про твою силу без слів.
+</p>
 
           <NavLink to="/products" className="button">
             Перейти до товарів
@@ -29,7 +28,6 @@ export default function Home() {
 
       <Advantages />
 
-      <Stats />
     </div>
   );
 }
