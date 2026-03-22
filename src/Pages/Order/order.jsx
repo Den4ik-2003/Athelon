@@ -17,7 +17,7 @@ export default function Order() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const TELEGRAM_TOKEN = "8769225799:AAGi1WWB-D17mmHd5Mm3EqekK4_HcbPmoGY";
+  const TELEGRAM_TOKEN = "8769225799:AAGErWG4h78fN6KDJtbgK_-GFSF6S-t5FeQ";
   const TELEGRAM_CHAT_ID = "2129690062";
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function Order() {
     const message = cartItems
       .map(
         (item, index) =>
-          `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price} грн\nКількість: ${item.quantity}\nРозмір: ${item.size}`
+          `Товар ${index + 1}:\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price} грн\nКількість: ${item.quantity}\nРозмір: ${item.size}`,
       )
       .join("\n\n");
 
@@ -74,20 +74,21 @@ export default function Order() {
     formData.append("message", fullMessage);
 
     try {
-      await fetch("https://api.telegram.org/bot" + "8769225799:AAGi1WWB-D17mmHd5Mm3EqekK4_HcbPmoGY" + "/sendMessage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
+      await fetch(
+        "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: fullMessage,
+          }),
         },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: fullMessage
-        })
-      });
+      );
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        body: formData,
       });
 
       const result = await response.json();
