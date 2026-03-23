@@ -7,8 +7,9 @@
 
 .reviews-carousel h2 {
   text-align: center;
-  margin-bottom: 30px;
-  color: var(--color-green);
+  margin-bottom: 60px;
+  font-size: 32px;
+  color: #fff;
 }
 
 .carousel-wrapper {

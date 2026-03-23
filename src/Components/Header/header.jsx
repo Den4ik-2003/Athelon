@@ -5,7 +5,7 @@ import Basket from "../../assets/Icons/basket.svg";
 import GoTopIcon from "../../assets/Icons/goTop.svg";
 import "./header.css";
 
-export default function Header() {
+export default function Header({ openModal }) {
   const [likeCount, setLikeCount] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -23,7 +23,8 @@ export default function Header() {
     updateCounts();
     const handleLocalUpdate = () => updateCounts();
     window.addEventListener("localStorageUpdate", handleLocalUpdate);
-    return () => window.removeEventListener("localStorageUpdate", handleLocalUpdate);
+    return () =>
+      window.removeEventListener("localStorageUpdate", handleLocalUpdate);
   }, []);
 
   useEffect(() => {
@@ -52,29 +53,68 @@ export default function Header() {
             <h1>Athelon</h1>
           </div>
 
-          <div className={`burger ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+          <div
+            className={`burger ${menuOpen ? "open" : ""}`}
+            onClick={toggleMenu}
+          >
             <span></span>
             <span></span>
             <span></span>
           </div>
 
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
-            <NavLink className="nav-link" to="/home" onClick={() => setMenuOpen(false)}>Головна</NavLink>
-            <NavLink className="nav-link" to="/products" onClick={() => setMenuOpen(false)}>Товари</NavLink>
-            <NavLink className="nav-link" to="/about" onClick={() => setMenuOpen(false)}>Про нас</NavLink>
-            <NavLink className="nav-link" to="/contact" onClick={() => setMenuOpen(false)}>Контакти</NavLink>
+            <NavLink
+              className="nav-link"
+              to="/home"
+              onClick={() => setMenuOpen(false)}
+            >
+              Головна
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              to="/products"
+              onClick={() => setMenuOpen(false)}
+            >
+              Товари
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              to="/about"
+              onClick={() => setMenuOpen(false)}
+            >
+              Про нас
+            </NavLink>
+            <NavLink
+              className="nav-link"
+              to="/contact"
+              onClick={() => setMenuOpen(false)}
+            >
+              Контакти
+            </NavLink>
             <div className="mobile-menu-extra">
               <div className="mobile-icons">
-                <button className="cart" onClick={() => handleNavigate("/like")}>
+                <button onClick={openModal}>🔥 Спецпропозиція</button>
+                <button
+                  className="cart"
+                  onClick={() => handleNavigate("/like")}
+                >
                   <img src={Like} alt="Like" />
                   <span className="cart-count">{displayCount(likeCount)}</span>
                 </button>
-                <button className="cart" onClick={() => handleNavigate("/cart")}>
+                <button
+                  className="cart"
+                  onClick={() => handleNavigate("/cart")}
+                >
                   <img src={Basket} alt="Basket" />
                   <span className="cart-count">{displayCount(cartCount)}</span>
                 </button>
               </div>
-              <button className="button" onClick={() => handleNavigate("/products")}>Купити</button>
+              <button
+                className="button"
+                onClick={() => handleNavigate("/products")}
+              >
+                Купити
+              </button>
             </div>
           </nav>
 
@@ -87,13 +127,21 @@ export default function Header() {
               <img src={Basket} alt="Basket" />
               <span className="cart-count">{displayCount(cartCount)}</span>
             </button>
-            <button className="button" onClick={() => handleNavigate("/products")}>Купити</button>
+            <button
+              className="button"
+              onClick={() => handleNavigate("/products")}
+            >
+              Купити
+            </button>
           </div>
         </div>
       </header>
 
       {showScrollTop && (
-        <button className="scroll-top-btn" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+        <button
+          className="scroll-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <img src={GoTopIcon} alt="Go Top" />
         </button>
       )}

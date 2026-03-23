@@ -198,9 +198,9 @@ select {
 
 .top-deals h2,
 .stats h2 {
-  font-size: 2rem;
+  font-size: 32px;
   margin: 2rem 0;
-  color: var(--color-green);
+  color: #fff;
   text-align: center;
 }
 
