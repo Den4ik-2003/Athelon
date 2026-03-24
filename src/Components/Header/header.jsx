@@ -93,7 +93,6 @@ export default function Header({ openModal }) {
             </NavLink>
             <div className="mobile-menu-extra">
               <div className="mobile-icons">
-                <button onClick={openModal}>🔥 Спецпропозиція</button>
                 <button
                   className="cart"
                   onClick={() => handleNavigate("/like")}
