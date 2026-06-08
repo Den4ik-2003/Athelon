@@ -151,6 +151,7 @@ export default function ProductInfo() {
     );
 
   const showOldPrice = product.oldPrice && product.oldPrice !== product.newPrice;
+  const outOfStock = Number(product.inStock) === 0;
 
   return (
     <div className="product-page container">
@@ -176,12 +177,18 @@ export default function ProductInfo() {
 
       <div className="product-top container">
         <div className="image-section">
-          <img
-            ref={mainImageRef}
-            src={mainImage}
-            alt={product.name}
-            className="main-img"
-          />
+          <div  style={{ position: "relative" }}>
+            <img
+              ref={mainImageRef}
+              src={mainImage}
+              alt={product.name}
+              className="main-img"
+              style={outOfStock ? { filter: "grayscale(100%)", opacity: 0.6 } : {}}
+            />
+            {outOfStock && (
+              <div className="out-of-stock-badge">Немає в наявності</div>
+            )}
+          </div>
           <div className="side-images">
             {product.images?.slice(0, 4).map((img, i) => (
               <img
@@ -189,7 +196,10 @@ export default function ProductInfo() {
                 src={img}
                 alt=""
                 className={`small-img ${mainImage === img ? "active" : ""}`}
-                style={{ height: mainImageRef.current?.clientHeight || "auto" }}
+                style={{
+                  height: mainImageRef.current?.clientHeight || "auto",
+                  ...(outOfStock ? { filter: "grayscale(100%)", opacity: 0.6 } : {}),
+                }}
                 onClick={() => setMainImage(img)}
               />
             ))}
@@ -229,10 +239,9 @@ export default function ProductInfo() {
                 {product.sizes.map((size) => (
                   <button
                     key={size}
-                    className={`size-btn ${
-                      selectedSize === size ? "active" : ""
-                    }`}
-                    onClick={() => setSelectedSize(size)}
+                    className={`size-btn ${selectedSize === size ? "active" : ""}`}
+                    onClick={() => !outOfStock && setSelectedSize(size)}
+                    disabled={outOfStock}
                   >
                     {size}
                   </button>
@@ -242,11 +251,21 @@ export default function ProductInfo() {
           )}
 
           <div className="buttons">
-            <button className="buy-btn3" onClick={updateCartLocalStorage}>
-              Додати в кошик
+            <button
+              className="buy-btn3"
+              onClick={updateCartLocalStorage}
+              disabled={outOfStock}
+              style={outOfStock ? { background: "#444", color: "#888", cursor: "default" } : {}}
+            >
+              {outOfStock ? "Немає в наявності" : "Додати в кошик"}
             </button>
-            <button className="cart-btn" onClick={handleBuyNow}>
-              Купити
+            <button
+              className="cart-btn"
+              onClick={handleBuyNow}
+              disabled={outOfStock}
+              style={outOfStock ? { background: "#444", color: "#888", cursor: "default" } : {}}
+            >
+              {outOfStock ? "Немає в наявності" : "Купити"}
             </button>
           </div>
         </div>
@@ -257,17 +276,20 @@ export default function ProductInfo() {
           <h2>Подібні товари</h2>
           <div className="deals-grid">
             {recommended.map((item) => {
-              const showRecOld =
-                item.oldPrice && item.oldPrice !== item.newPrice;
+              const showRecOld = item.oldPrice && item.oldPrice !== item.newPrice;
+              const recOutOfStock = Number(item.inStock) === 0;
               return (
                 <NavLink
                   key={item.id}
                   to={`/product/${item.id}`}
                   className="deal-card-link"
                 >
-                  <div className="deal-card deal-card-top">
+                  <div className={`deal-card deal-card-top ${recOutOfStock ? "deal-card--out-of-stock" : ""}`}>
                     <div className="deal-img">
                       <img src={item.image} alt={item.name} />
+                      {recOutOfStock && (
+                        <div className="out-of-stock-badge">Немає в наявності</div>
+                      )}
                     </div>
                     <h3>{item.name}</h3>
                     <div className="rating">
@@ -280,14 +302,18 @@ export default function ProductInfo() {
                       <span className="new">{item.newPrice} грн</span>
                     </p>
                     <div className="card-footer">
-                      <button className="button">Купити</button>
+                      <button
+                        className="button"
+                        disabled={recOutOfStock}
+                        onClick={(e) => recOutOfStock && e.preventDefault()}
+                      >
+                        {recOutOfStock ? "Немає в наявності" : "Купити"}
+                      </button>
                       <div className="card-icons">
                         <img
                           src={item.liked ? LikeFill : Like}
                           alt="heart"
-                          className={`icon heart ${
-                            item.liked ? "active" : ""
-                          }`}
+                          className={`icon heart ${item.liked ? "active" : ""}`}
                           onClick={(e) => {
                             e.preventDefault();
                             toggleRecLike(item.id);

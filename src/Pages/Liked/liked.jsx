@@ -71,36 +71,47 @@ export default function Liked() {
         </div>
       ) : (
         <div className="products-grid">
-          {products.map(item => (
-            <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
-              <div className="deal-card">
-                <div className="deal-img">
-                  <img src={item.image} alt={item.name} />
-                </div>
-                <h3>{item.name}</h3>
-                {/* <p className="description" dangerouslySetInnerHTML={{ __html: item.description }}></p> */}
-                <div className="rating">{renderStars(item.rating)}</div>
-                <p className="price">
-                  <span className="old">{item.oldPrice} грн</span>
-                  <span className="new">{item.newPrice} грн</span>
-                </p>
-                <div className="card-footer">
-                  <button className="button">Купити</button>
-                  <div className="card-icons">
-                    <img
-                      src={item.liked ? LikeFill : Like}
-                      alt=""
-                      className={`icon heart ${item.liked ? "active" : ""}`}
-                      onClick={e => {
-                        e.preventDefault()
-                        toggleLike(item.id)
-                      }}
-                    />
+          {products.map(item => {
+            const outOfStock = Number(item.inStock) === 0
+            return (
+              <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
+                <div className={`deal-card ${outOfStock ? "deal-card--out-of-stock" : ""}`}>
+                  <div className="deal-img">
+                    <img src={item.image} alt={item.name} />
+                    {outOfStock && (
+                      <div className="out-of-stock-badge">Немає в наявності</div>
+                    )}
+                  </div>
+                  <h3>{item.name}</h3>
+                  <div className="rating">{renderStars(item.rating)}</div>
+                  <p className="price">
+                    <span className="old">{item.oldPrice} грн</span>
+                    <span className="new">{item.newPrice} грн</span>
+                  </p>
+                  <div className="card-footer">
+                    <button
+                      className="button"
+                      disabled={outOfStock}
+                      onClick={e => outOfStock && e.preventDefault()}
+                    >
+                      {outOfStock ? "Немає в наявності" : "Купити"}
+                    </button>
+                    <div className="card-icons">
+                      <img
+                        src={item.liked ? LikeFill : Like}
+                        alt=""
+                        className={`icon heart ${item.liked ? "active" : ""}`}
+                        onClick={e => {
+                          e.preventDefault()
+                          toggleLike(item.id)
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-            </NavLink>
-          ))}
+              </NavLink>
+            )
+          })}
         </div>
       )}
     </section>

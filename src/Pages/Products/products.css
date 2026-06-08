@@ -75,6 +75,45 @@
   margin: 2rem auto;
 }
 
+/* ===== OUT OF STOCK ===== */
+.deal-card--out-of-stock {
+  filter: grayscale(100%);
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: default;
+}
+
+.deal-card-link--disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
+.deal-img {
+  position: relative;
+}
+
+.out-of-stock-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.deal-card--out-of-stock .button:disabled {
+  background: #444;
+  color: #888;
+  cursor: default;
+  border: none;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .filters {

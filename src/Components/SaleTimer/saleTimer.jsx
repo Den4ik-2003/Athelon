@@ -1,65 +1,174 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./saleTimer.css";
 
+const PRODUCT_KEY = "saleTimerProduct";
+const TIMER_KEY = "saleTimerEnd";
+const DURATION = 10800;
+
 export default function SaleTimer() {
   const [product, setProduct] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(DURATION);
+  const [visible, setVisible] = useState(false);
+  const [digits, setDigits] = useState({ h: "03", m: "00", s: "00" });
+  const [flipping, setFlipping] = useState({ h: false, m: false, s: false });
+  const prevDigits = useRef({ h: "03", m: "00", s: "00" });
   const navigate = useNavigate();
+  const allProductsRef = useRef([]);
+
+  const pickNewProduct = (products) => {
+    if (!products.length) return null;
+    const picked = products[Math.floor(Math.random() * products.length)];
+    const endTime = Date.now() + DURATION * 1000;
+    localStorage.setItem(PRODUCT_KEY, JSON.stringify(picked));
+    localStorage.setItem(TIMER_KEY, String(endTime));
+    return { picked, endTime };
+  };
 
   useEffect(() => {
+    const cachedProduct = localStorage.getItem(PRODUCT_KEY);
+    const cachedEnd = localStorage.getItem(TIMER_KEY);
+
+    if (cachedProduct && cachedEnd) {
+      const secondsLeft = Math.floor((Number(cachedEnd) - Date.now()) / 1000);
+
+      if (secondsLeft > 0) {
+        setProduct(JSON.parse(cachedProduct));
+        setTimeLeft(secondsLeft);
+        setTimeout(() => setVisible(true), 100);
+      }
+      // якщо таймер вже 0 — чекаємо на завантаження продуктів щоб вибрати новий
+    }
+
     fetch("https://athelonservers.onrender.com/api/products")
       .then(res => res.json())
       .then(data => {
         if (!Array.isArray(data)) return;
-        const discounted = data.filter(p => p.oldPrice > p.newPrice);
-        if (!discounted.length) return;
-        const randomIndex = Math.floor(Math.random() * discounted.length);
-        setProduct(discounted[randomIndex]);
+        const discounted = data.filter(
+          p => p.oldPrice > p.newPrice && Number(p.inStock) > 0
+        );
+        allProductsRef.current = discounted;
+
+        // якщо не було кешу або таймер вже вийшов — одразу вибираємо новий товар
+        const end = Number(localStorage.getItem(TIMER_KEY));
+        const secondsLeft = Math.floor((end - Date.now()) / 1000);
+
+        if (!localStorage.getItem(PRODUCT_KEY) || secondsLeft <= 0) {
+          const result = pickNewProduct(discounted);
+          if (!result) return;
+          setProduct(result.picked);
+          setTimeLeft(DURATION);
+          setTimeout(() => setVisible(true), 100);
+        }
       });
-    setTimeLeft(10800);
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTimeLeft(prev => (prev > 0 ? prev - 1 : 0));
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          // таймер дійшов до 0 — вибираємо новий товар
+          const products = allProductsRef.current;
+          const result = pickNewProduct(products);
+          if (result) {
+            setProduct(result.picked);
+            setVisible(false);
+            setTimeout(() => setVisible(true), 100);
+          }
+          return DURATION;
+        }
+        return prev - 1;
+      });
     }, 1000);
     return () => clearInterval(interval);
   }, []);
 
-  const formatTime = (seconds) => {
-    const h = Math.floor(seconds / 3600).toString().padStart(2, "0");
-    const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, "0");
-    const s = (seconds % 60).toString().padStart(2, "0");
-    return `${h}:${m}:${s}`;
-  };
+  useEffect(() => {
+    const h = Math.floor(timeLeft / 3600).toString().padStart(2, "0");
+    const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, "0");
+    const s = (timeLeft % 60).toString().padStart(2, "0");
+
+    const newFlipping = {
+      h: h !== prevDigits.current.h,
+      m: m !== prevDigits.current.m,
+      s: s !== prevDigits.current.s,
+    };
+
+    if (newFlipping.h || newFlipping.m || newFlipping.s) {
+      setFlipping(newFlipping);
+      setTimeout(() => setFlipping({ h: false, m: false, s: false }), 400);
+    }
+
+    prevDigits.current = { h, m, s };
+    setDigits({ h, m, s });
+  }, [timeLeft]);
+
+  const discount = product
+    ? Math.round(((product.oldPrice - product.newPrice) / product.oldPrice) * 100)
+    : 0;
 
   if (!product) return null;
 
   return (
     <section className="sale-timer container">
-      <h2>Спеціальна пропозиція</h2>
-      <div className="sale-card">
-        <div className="sale-img">
-          <img src={product.images?.[0]} alt={product.name} />
+      <div className={`sale-wrapper ${visible ? "sale-wrapper--visible" : ""}`}>
+
+        <div className="sale-label">
+          <span className="sale-label__dot" />
+          Обмежена пропозиція
         </div>
-        <div className="sale-info">
-          <h3>{product.name}</h3>
-          <p>
-            <span className="old">{product.oldPrice} грн</span>
-            <br />
-            <span className="new">{product.newPrice} грн</span>
-          </p>
-          <div className="timer">
-            Акція закінчиться через: <span>{formatTime(timeLeft)}</span>
+
+        <div className="sale-card">
+          <div className="sale-img-wrap">
+            <div className="sale-discount-badge">−{discount}%</div>
+            <img src={product.images?.[0]} alt={product.name} className="sale-img" />
+            <div className="sale-img-glow" />
           </div>
-          <br />
-          <button
-            className="button buttonProposition"
-            onClick={() => navigate("/products")}
-          >
-            Перейти
-          </button>
+
+          <div className="sale-info">
+            <h2 className="sale-title">Спеціальна пропозиція</h2>
+            <h3 className="sale-product-name">{product.name}</h3>
+
+            <div className="sale-prices">
+              <span className="sale-old">{product.oldPrice} грн</span>
+              <span className="sale-new">{product.newPrice} грн</span>
+            </div>
+
+            <div className="sale-timer-label">Акція закінчиться через:</div>
+
+            <div className="flip-clock">
+              <div className={`flip-unit ${flipping.h ? "flip-unit--flipping" : ""}`}>
+                <div className="flip-card">
+                  <span className="flip-top">{digits.h}</span>
+                </div>
+                <span className="flip-label">год</span>
+              </div>
+              <span className="flip-sep">:</span>
+              <div className={`flip-unit ${flipping.m ? "flip-unit--flipping" : ""}`}>
+                <div className="flip-card">
+                  <span className="flip-top">{digits.m}</span>
+                </div>
+                <span className="flip-label">хв</span>
+              </div>
+              <span className="flip-sep">:</span>
+              <div className={`flip-unit ${flipping.s ? "flip-unit--flipping" : ""}`}>
+                <div className="flip-card">
+                  <span className="flip-top">{digits.s}</span>
+                </div>
+                <span className="flip-label">сек</span>
+              </div>
+            </div>
+
+            <button
+              className="sale-btn"
+              onClick={() => navigate("/products")}
+            >
+              <span>Перейти до товару</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </section>

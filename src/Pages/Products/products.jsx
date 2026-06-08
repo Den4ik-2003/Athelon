@@ -57,7 +57,8 @@ export default function Products() {
     window.dispatchEvent(new Event("localStorageUpdate"));
   };
 
-  const toggleLike = id => {
+  const toggleLike = (e, id) => {
+    e.preventDefault();
     setProducts(prev =>
       prev.map(p => {
         if (p.id === id) {
@@ -84,7 +85,8 @@ export default function Products() {
     else setFilters(p => ({ ...p, [name]: value }));
   };
 
-  const normalizeString = str => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
+  const normalizeString = str =>
+    str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
 
   useEffect(() => {
     let result = [...products];
@@ -102,7 +104,9 @@ export default function Products() {
     if (filters.rating) result = result.filter(p => p.rating >= filters.rating);
     if (filters.search) {
       const term = normalizeString(filters.search);
-      result = result.filter(p => normalizeString(p.name).includes(term) || normalizeString(p.description).includes(term));
+      result = result.filter(
+        p => normalizeString(p.name).includes(term) || normalizeString(p.description).includes(term)
+      );
     }
     setFiltered(result);
   }, [products, filters, searchTerm]);
@@ -110,10 +114,61 @@ export default function Products() {
   const loadMore = () => setVisibleCount(p => p + 50);
   const visibleProducts = filtered.slice(0, visibleCount);
 
+  const renderCard = item => {
+    const outOfStock = Number(item.inStock) === 0;
+
+    const cardContent = (
+      <div className={`deal-card ${outOfStock ? "deal-card--out-of-stock" : ""}`}>
+        <div className="deal-img">
+          <img src={item.images?.[0]} alt={item.name} />
+          {outOfStock && (
+            <div className="out-of-stock-badge">Немає в наявності</div>
+          )}
+        </div>
+        <h3>{item.name}</h3>
+        <div className="rating">{renderStars(item.rating)}</div>
+        <p className="price">
+          {item.oldPrice !== item.newPrice && (
+            <span className="old">{item.oldPrice} грн</span>
+          )}
+          <span className="new">{item.newPrice} грн</span>
+        </p>
+        <div className="card-footer">
+          <button
+            className="button"
+            disabled={outOfStock}
+            onClick={e => outOfStock && e.preventDefault()}
+          >
+            {outOfStock ? "Немає в наявності" : "Купити"}
+          </button>
+          <div className="card-icons">
+            <img
+              src={item.liked ? LikeFill : Like}
+              className={`icon heart ${item.liked ? "active" : ""}`}
+              onClick={e => toggleLike(e, item.id)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+
+    return (
+      <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
+        {cardContent}
+      </NavLink>
+    );
+  };
+
   return (
     <section className="top-deals container">
       <div className="filters">
-        <input type="text" name="search" placeholder="Пошук..." value={filters.search} onChange={handleFilterChange} />
+        <input
+          type="text"
+          name="search"
+          placeholder="Пошук..."
+          value={filters.search}
+          onChange={handleFilterChange}
+        />
         <select name="category" onChange={handleFilterChange} value={filters.category}>
           <option value="">Всі категорії</option>
           {categories.map(c => <option key={c} value={c}>{c}</option>)}
@@ -136,32 +191,13 @@ export default function Products() {
 
       {loading ? <Loader /> : (
         <>
-          <div className="deals-grid" style={{ display: visibleProducts.length === 0 ? "block" : "grid" }}>
+          <div
+            className="deals-grid"
+            style={{ display: visibleProducts.length === 0 ? "block" : "grid" }}
+          >
             {visibleProducts.length === 0 ? (
               <p className="errorText">Товари за цим фільтром не знайдено</p>
-            ) : visibleProducts.map(item => (
-              <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
-                <div className="deal-card">
-                  <div className="deal-img"><img src={item.images?.[0]} alt={item.name} /></div>
-                  <h3>{item.name}</h3>
-                  <div className="rating">{renderStars(item.rating)}</div>
-                  <p className="price">
-                    {item.oldPrice !== item.newPrice && <span className="old">{item.oldPrice} грн</span>}
-                    <span className="new">{item.newPrice} грн</span>
-                  </p>
-                  <div className="card-footer">
-                    <button className="button">Купити</button>
-                    <div className="card-icons">
-                      <img
-                        src={item.liked ? LikeFill : Like}
-                        className={`icon heart ${item.liked ? "active" : ""}`}
-                        onClick={e => { e.preventDefault(); toggleLike(item.id); }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </NavLink>
-            ))}
+            ) : visibleProducts.map(item => renderCard(item))}
           </div>
           {visibleProducts.length < filtered.length && (
             <div className="load-more-container">
