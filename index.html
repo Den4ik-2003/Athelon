@@ -2,30 +2,102 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="public/favicon.ico" sizes="48x48">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <meta name="description" content="Офіційний магазин Athleon. Футбольні форми, бутси, гетри та аксесуари від Nike, Adidas, Puma. Безкоштовна доставка по Україні. Оригінальна спортивна продукція, гарантія якості.">
-    <meta name="keywords" content="футбольна форма, бутси, гетри, Nike, Adidas, Puma, футбол, спортивний одяг, аксесуари, купити, Україна">
+    <link rel="icon" type="image/x-icon" href="/public/favicon.ico" sizes="48x48">
+    <link rel="apple-touch-icon" href="/public/favicon.ico">
+
+    <title>Athleon – Футбольна форма, бутси, гетри та аксесуари | Офіційний магазин</title>
+    <meta name="description" content="Athleon — офіційний магазин футбольного екіпірування в Україні. Форми Nike, Adidas, Puma, бутси, гетри, м'ячі, рукавиці. Оригінальна продукція з гарантією.">
+    <meta name="keywords" content="футбольна форма, бутси, гетри, футбольні рукавиці, футбольний м'яч, Nike football, Adidas football, Puma football, спортивний одяг для футболу, купити форму, замовити бутси, Україна">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Athleon">
+    <link rel="canonical" href="https://athelon.netlify.app/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://athelon.netlify.app/">
+    <meta property="og:title" content="Athleon – Футбольна форма, бутси, гетри та аксесуари">
+    <meta property="og:description" content="Офіційний магазин футбольного екіпірування. Форми, бутси, гетри, рукавиці та аксесуари Nike, Adidas, Puma.">
+    <meta property="og:image" content="https://athelon.netlify.app/public/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="uk_UA">
+    <meta property="og:site_name" content="Athleon">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://athelon.netlify.app/">
+    <meta name="twitter:title" content="Athleon – Футбольна форма, бутси, гетри та аксесуари">
+    <meta name="twitter:description" content="Офіційний магазин футбольного екіпірування. Форми, бутси, гетри та аксесуари Nike, Adidas, Puma.">
+    <meta name="twitter:image" content="https://athelon.netlify.app/public/og-image.jpg">
+
     <meta name="google-site-verification" content="YqbAY2YyF0dabaazERO5psHbFQPLAu1HzT21h3bUnbw">
-    
-    <title>Athleon – футбольні форми, бутси, гетри та аксесуари | Офіційний магазин</title>
-    
+
     <script type="application/ld+json">
     {
-        "@type": "Store",
+        "@context": "https://schema.org",
+        "@type": "SportingGoodsStore",
         "name": "Athleon",
-        "description": "Офіційний онлайн-магазин футбольних форм, бутсів та аксесуарів Nike, Adidas, Puma в Україні.",
+        "url": "https://athelon.netlify.app/",
+        "logo": "https://athelon.netlify.app/public/logo.png",
+        "description": "Офіційний онлайн-магазин футбольного екіпірування: форми, бутси, гетри, рукавиці та аксесуари Nike, Adidas, Puma в Україні.",
         "openingHours": "Mo-Su 09:00-18:00",
         "priceRange": "UAH",
+        "currenciesAccepted": "UAH",
+        "paymentAccepted": "Cash, Credit Card",
         "address": {
             "@type": "PostalAddress",
             "addressCountry": "UA"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer support",
+            "availableLanguage": "Ukrainian",
+            "url": "https://athelon.netlify.app/contact"
         }
     }
     </script>
-    
-    <link rel="apple-touch-icon" href="public/favicon.ico">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Athleon",
+        "url": "https://athelon.netlify.app"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Головна",
+                "item": "https://athelon.netlify.app/"
+            },
+            {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Товари",
+                "item": "https://athelon.netlify.app/products"
+            },
+            {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Про нас",
+                "item": "https://athelon.netlify.app/about"
+            },
+            {
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Контакти",
+                "item": "https://athelon.netlify.app/contact"
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <div id="root"></div>
@@ -38,6 +110,6 @@
     var plerdymainscript=document.querySelector("[data-plerdymainscript='plerdymainscript']");
     plerdymainscript&&plerdymainscript.parentNode.removeChild(plerdymainscript);
     try{document.head.appendChild(plerdyScript)}catch(t){console.log(t,"unable add script tag")}
-</script>
+    </script>
 </body>
 </html>
