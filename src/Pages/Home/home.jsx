@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
 import "./home.css";
 import SaleTimer from "../../Components/SaleTimer/saleTimer";
-import WhyUs from "../../Components/WhyUs/WhyUs";
+import WhyUs from "../../Components/WhyUs/whyUs";
 
 export default function Home() {
   return (
