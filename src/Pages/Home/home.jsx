@@ -2,9 +2,9 @@ import Video from "../../assets/Video/video.mp4";
 import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
-import WhyUs from "../../Components/WhyUs/WhyUs";
 import "./home.css";
 import SaleTimer from "../../Components/SaleTimer/saleTimer";
+import WhyUs from "../../Components/WhyUs/WhyUs";
 
 export default function Home() {
   return (
