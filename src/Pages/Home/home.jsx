@@ -2,6 +2,7 @@ import Video from "../../assets/Video/video.mp4";
 import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
+import WhyUs from "../../Components/WhyUs/WhyUs";
 import "./home.css";
 import SaleTimer from "../../Components/SaleTimer/saleTimer";
 
@@ -31,26 +32,7 @@ export default function Home() {
 
       <Advantages />
 
-      <section className="why-us container">
-        <h2>Чому обирають <span>Athleon </span>?</h2>
-
-        <div className="why-grid">
-          <div className="why-card">
-            <h3>⚡ Швидка доставка</h3>
-            <p>Доставляємо по всій Україні за 1–3 дні</p>
-          </div>
-
-          <div className="why-card">
-            <h3>🏆 Якість</h3>
-            <p>Тільки перевірені бренди та матеріали</p>
-          </div>
-
-          <div className="why-card">
-            <h3>💰 Вигідні ціни</h3>
-            <p>Регулярні знижки та акції</p>
-          </div>
-        </div>
-      </section>
+      <WhyUs />
 
       <SaleTimer />
     </div>

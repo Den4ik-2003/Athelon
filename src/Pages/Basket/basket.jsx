@@ -3,6 +3,9 @@ import { NavLink } from "react-router-dom"
 import "./basket.css"
 import Loader from "../../Components/Loader/loader"
 
+const API_URL = import.meta.env.VITE_API_URL
+const API_KEY = import.meta.env.VITE_API_KEY
+
 export default function Basket() {
   const [cartProducts, setCartProducts] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
@@ -19,7 +22,10 @@ export default function Basket() {
       return
     }
 
-    fetch("https://athelonservers.onrender.com/api/products", { cache: "no-store" })
+    fetch(API_URL, {
+      cache: "no-store",
+      headers: { "x-api-key": API_KEY }
+    })
       .then(res => {
         if (!res.ok) throw new Error("error")
         return res.json()
@@ -71,13 +77,13 @@ export default function Basket() {
         return p
       })
       updateLocalStorage(updated.map(p => ({
-  id: p.id,
-  name: p.name,
-  price: p.newPrice,
-  size: p.size,
-  quantity: p.quantity,
-  sezon: p.sezon
-})))
+        id: p.id,
+        name: p.name,
+        price: p.newPrice,
+        size: p.size,
+        quantity: p.quantity,
+        sezon: p.sezon
+      })))
       calculateTotal(updated)
       return updated
     })

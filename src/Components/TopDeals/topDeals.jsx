@@ -8,18 +8,23 @@ import LikeFill from "../../assets/Icons/likeFill.svg"
 import Loader from "../Loader/loader"
 import "./topDeals.css"
 
+const API_URL = import.meta.env.VITE_API_URL
+const API_KEY = import.meta.env.VITE_API_KEY
+
 export const TopDeals = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("https://athelonservers.onrender.com/api/products")
+    fetch(API_URL, {
+      headers: { "x-api-key": API_KEY }
+    })
       .then(res => res.json())
       .then(data => {
         const likedItems = JSON.parse(localStorage.getItem("likedItems")) || []
 
         const mapped = data
-          .filter(item => Number(item.oldPrice) > Number(item.newPrice))
+          .filter(item => Number(item.oldPrice) > Number(item.newPrice) && Number(item.inStock) > 0)
           .sort((a, b) => Number(a.id) - Number(b.id))
           .slice(-8)
           .reverse()
@@ -66,16 +71,11 @@ export const TopDeals = () => {
       return <img key={i} src={Star} className="star-icon" />
     })
 
-  const renderCard = item => {
-    const outOfStock = Number(item.inStock) === 0
-
-    const cardContent = (
-      <div className={`deal-card deal-card-top ${outOfStock ? "deal-card--out-of-stock" : ""}`}>
+  const renderCard = item => (
+    <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
+      <div className="deal-card deal-card-top">
         <div className="deal-img">
           <img src={item.image} alt={item.name} />
-          {outOfStock && (
-            <div className="out-of-stock-badge">Немає в наявності</div>
-          )}
         </div>
 
         <h3>{item.name}</h3>
@@ -88,13 +88,7 @@ export const TopDeals = () => {
         </p>
 
         <div className="card-footer">
-          <button
-            className="button"
-            disabled={outOfStock}
-            onClick={e => outOfStock && e.preventDefault()}
-          >
-            {outOfStock ? "Немає в наявності" : "Купити"}
-          </button>
+          <button className="button">Купити</button>
           <div className="card-icons">
             <img
               src={item.liked ? LikeFill : Like}
@@ -107,26 +101,13 @@ export const TopDeals = () => {
           </div>
         </div>
       </div>
-    )
-
-    return (
-      <NavLink key={item.id} to={`/product/${item.id}`} className="deal-card-link">
-        {cardContent}
-      </NavLink>
-    )
-  }
+    </NavLink>
+  )
 
   return (
     <section className="top-deals container">
       <h2>Топ пропозиції</h2>
-
-      {loading ? (
-        <Loader />
-      ) : (
-        <div className="deals-grid">
-          {products.map(item => renderCard(item))}
-        </div>
-      )}
+      {loading ? <Loader /> : <div className="deals-grid">{products.map(renderCard)}</div>}
     </section>
   )
 }

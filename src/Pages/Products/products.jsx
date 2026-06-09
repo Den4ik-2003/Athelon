@@ -8,6 +8,9 @@ import LikeFill from "../../assets/Icons/likeFill.svg";
 import "./products.css";
 import Loader from "../../Components/Loader/loader";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -29,7 +32,9 @@ export default function Products() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://athelonservers.onrender.com/api/products")
+    fetch(API_URL, {
+      headers: { "x-api-key": API_KEY }
+    })
       .then(res => {
         if (!res.ok) throw new Error("Network error");
         return res.json();
@@ -108,6 +113,15 @@ export default function Products() {
         p => normalizeString(p.name).includes(term) || normalizeString(p.description).includes(term)
       );
     }
+
+    // товари в наявності йдуть першими
+    result.sort((a, b) => {
+      const aOut = Number(a.inStock) === 0;
+      const bOut = Number(b.inStock) === 0;
+      if (aOut === bOut) return 0;
+      return aOut ? 1 : -1;
+    });
+
     setFiltered(result);
   }, [products, filters, searchTerm]);
 

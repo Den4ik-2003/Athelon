@@ -8,6 +8,9 @@ import LikeFill from "../../assets/Icons/likeFill.svg";
 import Loader from "../../Components/Loader/loader";
 import "./productInfo.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 export default function ProductInfo() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -24,8 +27,14 @@ export default function ProductInfo() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://athelonservers.onrender.com/api/products")
-      .then((res) => res.json())
+    fetch(API_URL, {
+      cache: "no-store",
+      headers: { "x-api-key": API_KEY },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("error");
+        return res.json();
+      })
       .then((allProducts) => {
         const data = allProducts.find((p) => String(p.id) === id);
         if (!data) {
@@ -42,7 +51,7 @@ export default function ProductInfo() {
         setLiked(likedItems.includes(data.id));
         setInCart(cartItems.some((i) => i.id === data.id));
 
-        let rec = allProducts
+        const rec = allProducts
           .filter(
             (p) =>
               p.id !== data.id &&
@@ -123,9 +132,7 @@ export default function ProductInfo() {
     localStorage.setItem("likedItems", JSON.stringify(items));
 
     setRecommended((prev) =>
-      prev.map((p) =>
-        p.id === pId ? { ...p, liked: !p.liked } : p
-      )
+      prev.map((p) => (p.id === pId ? { ...p, liked: !p.liked } : p))
     );
   };
 
@@ -136,7 +143,8 @@ export default function ProductInfo() {
         stars.push(<img key={i} src={StarFill} className="star-icon" alt="" />);
       else if (i - rating < 1)
         stars.push(<img key={i} src={StarHalf} className="star-icon" alt="" />);
-      else stars.push(<img key={i} src={Star} className="star-icon" alt="" />);
+      else
+        stars.push(<img key={i} src={Star} className="star-icon" alt="" />);
     }
     return stars;
   };
@@ -177,7 +185,7 @@ export default function ProductInfo() {
 
       <div className="product-top container">
         <div className="image-section">
-          <div  style={{ position: "relative" }}>
+          <div style={{ position: "relative" }}>
             <img
               ref={mainImageRef}
               src={mainImage}
@@ -292,9 +300,7 @@ export default function ProductInfo() {
                       )}
                     </div>
                     <h3>{item.name}</h3>
-                    <div className="rating">
-                      {renderStars(item.rating)}
-                    </div>
+                    <div className="rating">{renderStars(item.rating)}</div>
                     <p className="price">
                       {showRecOld && (
                         <span className="old">{item.oldPrice} грн</span>

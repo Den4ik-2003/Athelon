@@ -8,6 +8,9 @@ import LikeFill from "../../assets/Icons/likeFill.svg"
 import Loader from "../../Components/Loader/loader"
 import "./liked.css"
 
+const API_URL = import.meta.env.VITE_API_URL
+const API_KEY = import.meta.env.VITE_API_KEY
+
 export default function Liked() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
@@ -15,7 +18,10 @@ export default function Liked() {
   useEffect(() => {
     const likedItems = JSON.parse(localStorage.getItem("likedItems")) || []
 
-    fetch("https://athelonservers.onrender.com/api/products")
+    fetch(API_URL, {
+      cache: "no-store",
+      headers: { "x-api-key": API_KEY }
+    })
       .then(res => {
         if (!res.ok) throw new Error("error")
         return res.json()

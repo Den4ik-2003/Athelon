@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "ethers": "^6.16.0",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.5.2",
     "mongoose": "^9.0.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -2,7 +2,6 @@
   margin-bottom: 2rem;
 }
 
-/* ===== FILTERS ===== */
 .filters {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -56,7 +55,6 @@
   -moz-appearance: textfield;
 }
 
-/* ===== PRICE SLIDER (якщо знадобиться) ===== */
 .price-slider {
   display: flex;
   gap: 0.5rem;
@@ -69,17 +67,14 @@
   color: #fff;
 }
 
-/* ===== LOAD MORE ===== */
 .load-more {
   display: block;
   margin: 2rem auto;
 }
 
-/* ===== OUT OF STOCK ===== */
 .deal-card--out-of-stock {
   filter: grayscale(100%);
   opacity: 0.6;
-  pointer-events: none;
   cursor: default;
 }
 
@@ -114,7 +109,6 @@
   border: none;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .filters {
     grid-template-columns: 1fr;

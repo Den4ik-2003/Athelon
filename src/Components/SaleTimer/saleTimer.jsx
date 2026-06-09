@@ -2,6 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./saleTimer.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 const PRODUCT_KEY = "saleTimerProduct";
 const TIMER_KEY = "saleTimerEnd";
 const DURATION = 10800;
@@ -37,10 +40,11 @@ export default function SaleTimer() {
         setTimeLeft(secondsLeft);
         setTimeout(() => setVisible(true), 100);
       }
-      // якщо таймер вже 0 — чекаємо на завантаження продуктів щоб вибрати новий
     }
 
-    fetch("https://athelonservers.onrender.com/api/products")
+    fetch(API_URL, {
+      headers: { "x-api-key": API_KEY }
+    })
       .then(res => res.json())
       .then(data => {
         if (!Array.isArray(data)) return;
@@ -49,7 +53,6 @@ export default function SaleTimer() {
         );
         allProductsRef.current = discounted;
 
-        // якщо не було кешу або таймер вже вийшов — одразу вибираємо новий товар
         const end = Number(localStorage.getItem(TIMER_KEY));
         const secondsLeft = Math.floor((end - Date.now()) / 1000);
 
@@ -67,7 +70,6 @@ export default function SaleTimer() {
     const interval = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
-          // таймер дійшов до 0 — вибираємо новий товар
           const products = allProductsRef.current;
           const result = pickNewProduct(products);
           if (result) {

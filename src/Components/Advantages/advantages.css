@@ -1,126 +1,387 @@
-.reviews-carousel {
-  padding: 50px 0;
-  background: #111;
+.reviews-section {
+  position: relative;
+  padding: 100px 40px;
+  background: #0a0a0f;
   color: #fff;
   overflow: hidden;
+  isolation: isolate;
 }
 
-.reviews-carousel h2 {
-  text-align: center;
-  margin-bottom: 60px;
-  font-size: 32px;
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob--a {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-green) 30%, transparent) 0%,
+    transparent 70%
+  );
+  top: -120px;
+  right: 10%;
+  animation: blobDrift 12s ease-in-out infinite alternate;
+}
+
+.blob--b {
+  width: 380px;
+  height: 380px;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-hover) 25%, transparent) 0%,
+    transparent 70%
+  );
+  bottom: -80px;
+  left: 5%;
+  animation: blobDrift 16s ease-in-out infinite alternate-reverse;
+}
+@keyframes blobDrift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(30px, 20px) scale(1.08);
+  }
+}
+.reviews-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.reviews-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-green);
+  margin: 0 0 18px;
+}
+.reviews-headline {
+  font-size: clamp(28px, 4vw, 46px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0 0 36px;
+  background: linear-gradient(135deg, #fff 40%, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 48px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-num {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: #fff;
 }
-
-.carousel-wrapper {
+.stat-label {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.stat-divider {
+  width: 1px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.12);
+}
+.nav-buttons {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
 }
-
-.carousel-btn {
-  cursor: pointer;
-  padding: 15px;
+.nav-btn {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-}
-
-.reviews-display {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
   display: flex;
-  gap: 20px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    transform 0.15s;
+  flex-shrink: 0;
+}
+.nav-btn svg {
+  width: 18px;
+  height: 18px;
+}
+.nav-btn:hover {
+  background: #90ffbd;
+  border-color: #00ff66;
+  transform: scale(1.08);
+}
+.nav-btn:active {
+  transform: scale(0.95);
+}
+.dot-track {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    background 0.25s,
+    width 0.3s;
+}
+.dot--active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--color-green);
+}
+.deck-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 50px 50px 30px;
+}
+.deck {
+  position: relative;
+  width: 320px;
+  height: 210px;
+  perspective: 1200px;
+}
+.deck--next .deck-card--top {
+  animation: flyOutLeft 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.deck--prev .deck-card--top {
+  animation: flyOutRight 0.55s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-.review-card2 {
-  width: 300px;
-  height: 200px;
-  background: #222;
-  border-radius: 16px;
-  padding: 20px;
-  opacity: .5;
-  transform: scale(.9);
-  transition: transform .5s ease, opacity .5s ease;
-}
-
-.review-card2.active {
-  opacity: 1;
-  transform: scale(1);
-}
-
-@media (max-width: 1050px) {
-  .reviews-display {
-    height: 30vh;
-    position: relative;
-  }
-
-  .review-card2 {
-    position: absolute;
-    opacity: 0;
-    transform: translateY(80px) rotate(-15deg) scale(.8);
-  }
-
-  .review-card2.show {
-    opacity: 1;
-    animation: cardJumpIn 0.9s ease-out forwards;
-  }
-
-  .review-card2.hide {
-    opacity: 1;
-    animation: cardJumpOut 0.7s ease-in forwards;
-  }
-}
-
-@keyframes cardJumpIn {
+@keyframes flyOutLeft {
   0% {
-    transform: translateY(120px) rotate(-25deg) scale(.7);
-  }
-  60% {
-    transform: translateY(-10px) rotate(5deg) scale(1.05);
-  }
-  80% {
-    transform: translateY(5px) rotate(-3deg) scale(.98);
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
   }
   100% {
-    transform: translateY(0) rotate(0deg) scale(1);
+    transform: translate(-220px, -80px) rotate(-28deg) scale(0.6);
+    opacity: 0;
+  }
+}
+@keyframes flyOutRight {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(220px, -80px) rotate(28deg) scale(0.6);
+    opacity: 0;
   }
 }
 
-@keyframes cardJumpOut {
-  0% {
-    transform: translateY(0) rotate(0deg) scale(1);
-  }
-  100% {
-    transform: translateY(-120px) rotate(25deg) scale(.6);
-    opacity: 0;
-  }
+.deck-card {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 210px;
+  border-radius: 20px;
+
+  transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(var(--sc))
+    rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+
+  z-index: var(--z);
+  filter: brightness(var(--dim));
+
+  transition:
+    transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.4s ease,
+    box-shadow 0.3s ease;
+
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.deck-card--ghost {
+  pointer-events: none;
+}
+
+.deck-card--top {
+  cursor: pointer;
+}
+.deck-card--top:hover {
+  box-shadow:
+    0 32px 64px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(167, 139, 250, 0.3),
+    inset 0 0 40px rgba(167, 139, 250, 0.06);
+}
+
+.deck-card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 22px 24px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.deck-card__glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(
+    ellipse 65% 35% at 28% 18%,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .review-header {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  gap: 14px;
 }
-
+.avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
 .avatar {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
+  display: block;
 }
-
+.avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--color-green);
+}
 .user-info {
-  margin-left: 15px;
+  flex: 1;
+  min-width: 0;
 }
-
+.user-info h4 {
+  margin: 0 0 4px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .stars {
   display: flex;
+  gap: 2px;
 }
-
 .stars img {
-  width: 18px;
+  width: 13px;
+  height: 13px;
+}
+.rating-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-green);
+  background: #e6fff0;
+  border: 1px solid var(--color-green);
+  border-radius: 8px;
+  padding: 3px 8px;
+  flex-shrink: 0;
+}
+.review-text {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+  font-style: italic;
+}
+.card-hint {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.2);
+  text-align: right;
+  letter-spacing: 0.05em;
 }
 
-.review-text {
-  font-size: .9rem;
+.deck-shadow {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 28px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.6) 0%, transparent 80%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+@media (max-width: 860px) {
+  .reviews-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    text-align: center;
+  }
+  .reviews-meta {
+    order: 1;
+  }
+  .deck-stage {
+    order: 2;
+  }
+  .stat-row,
+  .nav-buttons {
+    justify-content: center;
+  }
+}
+@media (max-width: 480px) {
+  .reviews-section {
+    padding: 70px 20px;
+  }
+  .deck,
+  .deck-card {
+    width: 280px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blob,
+  .deck-card {
+    animation: none !important;
+    transition: none !important;
+  }
 }

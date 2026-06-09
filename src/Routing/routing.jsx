@@ -8,7 +8,7 @@ import AboutUs from "../Pages/AboutUs/aboutUs";
 import Contact from "../Pages/Contact/contact";
 import Footer from "../Components/Footer/footer";
 import Basket from "../Pages/Basket/basket";
-import NotFound from "../Pages/NotFound/notgound";
+import NotFound from "../Pages/NotFound/notfound";
  
 export default function Routing() {
   return (
