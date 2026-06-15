@@ -42,6 +42,37 @@ export default function Order() {
     return null;
   };
 
+  const updateStock = async () => {
+    const updates = cartItems.map(async (item) => {
+      try {
+        // 1. Отримуємо поточний товар, щоб дізнатись актуальний inStock
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/${item.id}`);
+        if (!res.ok) throw new Error("Не вдалося отримати товар");
+        const product = await res.json();
+
+        const currentStock = Number(product.inStock) || 0;
+        const newStock = Math.max(currentStock - Number(item.quantity), 0);
+
+        const updateRes = await fetch(
+          `${import.meta.env.VITE_API_URL}/${item.id}`,
+          {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ inStock: newStock }),
+          },
+        );
+
+        if (!updateRes.ok) {
+          throw new Error(`Не вдалося оновити склад для товару ${item.id}`);
+        }
+      } catch (err) {
+        console.error(`Помилка оновлення складу для товару ${item.id}:`, err);
+      }
+    });
+
+    await Promise.all(updates);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const error = validateForm();
@@ -82,6 +113,8 @@ export default function Order() {
       if (!response.ok) {
         throw new Error("Помилка сервера");
       }
+
+      await updateStock();
 
       await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
         method: "POST",
