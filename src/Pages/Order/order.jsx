@@ -63,7 +63,7 @@ export default function Order() {
     const fullMessage = `🛒 НОВЕ ЗАМОВЛЕННЯ\n\n${message}\n\n👤 ${surname} ${name} ${patronymic}\n📞 ${phone}\n📦 ${mail}\n🏙 ${city}\n🏤 Відділення: ${department}\n💰 Сума: ${totalPrice} грн`;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL_ORDERS}/api/orders`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL_ORDERS}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
