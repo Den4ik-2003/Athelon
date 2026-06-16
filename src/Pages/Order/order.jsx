@@ -45,7 +45,6 @@ export default function Order() {
   const updateStock = async () => {
     const updates = cartItems.map(async (item) => {
       try {
-        // 1. Отримуємо поточний товар, щоб дізнатись актуальний inStock
         const res = await fetch(`${import.meta.env.VITE_API_URL}/${item.id}`);
         if (!res.ok) throw new Error("Не вдалося отримати товар");
         const product = await res.json();
