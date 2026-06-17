@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { Helmet } from "react-helmet-async"
 import "./aboutUs.css"
 import History from "../../assets/Images/about1.jpg"
 import Mission from "../../assets/Images/mission.jpg"
@@ -28,6 +29,16 @@ export default function AboutUs() {
 
   return (
     <div className="about-page" ref={revealRef}>
+
+      <Helmet>
+        <title>Про нас — Athleon | Футбольне екіпірування в Україні</title>
+        <meta name="description" content="Athleon — молода компанія з футбольного та спортивного екіпірування. Форми, бутси, аксесуари Nike, Adidas, Puma для спортсменів України." />
+        <meta property="og:title" content="Про нас — Athleon" />
+        <meta property="og:description" content="Футбольне екіпірування від провідних брендів. Форми, бутси, аксесуари для тих, хто грає на повну." />
+        <meta property="og:url" content="https://athelon.netlify.app/about" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://athelon.netlify.app/about" />
+      </Helmet>
 
       <section className="about-hero">
         <div className="about-hero__bg" aria-hidden="true">
@@ -109,8 +120,6 @@ export default function AboutUs() {
             </div>
           ))}
         </div>
-
-        
       </section>
 
       <section className="about-cta" data-reveal>

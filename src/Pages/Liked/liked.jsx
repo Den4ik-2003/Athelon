@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
+import { Helmet } from "react-helmet-async"
 import Star from "../../assets/Icons/star.svg"
 import StarFill from "../../assets/Icons/starFill.svg"
 import StarHalf from "../../assets/Icons/starHalf.svg"
@@ -64,6 +65,17 @@ export default function Liked() {
 
   return (
     <section className="liked container">
+      <Helmet>
+        <title>Улюблені товари — Athleon</title>
+        <meta name="description" content="Ваш список улюблених товарів Athleon: збережені бутси, форма та аксесуари для футболу." />
+        <meta property="og:title" content="Улюблені товари — Athleon" />
+        <meta property="og:description" content="Перегляньте збережені товари та оформіть замовлення на футбольне екіпірування від Athleon." />
+        <meta property="og:url" content="https://athelon.netlify.app/liked" />
+        <meta property="og:type" content="website" />
+        <meta name="robots" content="noindex, follow" />
+        <link rel="canonical" href="https://athelon.netlify.app/liked" />
+      </Helmet>
+
       <h2 className="liked-title">Товари які вам сподобались</h2>
 
       {loading ? (

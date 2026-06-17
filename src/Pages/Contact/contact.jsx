@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import "./contact.css";
 
 export default function Contact() {
@@ -12,9 +13,9 @@ export default function Contact() {
   const [error, setError] = useState("");
 
   const contacts = [
-    { type: "Instagram", value: "@athelon.store", icon: "📸" },
-    { type: "Електронна пошта", value: "athelonstore@gmail.com", icon: "✉️" },
-    { type: "Графік роботи", value: "Пн–Пт, 9:00–18:00", icon: "🕐" },
+    { type: "Instagram", value: "@athelon.store" },
+    { type: "Електронна пошта", value: "athelonstore@gmail.com" },
+    { type: "Графік роботи", value: "Пн–Пт, 9:00–18:00" },
   ];
 
   const handleChange = (e) => {
@@ -54,6 +55,16 @@ export default function Contact() {
 
   return (
     <div className="contact-page">
+      <Helmet>
+        <title>Контакти — Athleon | Зв'яжіться з нами</title>
+        <meta name="description" content="Зв'яжіться з Athleon — футбольне екіпірування в Україні. Instagram, email athelonstore@gmail.com. Відповімо протягом одного робочого дня." />
+        <meta property="og:title" content="Контакти — Athleon" />
+        <meta property="og:description" content="Напишіть нам — відповімо протягом одного робочого дня. Instagram @athelon.store, email athelonstore@gmail.com." />
+        <meta property="og:url" content="https://athelon.netlify.app/contact" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://athelon.netlify.app/contact" />
+      </Helmet>
+
       <div className="contact-hero">
         <span className="contact-eyebrow">Підтримка</span>
         <h1 className="contact-title">Зв'яжіться з нами</h1>
@@ -65,12 +76,9 @@ export default function Contact() {
       <div className="contact-grid">
         <aside className="contact-sidebar">
           {contacts.map((item, index) => (
-            <div key={index} className="contact-card">
-              <span className="contact-card-icon">{item.icon}</span>
-              <div>
-                <p className="contact-card-label">{item.type}</p>
-                <p className="contact-card-value">{item.value}</p>
-              </div>
+            <div key={index} className="contact-row">
+              <p className="contact-row-label">{item.type}</p>
+              <p className="contact-row-value">{item.value}</p>
             </div>
           ))}
         </aside>
@@ -127,9 +135,6 @@ export default function Contact() {
 
             <button type="submit" className="submit-btn">
               <span>Надіслати</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </button>
           </form>
         </div>
@@ -138,7 +143,7 @@ export default function Contact() {
       {submitted && (
         <div className="modal-overlay" onClick={() => setSubmitted(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-check">✓</div>
+            <p className="modal-mark">Готово</p>
             <h3>Дякуємо!</h3>
             <p>Ваше повідомлення успішно надіслано. Ми відповімо найближчим часом.</p>
             <button className="modal-close-btn" onClick={() => setSubmitted(false)}>

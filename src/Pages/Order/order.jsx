@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import "./order.css";
 
 export default function Order() {
@@ -138,6 +139,16 @@ export default function Order() {
 
   return (
     <div className="container">
+      <Helmet>
+        <title>Оформлення замовлення — Athleon</title>
+        <meta name="description" content="Оформіть замовлення на футбольне екіпірування від Athleon. Доставка Новою Поштою та УкрПоштою по всій Україні." />
+        <meta property="og:title" content="Оформлення замовлення — Athleon" />
+        <meta property="og:description" content="Швидке оформлення замовлення. Доставка по всій Україні." />
+        <meta property="og:url" content="https://athelon.netlify.app/order" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://athelon.netlify.app/order" />
+      </Helmet>
+
       <div className="order">
         <h2>Оформлення замовлення</h2>
 

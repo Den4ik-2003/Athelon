@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
+import { Helmet } from "react-helmet-async"
 import "./basket.css"
 import Loader from "../../Components/Loader/loader"
 
@@ -105,6 +106,16 @@ export default function Basket() {
 
   return (
     <section className="basket2 top-deals container">
+      <Helmet>
+        <title>Кошик — Athleon | Футбольне екіпірування</title>
+        <meta name="description" content="Перегляньте товари у вашому кошику та оформіть замовлення на футбольне екіпірування від Athleon." />
+        <meta property="og:title" content="Кошик — Athleon" />
+        <meta property="og:description" content="Оформіть замовлення на футбольне екіпірування від Athleon." />
+        <meta property="og:url" content="https://athelon.netlify.app/basket" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://athelon.netlify.app/basket" />
+      </Helmet>
+
       <h2>Ваш кошик</h2>
 
       {loading ? (

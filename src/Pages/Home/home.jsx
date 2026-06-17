@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Video from "../../assets/Video/video.mp4";
 import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
@@ -9,6 +10,16 @@ import WhyUs from "../../Components/WhyUs/whyUs";
 export default function Home() {
   return (
     <div>
+      <Helmet>
+        <title>Athleon — Футбольне екіпірування в Україні</title>
+        <meta name="description" content="Athleon — інтернет-магазин футбольного екіпірування: бутси, форма, аксесуари. Доставка Новою Поштою та УкрПоштою по всій Україні." />
+        <meta property="og:title" content="Athleon — Футбольне екіпірування в Україні" />
+        <meta property="og:description" content="Великий вибір бутс, форми та аксесуарів для футболу. Швидка доставка по всій Україні." />
+        <meta property="og:url" content="https://athelon.netlify.app/" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://athelon.netlify.app/" />
+      </Helmet>
+
       <section className="hero">
         <video className="hero-video" src={Video} autoPlay loop muted></video>
 

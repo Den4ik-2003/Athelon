@@ -1,9 +1,16 @@
 import { NavLink } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import "./notfound.css";
 
 export default function NotFound() {
   return (
     <div className="notfound">
+      <Helmet>
+        <title>404 — Сторінку не знайдено | Athleon</title>
+        <meta name="description" content="Сторінку не знайдено. Поверніться на головну сторінку Athleon." />
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
+
       <div className="notfound-field">
         <div className="notfound-lines">
           {Array.from({ length: 9 }).map((_, i) => (

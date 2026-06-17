@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, NavLink, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import Star from "../../assets/Icons/star.svg";
 import StarFill from "../../assets/Icons/starFill.svg";
 import StarHalf from "../../assets/Icons/starHalf.svg";
@@ -154,6 +155,11 @@ export default function ProductInfo() {
   if (!product)
     return (
       <div className="no-product">
+        <Helmet>
+          <title>Товар не знайдено — Athleon</title>
+          <meta name="description" content="На жаль, такого товару немає в каталозі Athleon. Перегляньте інші пропозиції футбольного екіпірування." />
+          <meta name="robots" content="noindex, follow" />
+        </Helmet>
         <p>Товар не знайдено 😔</p>
       </div>
     );
@@ -161,8 +167,26 @@ export default function ProductInfo() {
   const showOldPrice = product.oldPrice && product.oldPrice !== product.newPrice;
   const outOfStock = Number(product.inStock) === 0;
 
+  const seoTitle = `${product.name} — купити в Athleon`;
+  const seoDescription = `${product.name} за ціною ${product.newPrice} грн. ${
+    outOfStock ? "Тимчасово немає в наявності." : "В наявності, доставка по всій Україні."
+  } Оригінальне футбольне екіпірування від Athleon.`;
+  const seoUrl = `https://athelon.netlify.app/product/${product.id}`;
+  const seoImage = product.images?.[0] || "";
+
   return (
     <div className="product-page container">
+      <Helmet>
+        <title>{seoTitle}</title>
+        <meta name="description" content={seoDescription} />
+        <meta property="og:title" content={seoTitle} />
+        <meta property="og:description" content={seoDescription} />
+        <meta property="og:url" content={seoUrl} />
+        <meta property="og:type" content="product" />
+        {seoImage && <meta property="og:image" content={seoImage} />}
+        <link rel="canonical" href={seoUrl} />
+      </Helmet>
+
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>
           <div className="modal-window" onClick={(e) => e.stopPropagation()}>

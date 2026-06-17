@@ -47,45 +47,36 @@
 .contact-sidebar {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  border-top: 1px solid #1e1e1e;
 }
 
-.contact-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  background: #111;
-  border: 1px solid #222;
-  border-radius: 14px;
-  padding: 18px 20px;
-  transition: border-color 0.2s;
+.contact-row {
+  position: relative;
+  padding: 22px 4px 22px 18px;
+  border-bottom: 1px solid #1e1e1e;
+  border-left: 2px solid #1e1e1e;
+  transition: border-left-color 0.2s;
 }
 
-.contact-card:hover {
-  border-color: rgba(0, 255, 106, 0.3);
+.contact-row:hover {
+  border-left-color: #00ff6a;
 }
 
-.contact-card-icon {
-  font-size: 1.3rem;
-  line-height: 1;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.contact-card-label {
+.contact-row-label {
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #555;
-  margin: 0 0 4px;
+  margin: 0 0 6px;
 }
 
-.contact-card-value {
-  font-size: 0.95rem;
-  color: #ddd;
+.contact-row-value {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #eee;
   margin: 0;
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .contact-form-wrap {
@@ -151,7 +142,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   width: 100%;
   padding: 14px 24px;
   font-size: 0.95rem;
@@ -207,18 +197,17 @@
   animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.modal-check {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(0, 255, 106, 0.1);
-  border: 1px solid rgba(0, 255, 106, 0.3);
+.modal-mark {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   color: #00ff6a;
-  font-size: 1.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 20px;
+  border: 1px solid rgba(0, 255, 106, 0.35);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin: 0 0 18px;
 }
 
 .modal h3 {
@@ -281,11 +270,20 @@
   .contact-sidebar {
     flex-direction: row;
     flex-wrap: wrap;
+    border-top: none;
   }
 
-  .contact-card {
-    flex: 1 1 calc(50% - 6px);
+  .contact-row {
+    flex: 1 1 calc(50% - 1px);
     min-width: 140px;
+    border-top: 1px solid #1e1e1e;
+    border-left: none;
+    border-bottom: 1px solid #1e1e1e;
+    padding: 18px 14px;
+  }
+
+  .contact-row:hover {
+    border-left: none;
   }
 
   .contact-form-wrap {
@@ -298,7 +296,7 @@
     flex-direction: column;
   }
 
-  .contact-card {
+  .contact-row {
     flex: none;
     width: 100%;
   }
