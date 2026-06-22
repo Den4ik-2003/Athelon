@@ -7,8 +7,8 @@ import Loader from "../../Components/Loader/loader";
 import LikeIcon from "../../assets/Icons/like.svg";
 import LikeFillIcon from "../../assets/Icons/likeFill.svg";
 import StarIcon from "../../assets/Icons/starNew.svg";
-import StarFillIcon from "../../assets/Icons/starfill.svg";
-import StarHalfIcon from "../../assets/Icons/starhalf.svg";
+import StarFillIcon from "../../assets/Icons/starFill.svg";
+import StarHalfIcon from "../../assets/Icons/starHalf.svg";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
