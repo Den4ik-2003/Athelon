@@ -1,17 +1,71 @@
-import "./footer.css"
-import { NavLink } from "react-router-dom"
-import Instagram from "../../assets/Icons/instagram.webp"
-import Telegram from "../../assets/Icons/telegram.webp"
+import "./footer.css";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import Instagram from "../../assets/Icons/instagram.webp";
+import Telegram from "../../assets/Icons/telegram.webp";
+
+const ChevronIcon =
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>',
+  );
+
+const NAV_FILTER_KEY = "footerNavFilter";
+const API_URL = import.meta.env.VITE_API_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function Footer() {
-  const contacts = {
-    email: {
-      value: "athelonstore@gmail.com",
-      link: "mailto:athelonstore@gmail.com",
-    },
-    instagram: "https://instagram.com/athelon.store",
-    telegram: "https://t.me/athelonstore",
-  }
+  const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+
+  useEffect(() => {
+    fetch(API_URL, { headers: { "x-api-key": API_KEY } })
+      .then((r) => r.json())
+      .then((data) => {
+        if (!Array.isArray(data)) return;
+
+        const uniqueCats = [];
+        const seenCats = new Set();
+        for (const p of data) {
+          if (p.category && !seenCats.has(p.category)) {
+            seenCats.add(p.category);
+            uniqueCats.push(p.category);
+            if (uniqueCats.length === 5) break;
+          }
+        }
+
+        const uniqueBrands = [];
+        const seenBrands = new Set();
+        for (const p of data) {
+          if (p.brand && !seenBrands.has(p.brand)) {
+            seenBrands.add(p.brand);
+            uniqueBrands.push(p.brand);
+            if (uniqueBrands.length === 5) break;
+          }
+        }
+
+        setCategories(uniqueCats);
+        setBrands(uniqueBrands);
+      })
+      .catch(() => {});
+  }, []);
+
+  const handleFilterLink = (filter) => {
+    if (filter) {
+      localStorage.setItem(NAV_FILTER_KEY, JSON.stringify(filter));
+    } else {
+      localStorage.removeItem(NAV_FILTER_KEY);
+    }
+    window.dispatchEvent(new Event("footerNavFilter"));
+    window.scrollTo(0, 0);
+    navigate("/products");
+  };
+
+  const aboutLinks = [
+    { label: "Про нас", to: "/about" },
+    { label: "Контакти", to: "/contact" },
+  ];
 
   return (
     <footer className="footer">
@@ -19,71 +73,77 @@ export default function Footer() {
         <div className="footer-col about">
           <h3>Athelon</h3>
           <p>
-    Ми — команда, яка живе футболом та сучасним спортивним стилем. У нас ви знайдете все необхідне для бездоганного футбольного образу — від форм та бутсів до стильних аксесуарів для тренувань і матчів. Ми працюємо онлайн, щоб ви могли легко замовити оригінальне спортивне екіпірування з будь-якої точки України.
-</p>
-        </div>
-
-        <div className="footer-col links">
-          <h4>Швидкі посилання</h4>
-          <ul>
-            <li>
-              <NavLink to="/home">Головна</NavLink>
-            </li>
-            <li>
-              <NavLink to="/products">Товари</NavLink>
-            </li>
-            <li>
-              <NavLink to="/about">Про нас</NavLink>
-            </li>
-            <li>
-              <NavLink to="/contact">Контакти</NavLink>
-            </li>
-          </ul>
-        </div>
-
-        <div className="footer-col contact">
-          <h4>Контакти</h4>
-          <ul>
-            <li>
-              <a href={contacts.email.link}>
-                {contacts.email.value}
-              </a>
-            </li>
-            <li>Україна, онлайн-магазин</li>
-          </ul>
-        </div>
-
-        <div className="footer-col social">
-          <h4>Ми в соцмережах</h4>
+            Сучасний стиль, комфорт і якість. Екіпірування для футболу та
+            спорту, для тих, хто обирає найкраще.
+          </p>
           <div className="social-icons">
-            <a
-              href={contacts.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://instagram.com/athelon.store" target="_blank" rel="noopener noreferrer">
               <img src={Instagram} alt="Instagram" />
             </a>
-            <a
-              href={contacts.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://t.me/athelonstore" target="_blank" rel="noopener noreferrer">
               <img src={Telegram} alt="Telegram" />
             </a>
-            {/* <a
-              href={contacts.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <img src={TikTok} alt="TikTok" />
-            </a> */}
           </div>
+        </div>
+
+        <div className="footer-col">
+          <h4>Каталог</h4>
+          <ul>
+            {categories.map((cat) => (
+              <li key={cat}>
+                <button className="footer-nav-btn" onClick={() => handleFilterLink({ type: "category", value: cat })}>
+                  <span>{cat}</span>
+                  <img src={ChevronIcon} alt="" className="footer-chevron" />
+                </button>
+              </li>
+            ))}
+            <li>
+              <button className="footer-nav-btn footer-link-accent" onClick={() => handleFilterLink({ type: "sort", value: "new" })}>
+                <span>Новинки</span>
+                <img src={ChevronIcon} alt="" className="footer-chevron" />
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-col">
+          <h4>Бренди</h4>
+          <ul>
+            {brands.map((brand) => (
+              <li key={brand}>
+                <button className="footer-nav-btn" onClick={() => handleFilterLink({ type: "brand", value: brand })}>
+                  <span>{brand}</span>
+                  <img src={ChevronIcon} alt="" className="footer-chevron" />
+                </button>
+              </li>
+            ))}
+            <li>
+              <button className="footer-nav-btn footer-link-accent" onClick={() => handleFilterLink(null)}>
+                <span>Всі бренди</span>
+                <img src={ChevronIcon} alt="" className="footer-chevron" />
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-col">
+          <h4>Про нас</h4>
+          <ul>
+            {aboutLinks.map((item) => (
+              <li key={item.label}>
+                <NavLink to={item.to}>
+                  <span>{item.label}</span>
+                  <img src={ChevronIcon} alt="" className="footer-chevron" />
+                </NavLink>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
-      <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} Athelon. Всі права захищено.</p>
+      <div className="footer-bottom container">
+        <p>© {new Date().getFullYear()} Athelon. Всі права захищені.</p>
       </div>
     </footer>
-  )
+  );
 }

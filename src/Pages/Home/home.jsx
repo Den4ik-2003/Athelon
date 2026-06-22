@@ -1,51 +1,85 @@
 import { Helmet } from "react-helmet-async";
-import Video from "../../assets/Video/video.mp4";
-import Advantages from "../../Components/Advantages/advantages";
 import { NavLink } from "react-router-dom";
 import { TopDeals } from "../../Components/TopDeals/topDeals";
 import "./home.css";
 import SaleTimer from "../../Components/SaleTimer/saleTimer";
 import WhyUs from "../../Components/WhyUs/whyUs";
+import HeroImage from "../../assets/Images/main.webp";
+import Gallery from "../../Components/Gallery/gallery";
 
 export default function Home() {
   return (
     <div>
       <Helmet>
-        <title>Athleon — Футбольне екіпірування в Україні</title>
-        <meta name="description" content="Athleon — інтернет-магазин футбольного екіпірування: бутси, форма, аксесуари. Доставка Новою Поштою та УкрПоштою по всій Україні." />
-        <meta property="og:title" content="Athleon — Футбольне екіпірування в Україні" />
-        <meta property="og:description" content="Великий вибір бутс, форми та аксесуарів для футболу. Швидка доставка по всій Україні." />
+        <title>
+          Брендовий чоловічий одяг | Stone Island, Premium Collection | Athelon
+        </title>
+
+        <meta
+          name="description"
+          content="Купити брендовий чоловічий одяг в Україні. Футболки, худі, світшоти та інший преміум одяг Stone Island. Оригінальний стиль, висока якість та швидка доставка по всій Україні."
+        />
+
+        <meta
+          name="keywords"
+          content="брендовий чоловічий одяг, Stone Island, чоловічі футболки, преміум одяг, дизайнерський одяг, чоловічий одяг Україна, купити Stone Island"
+        />
+
+        <meta
+          property="og:title"
+          content="Брендовий чоловічий одяг | Stone Island, Premium Collection | Athelon"
+        />
+        <meta
+          property="og:description"
+          content="Брендовий чоловічий одяг та аксесуари для тих, хто цінує комфорт, якість і стиль. Оригінал, гарантія якості, швидка доставка по всій Україні."
+        />
         <meta property="og:url" content="https://athelon.netlify.app/" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://athelon.netlify.app/" />
       </Helmet>
 
       <section className="hero">
-        <video className="hero-video" src={Video} autoPlay loop muted></video>
-
         <div className="hero-content">
-          <h1>Athelon</h1>
+          <span className="hero-eyebrow">Преміум якість</span>
+
+          <h1>
+            Стиль, що
+            <br />
+            <span className="hero-accent">виділяє тебе</span>
+          </h1>
+
           <p>
-            Athleon — це сучасне екіпірування для футболу та спорту, для тих,
-            хто обирає стиль, комфорт і результативність. Кожна футбольна форма,
-            кожні бутси та аксесуари створені, щоб підкреслити твою
-            індивідуальність на полі. Одягни стиль та екіпірування, яке говорить
-            про твою силу без слів.
+            Брендовий одяг та аксесуари для тих, хто цінує комфорт, якість і
+            стиль.
           </p>
 
-          <NavLink to="/products" className="button">
-            Перейти до товарів
-          </NavLink>
+          <div className="hero-actions">
+            <NavLink to="/products" className="hero-btn-primary">
+              Перейти до товарів <span className="hero-btn-arrow">→</span>
+            </NavLink>
+            <NavLink to="/about" className="hero-btn-secondary">
+              Дізнатись більше
+            </NavLink>
+          </div>
+
+        </div>
+
+        <div className="hero-media">
+          <img
+            src={HeroImage}
+            alt="Athleon — брендовий одяг"
+            className="hero-image"
+          />
         </div>
       </section>
 
       <TopDeals />
 
-      <Advantages />
-
-      <WhyUs />
+      <Gallery />
 
       <SaleTimer />
+
+      <WhyUs />
     </div>
   );
 }

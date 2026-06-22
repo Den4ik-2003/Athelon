@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import Like from "../../assets/Icons/likeFill.svg";
+import Like from "../../assets/Icons/likeHeader.svg";
 import Basket from "../../assets/Icons/basket.svg";
 import GoTopIcon from "../../assets/Icons/goTop.svg";
 import "./header.css";
@@ -44,6 +44,8 @@ export default function Header({ openModal }) {
     navigate(path);
     setMenuOpen(false);
   };
+  const linkClass = ({ isActive }) =>
+    isActive ? "nav-link active" : "nav-link";
 
   return (
     <>
@@ -64,28 +66,35 @@ export default function Header({ openModal }) {
 
           <nav className={`nav ${menuOpen ? "open" : ""}`}>
             <NavLink
-              className="nav-link"
+              className={linkClass}
               to="/home"
               onClick={() => setMenuOpen(false)}
             >
               Головна
             </NavLink>
             <NavLink
-              className="nav-link"
+              className={linkClass}
               to="/products"
               onClick={() => setMenuOpen(false)}
             >
               Товари
             </NavLink>
             <NavLink
-              className="nav-link"
+              className={linkClass}
               to="/about"
               onClick={() => setMenuOpen(false)}
             >
               Про нас
             </NavLink>
             <NavLink
-              className="nav-link"
+              className={linkClass}
+              to="/reviews"
+              onClick={() => setMenuOpen(false)}
+            >
+              Відгуки
+            </NavLink>
+            <NavLink
+              className={linkClass}
               to="/contact"
               onClick={() => setMenuOpen(false)}
             >

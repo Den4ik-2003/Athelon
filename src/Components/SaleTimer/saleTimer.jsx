@@ -1,3 +1,6 @@
+
+
+
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./saleTimer.css";
@@ -5,17 +8,18 @@ import "./saleTimer.css";
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
+
 const PRODUCT_KEY = "saleTimerProduct";
 const TIMER_KEY = "saleTimerEnd";
-const DURATION = 10800;
+const DURATION = 43200;
 
 export default function SaleTimer() {
   const [product, setProduct] = useState(null);
   const [timeLeft, setTimeLeft] = useState(DURATION);
   const [visible, setVisible] = useState(false);
-  const [digits, setDigits] = useState({ h: "03", m: "00", s: "00" });
+  const [digits, setDigits] = useState({ h: "12", m: "00", s: "00" });
   const [flipping, setFlipping] = useState({ h: false, m: false, s: false });
-  const prevDigits = useRef({ h: "03", m: "00", s: "00" });
+  const prevDigits = useRef({ h: "12", m: "00", s: "00" });
   const navigate = useNavigate();
   const allProductsRef = useRef([]);
 
@@ -34,7 +38,6 @@ export default function SaleTimer() {
 
     if (cachedProduct && cachedEnd) {
       const secondsLeft = Math.floor((Number(cachedEnd) - Date.now()) / 1000);
-
       if (secondsLeft > 0) {
         setProduct(JSON.parse(cachedProduct));
         setTimeLeft(secondsLeft);
@@ -42,9 +45,7 @@ export default function SaleTimer() {
       }
     }
 
-    fetch(API_URL, {
-      headers: { "x-api-key": API_KEY }
-    })
+    fetch(API_URL, { headers: { "x-api-key": API_KEY } })
       .then(res => res.json())
       .then(data => {
         if (!Array.isArray(data)) return;
@@ -112,66 +113,73 @@ export default function SaleTimer() {
   if (!product) return null;
 
   return (
-    <section className="sale-timer container">
-      <div className={`sale-wrapper ${visible ? "sale-wrapper--visible" : ""}`}>
+    <section className="st-section container">
+      <div className={`st-card ${visible ? "st-card--visible" : ""}`}>
 
-        <div className="sale-label">
-          <span className="sale-label__dot" />
-          Обмежена пропозиція
+        <div className="st-left">
+          <div className="st-badge-hit">ХІТ ПРОДАЖІВ</div>
+          <div className="st-badge-discount">−{discount}%</div>
+          <img src={product.images?.[0]} alt={product.name} className="st-img" />
+          <div className="st-img-glow" />
         </div>
 
-        <div className="sale-card">
-          <div className="sale-img-wrap">
-            <div className="sale-discount-badge">−{discount}%</div>
-            <img src={product.images?.[0]} alt={product.name} className="sale-img" />
-            <div className="sale-img-glow" />
+        <div className="st-right">
+          <div className="st-label">
+            <span className="st-label__dot" />
+            Обмежена пропозиція
           </div>
 
-          <div className="sale-info">
-            <h2 className="sale-title">Спеціальна пропозиція</h2>
-            <h3 className="sale-product-name">{product.name}</h3>
+          <h2 className="st-headline">
+            ЛИШЕ СЬОГОДНІ<br />
+            <span className="st-headline--green">ЗНИЖКА {discount}%</span>
+          </h2>
 
-            <div className="sale-prices">
-              <span className="sale-old">{product.oldPrice} грн</span>
-              <span className="sale-new">{product.newPrice} грн</span>
+          <div className="st-product-name">{product.name}</div>
+          {product.description && (
+            <div className="st-product-desc" dangerouslySetInnerHTML={{ __html: product.description }} />
+          )}
+
+          {product.inStock && (
+            <div className="st-stock">Залишилось: <strong>{product.inStock} шт.</strong></div>
+          )}
+
+          <div className="st-timer-row">
+            <div className={`st-unit ${flipping.h ? "st-unit--flip" : ""}`}>
+              <div className="st-digit">{digits.h}</div>
+              <div className="st-unit-label">год</div>
             </div>
-
-            <div className="sale-timer-label">Акція закінчиться через:</div>
-
-            <div className="flip-clock">
-              <div className={`flip-unit ${flipping.h ? "flip-unit--flipping" : ""}`}>
-                <div className="flip-card">
-                  <span className="flip-top">{digits.h}</span>
-                </div>
-                <span className="flip-label">год</span>
-              </div>
-              <span className="flip-sep">:</span>
-              <div className={`flip-unit ${flipping.m ? "flip-unit--flipping" : ""}`}>
-                <div className="flip-card">
-                  <span className="flip-top">{digits.m}</span>
-                </div>
-                <span className="flip-label">хв</span>
-              </div>
-              <span className="flip-sep">:</span>
-              <div className={`flip-unit ${flipping.s ? "flip-unit--flipping" : ""}`}>
-                <div className="flip-card">
-                  <span className="flip-top">{digits.s}</span>
-                </div>
-                <span className="flip-label">сек</span>
-              </div>
+            <span className="st-sep">:</span>
+            <div className={`st-unit ${flipping.m ? "st-unit--flip" : ""}`}>
+              <div className="st-digit">{digits.m}</div>
+              <div className="st-unit-label">хв</div>
             </div>
+            <span className="st-sep">:</span>
+            <div className={`st-unit ${flipping.s ? "st-unit--flip" : ""}`}>
+              <div className="st-digit">{digits.s}</div>
+              <div className="st-unit-label">сек</div>
+            </div>
+          </div>
 
-            <button
-              className="sale-btn"
-              onClick={() => navigate("/products")}
-            >
-              <span>Перейти до товару</span>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+          <div className="st-bottom-row">
+            <button className="st-btn" onClick={() => navigate(`/product/${product.id}`)}>
+              Купити зараз →
             </button>
+            <div className="st-prices">
+              <span className="st-old">{product.oldPrice} грн</span>
+              <span className="st-new">{product.newPrice} грн</span>
+            </div>
+          </div>
+
+          <div className="st-urgency">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="#00ff88" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              <line x1="3" y1="6" x2="21" y2="6" stroke="#00ff88" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M16 10a4 4 0 01-8 0" stroke="#00ff88" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+            Поспішай! Кількість обмежена
           </div>
         </div>
+
       </div>
     </section>
   );

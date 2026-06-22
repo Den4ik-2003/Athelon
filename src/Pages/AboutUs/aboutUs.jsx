@@ -1,139 +1,176 @@
-import { useEffect, useRef } from "react"
-import { Helmet } from "react-helmet-async"
-import "./aboutUs.css"
-import History from "../../assets/Images/about1.jpg"
-import Mission from "../../assets/Images/mission.jpg"
+import { useEffect, useRef } from "react";
+import { Helmet } from "react-helmet-async";
+import "./aboutUs.css";
+import History from "../../assets/Images/history.webp";
+import Mission from "../../assets/Images/mission.webp";
+import qualityIcon from "../../assets/Icons/security.svg";
+import brandIcon from "../../assets/Icons/star.svg";
+import clientIcon from "../../assets/Icons/delivery.svg";
+import checkIcon from "../../assets/Icons/check.svg";
 
-const OFFERS = [
-  "Футбольні форми та комплектуючі для команд і особистої гри",
-  "Бутси, гетри та спортивний одяг для тренувань і матчів",
-  "Аксесуари: сумки, щитки, рукавички та більше",
-  "Оригінальне екіпірування Nike, Adidas, Puma та інших",
-]
+const FEATURES = [
+  {
+    icon: qualityIcon,
+    title: "Преміальна якість",
+    text: "Сертифіковані матеріали та фабричний шов",
+  },
+  {
+    icon: brandIcon,
+    title: "Оригінальні бренди",
+    text: "Працюємо тільки з перевіреними брендами",
+  },
+  {
+    icon: clientIcon,
+    title: "Клієнт на першому місці",
+    text: "Ваш комфорт і довіра — наш пріоритет",
+  },
+];
+
+const MISSION_POINTS = [
+  "Тільки оригінальний товар",
+  "Постійне оновлення асортименту",
+  "Увага до деталей у кожному замовленні",
+  "Підтримка та турбота про клієнтів",
+];
+
+const STATS = [
+  { num: "2+", label: "роки досвіду" },
+  { num: "100+", label: "задоволених клієнтів" },
+  { num: "50+", label: "брендових позицій" },
+  { num: "1–3 дні", label: "швидка доставка" },
+];
 
 export default function AboutUs() {
-  const revealRef = useRef(null)
+  const revealRef = useRef(null);
 
   useEffect(() => {
-    const els = revealRef.current?.querySelectorAll("[data-reveal]")
-    if (!els) return
+    const els = revealRef.current?.querySelectorAll("[data-reveal]");
+    if (!els) return;
     const io = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target) }
-      }),
-      { threshold: 0.12 }
-    )
-    els.forEach(el => io.observe(el))
-    return () => io.disconnect()
-  }, [])
+      (entries) =>
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-visible");
+            io.unobserve(e.target);
+          }
+        }),
+      { threshold: 0.12 },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   return (
     <div className="about-page" ref={revealRef}>
-
       <Helmet>
-        <title>Про нас — Athleon | Футбольне екіпірування в Україні</title>
-        <meta name="description" content="Athleon — молода компанія з футбольного та спортивного екіпірування. Форми, бутси, аксесуари Nike, Adidas, Puma для спортсменів України." />
-        <meta property="og:title" content="Про нас — Athleon" />
-        <meta property="og:description" content="Футбольне екіпірування від провідних брендів. Форми, бутси, аксесуари для тих, хто грає на повну." />
+        <title>Про нас — Athleon | Брендовий чоловічий одяг в Україні</title>
+        <meta
+          name="description"
+          content="Athleon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Оригінальна якість, швидка доставка по всій Україні."
+        />
+        <meta
+          name="keywords"
+          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athleon"
+        />
+        <meta
+          property="og:title"
+          content="Про нас — Athleon | Брендовий чоловічий одяг"
+        />
+        <meta
+          property="og:description"
+          content="Стиль життя, а не просто одяг. Nike, Stone Island, Adidas та інші провідні бренди для тих, хто цінує якість і впевненість у кожному русі."
+        />
         <meta property="og:url" content="https://athelon.netlify.app/about" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://athelon.netlify.app/about" />
       </Helmet>
 
       <section className="about-hero">
-        <div className="about-hero__bg" aria-hidden="true">
-          <div className="about-hero__blob about-hero__blob--a" />
-          <div className="about-hero__blob about-hero__blob--b" />
-          <div className="about-hero__grid" />
-        </div>
-        <div className="about-hero__inner" data-reveal>
-          <p className="about-eyebrow">Хто ми</p>
-          <h1 className="about-hero__title">Про <span>Athleon</span></h1>
+        <div className="about-hero__text" data-reveal data-reveal-dir="left">
+          <p className="about-eyebrow">Про нас</p>
+          <h1 className="about-hero__title">
+            Про <span>Athelon</span>
+          </h1>
           <p className="about-hero__lead">
-            Молода та амбітна компанія, що спеціалізується на футбольному та
-            спортивному екіпіруванні. Форми, бутси, аксесуари від провідних
-            брендів — для тих, хто грає на повну.
+            Athelon — це більше, ніж одяг. Це стиль життя. Ми створюємо
+            брендовий чоловічий одяг для тих, хто цінує якість, комфорт і
+            впевненість у кожному русі.
+          </p>
+          <p className="about-hero__lead">
+            Наша місія — допомогти кожному чоловіку підкреслити індивідуальність
+            та впевненість через лаконічний дизайн, преміальні матеріали та
+            увагу до деталей.
           </p>
         </div>
-      </section>
 
-      <section className="about-split">
-        <div className="about-split__text" data-reveal data-reveal-dir="left">
-          <p className="about-eyebrow">З чого все почалось</p>
-          <h2>Наша історія</h2>
-          <p>
-            Кілька років тому команда ентузіастів футболу вирішила змінити
-            підхід до спортивного екіпірування в Україні. Починали з невеликого
-            асортименту — сьогодні ми надійний постачальник оригінального
-            екіпірування для тисяч спортсменів.
-          </p>
-        </div>
-        <div className="about-split__media" data-reveal data-reveal-dir="right">
+        <div className="about-hero__media" data-reveal data-reveal-dir="right">
           <div className="about-img-frame">
-            <img src={History} alt="Наша команда" />
-            <div className="about-img-frame__badge">
-              <span className="badge-num">5+</span>
-              <span className="badge-label">років досвіду</span>
-            </div>
+            <img src={History} alt="Брендовий чоловічий одяг Athelon" />
           </div>
         </div>
       </section>
 
-      <section className="about-split about-split--flip about-split--dark">
-        <div className="about-split__media" data-reveal data-reveal-dir="left">
-          <div className="about-img-frame">
-            <img src={Mission} alt="Місія" />
-            <div className="about-img-frame__badge about-img-frame__badge--right">
-              <span className="badge-num">50+</span>
-              <span className="badge-label">брендів</span>
+      <section className="about-features">
+        {FEATURES.map((f, i) => (
+          <div
+            className="feature-item"
+            key={i}
+            data-reveal
+            style={{ "--delay": `${i * 0.1}s` }}
+          >
+            <img className="feature-item__icon" src={f.icon} alt="" />
+            <div className="feature-item__body">
+              <p className="feature-item__title">{f.title}</p>
+              <p className="feature-item__text">{f.text}</p>
             </div>
           </div>
-        </div>
-        <div className="about-split__text" data-reveal data-reveal-dir="right">
-          <p className="about-eyebrow">Навіщо ми існуємо</p>
-          <h2>Наша місія</h2>
+        ))}
+      </section>
+
+      <section className="about-mission">
+        <div className="about-mission__text" data-reveal data-reveal-dir="left">
+          <p className="about-eyebrow">Наша місія</p>
+          <h2>Створювати стиль, який надихає</h2>
           <p>
-            Надихати спортсменів виглядати впевнено — на полі та поза ним.
-            Ми поєднуємо стиль, комфорт і результативність у кожній деталі
-            екіпірування, яке пропонуємо.
+            Ми віримо, що одяг — це спосіб самовираження. Наша місія — допомогти
+            кожному чоловіку підкреслити індивідуальність через якісний
+            брендовий одяг.
           </p>
+
+          <ul className="mission-list">
+            {MISSION_POINTS.map((point, i) => (
+              <li key={i}>
+                <img className="mission-list__icon" src={checkIcon} alt="" />
+                {point}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div
+          className="about-mission__media"
+          data-reveal
+          data-reveal-dir="right"
+        >
+          <div className="about-img-frame">
+            <img src={Mission} alt="Магазин брендового одягу Athelon" />
+          </div>
         </div>
       </section>
 
-      <section className="about-offers">
-        <div className="about-offers__header" data-reveal>
-          <p className="about-eyebrow">Асортимент</p>
-          <h2>Що ми пропонуємо</h2>
-        </div>
-
-        <div className="about-offers__grid">
-          {OFFERS.map((text, i) => (
-            <div
-              className="offer-card"
-              key={i}
-              data-reveal
-              style={{ "--delay": `${i * 0.1}s` }}
-            >
-              <span className="offer-card__num">0{i + 1}</span>
-              <p className="offer-card__text">{text}</p>
-              <div className="offer-card__line" />
-            </div>
-          ))}
-        </div>
+      <section className="about-stats">
+        {STATS.map((s, i) => (
+          <div
+            className="stat-item"
+            key={i}
+            data-reveal
+            style={{ "--delay": `${i * 0.08}s` }}
+          >
+            <span className="stat-item__num">{s.num}</span>
+            <span className="stat-item__label">{s.label}</span>
+          </div>
+        ))}
       </section>
-
-      <section className="about-cta" data-reveal>
-        <div className="about-cta__inner">
-          <h2>Приєднуйтесь до <span>Athleon</span></h2>
-          <p>
-            Персональний підбір, стильне екіпірування та підтримка на кожному
-            кроці — від першого замовлення до поля.
-          </p>
-          <a href="/products" className="about-cta__btn">Переглянути товари</a>
-        </div>
-        <div className="about-cta__blob" aria-hidden="true" />
-      </section>
-
     </div>
-  )
+  );
 }

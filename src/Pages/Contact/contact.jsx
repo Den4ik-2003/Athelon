@@ -2,6 +2,13 @@ import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import "./contact.css";
 
+import instagramIcon from "../../assets/Icons/instagram.svg";
+import emailIcon from "../../assets/Icons/email.svg";
+import clockIcon from "../../assets/Icons/clock.svg";
+import instagramColor from "../../assets/Icons/instagram.webp";
+import telegramColor from "../../assets/Icons/telegram.webp";
+import contactImage from "../../assets/Images/contactImage.webp";
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -11,11 +18,14 @@ export default function Contact() {
 
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const API_URL_CONTACT = import.meta.env.VITE_API_URL_CONTACT;
 
   const contacts = [
-    { type: "Instagram", value: "@athelon.store" },
-    { type: "Електронна пошта", value: "athelonstore@gmail.com" },
-    { type: "Графік роботи", value: "Пн–Пт, 9:00–18:00" },
+    { icon: instagramIcon, label: "Instagram", value: "@athelon.store" },
+    { icon: emailIcon, label: "Електронна пошта", value: "athelonstore@gmail.com" },
+    { icon: clockIcon, label: "Графік роботи", value: "Пн–Пт, 9:00–18:00" },
   ];
 
   const handleChange = (e) => {
@@ -26,13 +36,13 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch(API_URL_CONTACT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          access_key: "66339d3f-6627-46ad-840b-d4995661f188",
           name: formData.name,
           email: formData.email,
           message: formData.message,
@@ -41,7 +51,7 @@ export default function Contact() {
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok && result.success) {
         setSubmitted(true);
         setFormData({ name: "", email: "", message: "" });
       } else {
@@ -50,16 +60,28 @@ export default function Contact() {
     } catch (err) {
       console.error(err);
       setError("Сталася помилка при відправці форми.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="contact-page">
+    <div className="contact-page container">
       <Helmet>
-        <title>Контакти — Athleon | Зв'яжіться з нами</title>
-        <meta name="description" content="Зв'яжіться з Athleon — футбольне екіпірування в Україні. Instagram, email athelonstore@gmail.com. Відповімо протягом одного робочого дня." />
-        <meta property="og:title" content="Контакти — Athleon" />
-        <meta property="og:description" content="Напишіть нам — відповімо протягом одного робочого дня. Instagram @athelon.store, email athelonstore@gmail.com." />
+        <title>Контакти — Athleon | Брендовий чоловічий одяг в Україні</title>
+        <meta
+          name="description"
+          content="Зв'яжіться з Athleon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Відповімо протягом одного робочого дня."
+        />
+        <meta
+          name="keywords"
+          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athleon"
+        />
+        <meta property="og:title" content="Контакти — Athleon | Брендовий чоловічий одяг" />
+        <meta
+          property="og:description"
+          content="Напишіть нам — відповімо протягом одного робочого дня. Брендовий чоловічий одяг Nike, Stone Island, Adidas. Instagram @athelon.store."
+        />
         <meta property="og:url" content="https://athelon.netlify.app/contact" />
         <meta property="og:type" content="website" />
         <link rel="canonical" href="https://athelon.netlify.app/contact" />
@@ -69,74 +91,105 @@ export default function Contact() {
         <span className="contact-eyebrow">Підтримка</span>
         <h1 className="contact-title">Зв'яжіться з нами</h1>
         <p className="contact-subtitle">
-          Відповімо протягом одного робочого дня
+          Ми завжди готові допомогти вам з вибором і відповісти на ваші запитання.
         </p>
       </div>
 
-      <div className="contact-grid">
-        <aside className="contact-sidebar">
-          {contacts.map((item, index) => (
-            <div key={index} className="contact-row">
-              <p className="contact-row-label">{item.type}</p>
-              <p className="contact-row-value">{item.value}</p>
+      <div className="contact-layout">
+        <div className="contact-left">
+          <aside className="contact-sidebar">
+            <h2 className="sidebar-heading">Контакти</h2>
+            {contacts.map((item, index) => (
+              <div key={index} className="contact-row">
+                <img src={item.icon} alt={item.label} className="contact-row-icon" />
+                <div>
+                  <p className="contact-row-label">{item.label}</p>
+                  <p className="contact-row-value">{item.value}</p>
+                </div>
+              </div>
+            ))}
+          </aside>
+
+          <div className="contact-help-block">
+            <p className="help-title">Потрібна допомога?</p>
+            <p className="help-text">
+              Напишіть нам у месенджерах — ми відповімо найшвидше.
+            </p>
+            <div className="help-socials">
+              <a href="https://instagram.com/athelon.store" target="_blank" rel="noopener noreferrer">
+                <img src={instagramColor} alt="Instagram" />
+              </a>
+              <a href="https://t.me/athelonstore" target="_blank" rel="noopener noreferrer">
+                <img src={telegramColor} alt="Telegram" />
+              </a>
             </div>
-          ))}
-        </aside>
+          </div>
+        </div>
 
-        <div className="contact-form-wrap">
-          <h2 className="form-heading">Напишіть нам</h2>
+        <div className="contact-center">
+          <div className="contact-form-wrap">
+            <h2 className="form-heading">Напишіть нам</h2>
 
-          {error && <p className="form-error">{error}</p>}
+            {error && <p className="form-error">{error}</p>}
 
-          <form className="contact-form" onSubmit={handleSubmit}>
-            <input type="hidden" name="access_key" value="66339d3f-6627-46ad-840b-d4995661f188" />
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="field">
+                <label className="field-label" htmlFor="name">Ім'я</label>
+                <input
+                  id="name"
+                  type="text"
+                  name="name"
+                  placeholder="Як до вас звертатись?"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  pattern=".{2,}"
+                  title="Мінімум 2 символи"
+                />
+              </div>
 
-            <div className="field">
-              <label className="field-label" htmlFor="name">Ім'я</label>
-              <input
-                id="name"
-                type="text"
-                name="name"
-                placeholder="Як до вас звертатись?"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                pattern=".{2,}"
-                title="Мінімум 2 символи"
-              />
+              <div className="field">
+                <label className="field-label" htmlFor="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="field">
+                <label className="field-label" htmlFor="message">Повідомлення</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  placeholder="Розкажіть про ваше питання..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  pattern=".{5,}"
+                  title="Мінімум 5 символів"
+                />
+              </div>
+
+              <button type="submit" className="submit-btn" disabled={loading}>
+                <span>{loading ? "Відправка..." : "Надіслати повідомлення"}</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div className="contact-right">
+          <div className="brand-banner">
+            <div className="brand-model-img">
+              <img src={contactImage} alt="Брендовий чоловічий одяг Athleon" />
+              <div className="brand-model-fade-left" />
+              <div className="brand-model-fade-right" />
             </div>
-
-            <div className="field">
-              <label className="field-label" htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                name="email"
-                placeholder="your@email.com"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div className="field">
-              <label className="field-label" htmlFor="message">Повідомлення</label>
-              <textarea
-                id="message"
-                name="message"
-                placeholder="Розкажіть про ваше питання..."
-                value={formData.message}
-                onChange={handleChange}
-                required
-                pattern=".{5,}"
-                title="Мінімум 5 символів"
-              />
-            </div>
-
-            <button type="submit" className="submit-btn">
-              <span>Надіслати</span>
-            </button>
-          </form>
+          </div>
         </div>
       </div>
 

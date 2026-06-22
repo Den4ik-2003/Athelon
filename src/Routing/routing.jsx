@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Header from "../Components/Header/header";
 import Home from "../Pages/Home/home";
 import ProductInfo from "../Pages/ProductInfo/productInfo";
@@ -10,11 +11,21 @@ import Footer from "../Components/Footer/footer";
 import Basket from "../Pages/Basket/basket";
 import NotFound from "../Pages/NotFound/notfound";
 import Order from "../Pages/Order/order";
- 
+import Reviews from "../Pages/Reviews/reviews";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 export default function Routing() {
   return (
     <div className="routing">
       <Router>
+        <ScrollToTop />
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -22,6 +33,7 @@ export default function Routing() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/reviews" element={<Reviews />} />
           <Route path="/product/:id" element={<ProductInfo />} />
           <Route path="/like" element={<Liked />} />
           <Route path="/cart" element={<Basket />} />
@@ -33,4 +45,3 @@ export default function Routing() {
     </div>
   );
 }
-
