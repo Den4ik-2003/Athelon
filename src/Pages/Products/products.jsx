@@ -5,7 +5,7 @@ import "./products.css";
 import Loader from "../../Components/Loader/loader";
 
 import LikeIcon from "../../assets/Icons/like.svg";
-import LikeFillIcon from "../../assets/Icons/likefill.svg";
+import LikeFillIcon from "../../assets/Icons/likeFill.svg";
 import StarIcon from "../../assets/Icons/starNew.svg";
 import StarFillIcon from "../../assets/Icons/starfill.svg";
 import StarHalfIcon from "../../assets/Icons/starhalf.svg";
