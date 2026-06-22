@@ -45,7 +45,7 @@ export default function Order() {
 
     if (savedCart.length === 0) return;
 
-    fetch(API_URL_PRODUCTS, {
+    fetch(API_URL, {
       cache: "no-store",
       headers: { "x-api-key": API_KEY },
     })
@@ -115,7 +115,7 @@ export default function Order() {
 
       await Promise.all(
         cartItems.map((item) =>
-          fetch(`${API_URL_PRODUCTS}/${item.id}/stock`, {
+          fetch(`${API_URL}/${item.id}/stock`, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ quantity: item.quantity }),
