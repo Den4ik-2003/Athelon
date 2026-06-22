@@ -55,6 +55,17 @@ export default function Header({ openModal }) {
             <h1>Athelon</h1>
           </div>
 
+          <div className="mobile-actions">
+            <button className="cart" onClick={() => handleNavigate("/like")}>
+              <img src={Like} alt="Like" />
+              <span className="cart-count">{displayCount(likeCount)}</span>
+            </button>
+            <button className="cart" onClick={() => handleNavigate("/cart")}>
+              <img src={Basket} alt="Basket" />
+              <span className="cart-count">{displayCount(cartCount)}</span>
+            </button>
+          </div>
+
           <div
             className={`burger ${menuOpen ? "open" : ""}`}
             onClick={toggleMenu}
@@ -101,22 +112,6 @@ export default function Header({ openModal }) {
               Контакти
             </NavLink>
             <div className="mobile-menu-extra">
-              <div className="mobile-icons">
-                <button
-                  className="cart"
-                  onClick={() => handleNavigate("/like")}
-                >
-                  <img src={Like} alt="Like" />
-                  <span className="cart-count">{displayCount(likeCount)}</span>
-                </button>
-                <button
-                  className="cart"
-                  onClick={() => handleNavigate("/cart")}
-                >
-                  <img src={Basket} alt="Basket" />
-                  <span className="cart-count">{displayCount(cartCount)}</span>
-                </button>
-              </div>
               <button
                 className="button"
                 onClick={() => handleNavigate("/products")}
