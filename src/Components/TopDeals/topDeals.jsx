@@ -9,6 +9,7 @@ import Loader from "../Loader/loader";
 import "./topDeals.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
+const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const TOP_COUNT = 4;
@@ -180,12 +181,31 @@ export const TopDeals = () => {
   });
 
   useEffect(() => {
-    fetch(API_URL, {
-      headers: { "x-api-key": API_KEY },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const inStockWithDiscount = data.filter(
+    Promise.all([
+      fetch(API_URL, { headers: { "x-api-key": API_KEY } }).then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      }),
+      fetch(COMMENTS_URL, { headers: { "x-api-key": API_KEY } })
+        .then((r) => {
+          if (!r.ok) throw new Error(`HTTP ${r.status}`);
+          return r.json();
+        })
+        .catch(() => []),
+    ])
+      .then(([productsData, commentsData]) => {
+        const commentsByProductId = {};
+        (Array.isArray(commentsData) ? commentsData : []).forEach((c) => {
+          if (!commentsByProductId[c.productId]) commentsByProductId[c.productId] = [];
+          commentsByProductId[c.productId].push(c);
+        });
+
+        const merged = productsData.map((p) => ({
+          ...p,
+          comments: commentsByProductId[p.id] || [],
+        }));
+
+        const inStockWithDiscount = merged.filter(
           (item) =>
             Number(item.oldPrice) > Number(item.newPrice) &&
             Number(item.inStock) > 0,

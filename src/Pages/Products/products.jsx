@@ -15,7 +15,7 @@ const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 const NAV_FILTER_KEY = "footerNavFilter";
 
-const ITEMS_PER_PAGE = 16;
+const ITEMS_PER_PAGE = 24;
 const SIZES = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
 
 function getAgeInDays(createdAt) {
