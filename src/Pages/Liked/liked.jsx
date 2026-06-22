@@ -4,8 +4,8 @@ import { Helmet } from "react-helmet-async";
 import HeartIcon from "../../assets/Icons/likeFill.svg";
 import TrashIcon from "../../assets/Icons/trash.svg";
 import StarIcon from "../../assets/Icons/starNew.svg";
-import StarFillIcon from "../../assets/Icons/starfill.svg";
-import StarHalfIcon from "../../assets/Icons/starhalf.svg";
+import StarFillIcon from "../../assets/Icons/starFill.svg";
+import StarHalfIcon from "../../assets/Icons/starHalf.svg";
 import Loader from "../../Components/Loader/loader";
 import "./liked.css";
 
