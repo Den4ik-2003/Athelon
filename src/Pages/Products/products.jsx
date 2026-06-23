@@ -135,7 +135,7 @@ function ProductCard({ product, liked, onToggleLike }) {
             <span className="pc-review-count pc-no-reviews">Поки немає відгуків</span>
           )}
         </div>
-        <div className="pc-price-row">
+        <div className="pc-price-rows">
           {hasDiscount && <span className="pc-price-old">{product.oldPrice.toLocaleString("uk-UA")} грн</span>}
           <span className="pc-price-new">{product.newPrice.toLocaleString("uk-UA")} грн</span>
         </div>

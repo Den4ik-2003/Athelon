@@ -349,6 +349,20 @@
   color: #06190d;
 }
 
+.filter-show-more {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
@@ -445,6 +459,11 @@
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
+.pc-card:hover {
+  border-color: var(--border);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4);
+}
 .pc-card--oos {
   opacity: 0.65;
 }
@@ -529,13 +548,16 @@
   font-size: 36px;
   background: #16181a;
 }
-
 .pc-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.pc-card:hover .pc-img {
+  transform: scale(1.04);
 }
 
 .pc-out-overlay {
@@ -557,28 +579,29 @@
 }
 
 .pc-body {
-  display: grid;
-  grid-template-rows: auto auto auto auto auto;
-  row-gap: 8px;
-  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 14px 16px 16px;
   flex: 1;
+  gap: 0;
 }
 
 .pc-label-rows {
   display: flex;
-  gap: 4px;
-  flex-wrap: nowrap;
+  gap: 5px;
   align-items: center;
   overflow: hidden;
   height: 24px;
+  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 .pc-label {
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 700;
   padding: 3px 9px;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -597,7 +620,7 @@
 }
 
 .pc-name {
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text);
   line-height: 1.3;
@@ -605,60 +628,83 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(15.5px * 1.3 * 2);
+  height: calc(15px * 1.3 * 2);
+  flex-shrink: 0;
+  margin-bottom: 6px;
 }
+
 .pc-desc {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-faint);
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: calc(13px * 1.4 * 2);
+  height: calc(12.5px * 1.4 * 2);
+  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 
 .pc-rating-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  min-height: 18px;
-  flex-wrap: wrap;
+  gap: 5px;
+  height: 20px;
+  flex-shrink: 0;
+  overflow: hidden;
+  margin-bottom: 10px;
 }
 .pc-stars {
   display: flex;
   gap: 2px;
+  flex-shrink: 0;
 }
 .pc-rating-val {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--text);
+  flex-shrink: 0;
 }
 .pc-review-count {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pc-no-reviews {
   font-style: italic;
 }
 
-.pc-price-row {
+.pc-price-rows {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
   margin-top: auto;
-  padding-top: 4px;
+  padding-top: 2px;
 }
 .pc-price-old {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-faint);
   text-decoration: line-through;
+  white-space: nowrap;
+  height: 18px;
+  line-height: 18px;
+  display: block;
+}
+
+.pc-price-rows:not(:has(.pc-price-old))::before {
+  content: "";
+  display: block;
+  height: 18px;
 }
 .pc-price-new {
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 800;
   color: var(--accent);
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .pagination {
@@ -765,25 +811,31 @@
     gap: 12px;
   }
   .pc-body {
-    padding: 12px 14px 14px;
-    row-gap: 6px;
+    padding: 11px 12px 13px;
   }
   .pc-name {
-    font-size: 14px;
-    min-height: calc(14px * 1.3 * 2);
+    font-size: 13.5px;
+    height: calc(13.5px * 1.3 * 2);
+    margin-bottom: 5px;
   }
   .pc-desc {
-    font-size: 12px;
-    min-height: calc(12px * 1.4 * 2);
+    font-size: 11.5px;
+    height: calc(11.5px * 1.4 * 2);
+    margin-bottom: 6px;
   }
   .pc-price-new {
-    font-size: 17px;
+    font-size: 16px;
   }
   .pc-price-old {
-    font-size: 12px;
+    font-size: 11.5px;
+    height: 16px;
+    line-height: 16px;
+  }
+  .pc-price-rows:not(:has(.pc-price-old))::before {
+    height: 16px;
   }
   .pc-label {
-    font-size: 10px;
+    font-size: 9px;
     padding: 2px 7px;
   }
   .pc-wishlist {
@@ -799,6 +851,9 @@
     padding: 4px 9px;
     top: 9px;
     left: 9px;
+  }
+  .pc-rating-row {
+    margin-bottom: 7px;
   }
 }
 
@@ -821,10 +876,10 @@
     gap: 10px;
   }
   .pc-body {
-    padding: 10px 12px 12px;
+    padding: 9px 10px 11px;
   }
   .pc-rating-row {
-    min-height: 0;
+    height: auto;
   }
   .pg-btn {
     min-width: 34px;
