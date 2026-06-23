@@ -369,7 +369,7 @@ export default function Products() {
                 </label>
               ))}
               {brands.length > BRANDS_INITIAL && (
-                <button className="filter-show-more" onClick={() => setBrandsExpanded((x) => !x)}>
+                <button className="filter-show-more button" onClick={() => setBrandsExpanded((x) => !x)}>
                   {brandsExpanded ? "Сховати" : `Ще ${brands.length - BRANDS_INITIAL}`}
                   <i className={`ti ti-chevron-${brandsExpanded ? "up" : "down"}`} />
                 </button>
@@ -402,7 +402,7 @@ export default function Products() {
                   ))}
                 </div>
                 {apiColors.length > COLORS_INITIAL && (
-                  <button className="filter-show-more" onClick={() => setColorsExpanded((x) => !x)}>
+                  <button className="filter-show-more button" onClick={() => setColorsExpanded((x) => !x)}>
                     {colorsExpanded ? "Сховати" : `Ще ${apiColors.length - COLORS_INITIAL}`}
                     <i className={`ti ti-chevron-${colorsExpanded ? "up" : "down"}`} />
                   </button>
