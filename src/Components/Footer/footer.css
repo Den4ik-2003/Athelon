@@ -80,7 +80,6 @@
 .footer-col ul li a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   color: #b9bbb9;
   text-decoration: none;

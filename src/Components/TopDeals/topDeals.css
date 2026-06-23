@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-
 .top-deals {
   --bg-card-solid: #161717;
   --bg-input: #1d1f1e;
@@ -14,7 +12,6 @@
   --radius-lg: 18px;
   --radius-md: 10px;
 
-  font-family: "Inter", sans-serif;
   color: var(--text);
   padding-top: 48px;
   padding-bottom: 48px;
@@ -34,6 +31,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 22px;
+  align-items: stretch;
 }
 
 .pc-card-link {
@@ -42,6 +40,7 @@
   color: inherit;
   width: 100%;
   min-width: 0;
+  height: 100%;
 }
 
 .pc-card {
@@ -126,6 +125,7 @@
   aspect-ratio: 1/1;
   background: #1a1b1b;
   overflow: hidden;
+  flex-shrink: 0;
 }
 .pc-img-placeholder {
   position: absolute;
@@ -169,12 +169,15 @@
   flex-direction: column;
   gap: 8px;
   padding: 16px 18px 18px;
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
 }
+
 .pc-label-rows {
   display: flex;
   gap: 3px;
   flex-wrap: wrap;
+  min-height: 20px;
 }
 .pc-label {
   font-size: 9px;
@@ -204,6 +207,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 40px;
 }
 .pc-desc {
   font-size: 13px;
@@ -213,6 +217,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  min-height: 36px;
 }
 
 .pc-rating-row {
@@ -220,7 +225,7 @@
   align-items: center;
   gap: 6px;
   margin-top: 2px;
-  min-height: 18px;
+  min-height: 22px;
   flex-wrap: wrap;
 }
 .pc-stars {
@@ -244,8 +249,9 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-top: 6px;
+  margin-top: auto;
   flex-wrap: wrap;
+  min-height: 28px;
 }
 .pc-price-old {
   font-size: 13px;
@@ -283,6 +289,7 @@
   }
   .pc-name {
     font-size: 14px;
+    min-height: 36px;
   }
   .pc-price-new {
     font-size: 17px;
