@@ -13,13 +13,16 @@ import StarHalfIcon from "../../assets/Icons/starHalf.svg";
 import arrowLeft from "../../assets/Icons/arrowLeft.svg";
 import arrowRight from "../../assets/Icons/arrowRight.svg";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL
 const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 const NAV_FILTER_KEY = "footerNavFilter";
 
 const ITEMS_PER_PAGE = 24;
 const SIZES = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+const CATS_INITIAL = 5;
+const BRANDS_INITIAL = 5;
+const COLORS_INITIAL = 12;
 
 function getAgeInDays(createdAt) {
   if (!createdAt) return null;
@@ -78,6 +81,16 @@ function StarRow({ rating }) {
   );
 }
 
+function ShowMoreBtn({ shown, total, onToggle, labelMore, labelLess }) {
+  if (total <= shown) return null;
+  return (
+    <button className="filter-show-more " onClick={onToggle}>
+      {labelMore}
+      <i className={`ti ti-chevron-${labelMore === labelLess ? "up" : "down"}`} />
+    </button>
+  );
+}
+
 function ProductCard({ product, liked, onToggleLike }) {
   const images = Array.isArray(product.images) && product.images.length ? product.images : product.image ? [product.image] : [];
   const mainImage = images[0];
@@ -131,6 +144,12 @@ function ProductCard({ product, liked, onToggleLike }) {
   );
 }
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+};
+
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
@@ -147,6 +166,10 @@ export default function Products() {
   const [priceMax, setPriceMax] = useState(10000);
   const [priceRange, setPriceRange] = useState([0, 10000]);
   const [apiColors, setApiColors] = useState([]);
+
+  const [catsExpanded, setCatsExpanded] = useState(false);
+  const [brandsExpanded, setBrandsExpanded] = useState(false);
+  const [colorsExpanded, setColorsExpanded] = useState(false);
 
   const [likedIds, setLikedIds] = useState(() => {
     try { return JSON.parse(localStorage.getItem("likedItems")) || []; } catch { return []; }
@@ -210,14 +233,19 @@ export default function Products() {
       .catch((err) => { setError(err.message); setLoading(false); });
   }, []);
 
+  // Build counts and sort by count descending
   const catCounts = {};
   const brandCounts = {};
   products.forEach((p) => {
     if (p.category) catCounts[p.category] = (catCounts[p.category] || 0) + 1;
     if (p.brand) brandCounts[p.brand] = (brandCounts[p.brand] || 0) + 1;
   });
-  const categories = Object.keys(catCounts);
-  const brands = Object.keys(brandCounts);
+  const categories = Object.keys(catCounts).sort((a, b) => catCounts[b] - catCounts[a]);
+  const brands = Object.keys(brandCounts).sort((a, b) => brandCounts[b] - brandCounts[a]);
+
+  const visibleCats = catsExpanded ? categories : categories.slice(0, CATS_INITIAL);
+  const visibleBrands = brandsExpanded ? brands : brands.slice(0, BRANDS_INITIAL);
+  const visibleColors = colorsExpanded ? apiColors : apiColors.slice(0, COLORS_INITIAL);
 
   const normalizeStr = (s) => s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
 
@@ -307,10 +335,11 @@ export default function Products() {
             </button>
           </div>
 
+          {/* CATEGORIES */}
           <div className="filter-group">
             <div className="filter-group-head">Категорії <i className="ti ti-chevron-up" /></div>
             <div className="filter-group-body">
-              {categories.map((cat) => (
+              {visibleCats.map((cat) => (
                 <label key={cat} className="filter-check">
                   <input type="checkbox" checked={selCats.includes(cat)} onChange={() => toggleArr(selCats, setSelCats, cat)} />
                   <span className="check-box" />
@@ -318,13 +347,20 @@ export default function Products() {
                   <span className="check-count">{catCounts[cat]}</span>
                 </label>
               ))}
+              {categories.length > CATS_INITIAL && (
+                <button className="filter-show-more button" onClick={() => setCatsExpanded((x) => !x)}>
+                  {catsExpanded ? "Сховати" : `Ще ${categories.length - CATS_INITIAL}`}
+                  <i className={`ti ti-chevron-${catsExpanded ? "up" : "down"}`} />
+                </button>
+              )}
             </div>
           </div>
 
+          {/* BRANDS */}
           <div className="filter-group">
             <div className="filter-group-head">Бренди <i className="ti ti-chevron-up" /></div>
             <div className="filter-group-body">
-              {brands.map((br) => (
+              {visibleBrands.map((br) => (
                 <label key={br} className="filter-check">
                   <input type="checkbox" checked={selBrands.includes(br)} onChange={() => toggleArr(selBrands, setSelBrands, br)} />
                   <span className="check-box" />
@@ -332,9 +368,16 @@ export default function Products() {
                   <span className="check-count">{brandCounts[br]}</span>
                 </label>
               ))}
+              {brands.length > BRANDS_INITIAL && (
+                <button className="filter-show-more" onClick={() => setBrandsExpanded((x) => !x)}>
+                  {brandsExpanded ? "Сховати" : `Ще ${brands.length - BRANDS_INITIAL}`}
+                  <i className={`ti ti-chevron-${brandsExpanded ? "up" : "down"}`} />
+                </button>
+              )}
             </div>
           </div>
 
+          {/* SIZES */}
           <div className="filter-group">
             <div className="filter-group-head">Розмір <i className="ti ti-chevron-up" /></div>
             <div className="filter-group-body">
@@ -346,21 +389,29 @@ export default function Products() {
             </div>
           </div>
 
+          {/* COLORS */}
           {apiColors.length > 0 && (
             <div className="filter-group">
               <div className="filter-group-head">Колір <i className="ti ti-chevron-up" /></div>
               <div className="filter-group-body">
                 <div className="color-grid">
-                  {apiColors.map((c) => (
+                  {visibleColors.map((c) => (
                     <button key={c.name} className={`color-btn ${selColors.includes(c.name) ? "active" : ""}`} style={{ "--clr": c.hex }} title={c.name} onClick={() => toggleArr(selColors, setSelColors, c.name)}>
                       <span className="color-circle" style={{ background: c.hex }} />
                     </button>
                   ))}
                 </div>
+                {apiColors.length > COLORS_INITIAL && (
+                  <button className="filter-show-more" onClick={() => setColorsExpanded((x) => !x)}>
+                    {colorsExpanded ? "Сховати" : `Ще ${apiColors.length - COLORS_INITIAL}`}
+                    <i className={`ti ti-chevron-${colorsExpanded ? "up" : "down"}`} />
+                  </button>
+                )}
               </div>
             </div>
           )}
 
+          {/* PRICE */}
           <div className="filter-group">
             <div className="filter-group-head">Ціна (грн) <i className="ti ti-chevron-up" /></div>
             <div className="filter-group-body">
@@ -409,45 +460,34 @@ export default function Products() {
               {totalPages > 1 && (
                 <div className="pagination">
                   <button
-  className="pg-btn pg-arrow"
-  disabled={page === 1}
-  onClick={() => {
-    setPage((p) => p - 1);
-    window.scrollTo(0, 0);
-  }}
->
-  <img src={arrowLeft} alt="Попередня сторінка" width={18} height={18} />
-</button>
+                    className="pg-btn pg-arrow"
+                    disabled={page === 1}
+                    onClick={() => { setPage((p) => p - 1); scrollToTop(); }}
+                  >
+                    <img src={arrowLeft} alt="Попередня сторінка" width={18} height={18} />
+                  </button>
 
-{getPaginationPages().map((p, i) =>
-  p === "..." ? (
-    <span key={`e${i}`} className="pg-ellipsis">
-      …
-    </span>
-  ) : (
-    <button
-      key={p}
-      className={`pg-btn ${p === page ? "active" : ""}`}
-      onClick={() => {
-        setPage(p);
-        window.scrollTo(0, 0);
-      }}
-    >
-      {p}
-    </button>
-  )
-)}
+                  {getPaginationPages().map((p, i) =>
+                    p === "..." ? (
+                      <span key={`e${i}`} className="pg-ellipsis">…</span>
+                    ) : (
+                      <button
+                        key={p}
+                        className={`pg-btn ${p === page ? "active" : ""}`}
+                        onClick={() => { setPage(p); scrollToTop(); }}
+                      >
+                        {p}
+                      </button>
+                    )
+                  )}
 
-<button
-  className="pg-btn pg-arrow"
-  disabled={page === totalPages}
-  onClick={() => {
-    setPage((p) => p + 1);
-    window.scrollTo(0, 0);
-  }}
->
-  <img src={arrowRight} alt="Наступна сторінка" width={18} height={18} />
-</button>
+                  <button
+                    className="pg-btn pg-arrow"
+                    disabled={page === totalPages}
+                    onClick={() => { setPage((p) => p + 1); scrollToTop(); }}
+                  >
+                    <img src={arrowRight} alt="Наступна сторінка" width={18} height={18} />
+                  </button>
                 </div>
               )}
             </>
