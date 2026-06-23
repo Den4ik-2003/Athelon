@@ -154,11 +154,13 @@ function DealCard({ product, liked, onToggleLike }) {
         </div>
 
         <div className="pc-price-row">
-          {hasDiscount && (
-            <span className="pc-price-old">
-              {Number(product.oldPrice).toLocaleString("uk-UA")} грн
-            </span>
-          )}
+          <span
+            className={`pc-price-old ${hasDiscount ? "" : "pc-price-old--hidden"}`}
+          >
+            {hasDiscount
+              ? `${Number(product.oldPrice).toLocaleString("uk-UA")} грн`
+              : "\u00A0"}
+          </span>
           <span className="pc-price-new">
             {Number(product.newPrice).toLocaleString("uk-UA")} грн
           </span>
