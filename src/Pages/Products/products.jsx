@@ -10,6 +10,9 @@ import StarIcon from "../../assets/Icons/starNew.svg";
 import StarFillIcon from "../../assets/Icons/starFill.svg";
 import StarHalfIcon from "../../assets/Icons/starHalf.svg";
 
+import arrowLeft from "../../assets/Icons/arrowLeft.svg";
+import arrowRight from "../../assets/Icons/arrowRight.svg";
+
 const API_URL = import.meta.env.VITE_API_URL;
 const COMMENTS_URL = import.meta.env.VITE_COMMENTS_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -405,19 +408,46 @@ export default function Products() {
 
               {totalPages > 1 && (
                 <div className="pagination">
-                  <button className="pg-btn pg-arrow" disabled={page === 1} onClick={() => { setPage((p) => p - 1); window.scrollTo(0, 0); }}>
-                    <i className="ti ti-chevron-left" />
-                  </button>
-                  {getPaginationPages().map((p, i) =>
-                    p === "..." ? (
-                      <span key={`e${i}`} className="pg-ellipsis">…</span>
-                    ) : (
-                      <button key={p} className={`pg-btn ${p === page ? "active" : ""}`} onClick={() => { setPage(p); window.scrollTo(0, 0); }}>{p}</button>
-                    ),
-                  )}
-                  <button className="pg-btn pg-arrow" disabled={page === totalPages} onClick={() => { setPage((p) => p + 1); window.scrollTo(0, 0); }}>
-                    <i className="ti ti-chevron-right" />
-                  </button>
+                  <button
+  className="pg-btn pg-arrow"
+  disabled={page === 1}
+  onClick={() => {
+    setPage((p) => p - 1);
+    window.scrollTo(0, 0);
+  }}
+>
+  <img src={arrowLeft} alt="Попередня сторінка" width={18} height={18} />
+</button>
+
+{getPaginationPages().map((p, i) =>
+  p === "..." ? (
+    <span key={`e${i}`} className="pg-ellipsis">
+      …
+    </span>
+  ) : (
+    <button
+      key={p}
+      className={`pg-btn ${p === page ? "active" : ""}`}
+      onClick={() => {
+        setPage(p);
+        window.scrollTo(0, 0);
+      }}
+    >
+      {p}
+    </button>
+  )
+)}
+
+<button
+  className="pg-btn pg-arrow"
+  disabled={page === totalPages}
+  onClick={() => {
+    setPage((p) => p + 1);
+    window.scrollTo(0, 0);
+  }}
+>
+  <img src={arrowRight} alt="Наступна сторінка" width={18} height={18} />
+</button>
                 </div>
               )}
             </>
