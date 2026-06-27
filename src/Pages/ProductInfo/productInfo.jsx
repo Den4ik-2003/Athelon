@@ -156,7 +156,7 @@ export default function ProductInfo() {
     return (
       <div className="container pi-not-found">
         <Helmet>
-          <title>Товар не знайдено — Athleon</title>
+          <title>Товар не знайдено — Athelon</title>
         </Helmet>
         <p>Товар не знайдено 😔</p>
       </div>
@@ -172,7 +172,7 @@ export default function ProductInfo() {
   return (
     <div className="container pi-page">
       <Helmet>
-        <title>{product.name} — купити в Athleon</title>
+        <title>{product.name} — купити в Athelon</title>
         <meta
           name="description"
           content={`${product.name} за ціною ${product.newPrice} грн.`}

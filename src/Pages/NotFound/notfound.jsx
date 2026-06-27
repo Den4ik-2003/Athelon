@@ -6,8 +6,8 @@ export default function NotFound() {
   return (
     <div className="notfound">
       <Helmet>
-        <title>404 — Сторінку не знайдено | Athleon</title>
-        <meta name="description" content="Сторінку не знайдено. Поверніться на головну сторінку Athleon." />
+        <title>404 — Сторінку не знайдено | Athelon</title>
+        <meta name="description" content="Сторінку не знайдено. Поверніться на головну сторінку Athelon." />
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 

@@ -112,18 +112,18 @@ export default function Basket() {
   return (
     <section className="basket2 container">
       <Helmet>
-        <title>Кошик — Athleon | Брендовий чоловічий одяг</title>
+        <title>Кошик — Athelon | Брендовий чоловічий одяг</title>
         <meta
           name="description"
-          content="Перегляньте товари у вашому кошику та оформіть замовлення на брендовий чоловічий одяг від Athleon."
+          content="Перегляньте товари у вашому кошику та оформіть замовлення на брендовий чоловічий одяг від Athelon."
         />
         <meta
           property="og:title"
-          content="Кошик — Athleon | Брендовий чоловічий одяг"
+          content="Кошик — Athelon | Брендовий чоловічий одяг"
         />
         <meta
           property="og:description"
-          content="Оформіть замовлення на брендовий чоловічий одяг від Athleon."
+          content="Оформіть замовлення на брендовий чоловічий одяг від Athelon."
         />
         <meta property="og:url" content="https://athelon.netlify.app/basket" />
         <meta property="og:type" content="website" />

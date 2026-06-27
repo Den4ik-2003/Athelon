@@ -67,7 +67,7 @@ export default function Home() {
         <div className="hero-media">
           <img
             src={HeroImage}
-            alt="Athleon — брендовий одяг"
+            alt="Athelon — брендовий одяг"
             className="hero-image"
           />
         </div>

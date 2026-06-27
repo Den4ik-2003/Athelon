@@ -68,16 +68,16 @@ export default function Contact() {
   return (
     <div className="contact-page container">
       <Helmet>
-        <title>Контакти — Athleon | Брендовий чоловічий одяг в Україні</title>
+        <title>Контакти — Athelon | Брендовий чоловічий одяг в Україні</title>
         <meta
           name="description"
-          content="Зв'яжіться з Athleon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Відповімо протягом одного робочого дня."
+          content="Зв'яжіться з Athelon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Відповімо протягом одного робочого дня."
         />
         <meta
           name="keywords"
-          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athleon"
+          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athelon"
         />
-        <meta property="og:title" content="Контакти — Athleon | Брендовий чоловічий одяг" />
+        <meta property="og:title" content="Контакти — Athelon | Брендовий чоловічий одяг" />
         <meta
           property="og:description"
           content="Напишіть нам — відповімо протягом одного робочого дня. Брендовий чоловічий одяг Nike, Stone Island, Adidas. Instagram @athelon.store."
@@ -185,7 +185,7 @@ export default function Contact() {
         <div className="contact-right">
           <div className="brand-banner">
             <div className="brand-model-img">
-              <img src={contactImage} alt="Брендовий чоловічий одяг Athleon" />
+              <img src={contactImage} alt="Брендовий чоловічий одяг Athelon" />
               <div className="brand-model-fade-left" />
               <div className="brand-model-fade-right" />
             </div>

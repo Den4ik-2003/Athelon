@@ -259,12 +259,12 @@ export default function Liked() {
   return (
     <section className="lk-page container">
       <Helmet>
-        <title>Вподобані товари — Athleon</title>
+        <title>Вподобані товари — Athelon</title>
         <meta
           name="description"
-          content="Ваш список вподобаних товарів Athleon."
+          content="Ваш список вподобаних товарів Athelon."
         />
-        <meta property="og:title" content="Вподобані товари — Athleon" />
+        <meta property="og:title" content="Вподобані товари — Athelon" />
         <meta property="og:url" content="https://athelon.netlify.app/liked" />
         <meta property="og:type" content="website" />
         <meta name="robots" content="noindex, follow" />

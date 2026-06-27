@@ -63,18 +63,18 @@ export default function AboutUs() {
   return (
     <div className="about-page" ref={revealRef}>
       <Helmet>
-        <title>Про нас — Athleon | Брендовий чоловічий одяг в Україні</title>
+        <title>Про нас — Athelon | Брендовий чоловічий одяг в Україні</title>
         <meta
           name="description"
-          content="Athleon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Оригінальна якість, швидка доставка по всій Україні."
+          content="Athelon — офіційний магазин брендового чоловічого одягу в Україні. Nike, Stone Island, Adidas та інші топ-бренди. Оригінальна якість, швидка доставка по всій Україні."
         />
         <meta
           name="keywords"
-          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athleon"
+          content="брендовий чоловічий одяг, купити Nike Україна, Stone Island Україна, Adidas чоловічий, брендовий одяг Athelon"
         />
         <meta
           property="og:title"
-          content="Про нас — Athleon | Брендовий чоловічий одяг"
+          content="Про нас — Athelon | Брендовий чоловічий одяг"
         />
         <meta
           property="og:description"

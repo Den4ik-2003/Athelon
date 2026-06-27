@@ -180,15 +180,15 @@ export default function Order() {
     <div className="container order-page">
       <Helmet>
         <title>
-          Оформлення замовлення — Athleon | Брендовий чоловічий одяг
+          Оформлення замовлення — Athelon | Брендовий чоловічий одяг
         </title>
         <meta
           name="description"
-          content="Оформіть замовлення на брендовий чоловічий одяг від Athleon. Доставка Новою Поштою та УкрПоштою по всій Україні."
+          content="Оформіть замовлення на брендовий чоловічий одяг від Athelon. Доставка Новою Поштою та УкрПоштою по всій Україні."
         />
         <meta
           property="og:title"
-          content="Оформлення замовлення — Athleon | Брендовий чоловічий одяг"
+          content="Оформлення замовлення — Athelon | Брендовий чоловічий одяг"
         />
         <meta
           property="og:description"
