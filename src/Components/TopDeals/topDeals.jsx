@@ -153,7 +153,7 @@ function DealCard({ product, liked, onToggleLike }) {
           )}
         </div>
 
-        <div className="pc-price-row">
+        <div className="pc-price-rows2">
           <span
             className={`pc-price-old ${hasDiscount ? "" : "pc-price-old--hidden"}`}
           >

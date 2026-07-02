@@ -177,7 +177,8 @@
   display: flex;
   gap: 3px;
   flex-wrap: wrap;
-  min-height: 20px;
+  height: 20px;
+  overflow: hidden;
 }
 .pc-label {
   font-size: 9px;
@@ -207,7 +208,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 40px;
+  height: 40px;
 }
 .pc-desc {
   font-size: 13px;
@@ -217,7 +218,7 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  min-height: 36px;
+  height: 36px;
 }
 
 .pc-rating-row {
@@ -225,9 +226,9 @@
   align-items: center;
   gap: 6px;
   margin-top: 2px;
-  height: 44px;
-  min-height: 44px;
-  max-height: 44px;
+  height: 20px;
+  min-height: 20px;
+  max-height: 20px;
   overflow: hidden;
   flex-wrap: nowrap;
 }
@@ -250,14 +251,18 @@
   font-size: 12px;
   color: var(--text-faint);
   line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.pc-price-row {
+.pc-price-rows2 {
   display: flex;
   flex-direction: column;
   gap: 2px;
   margin-top: auto;
   padding-top: 6px;
+  height: 42px;
 }
 .pc-price-old {
   font-size: 13px;
@@ -300,7 +305,7 @@
   }
   .pc-name {
     font-size: 14px;
-    min-height: 36px;
+    height: 36px;
   }
   .pc-price-new {
     font-size: 17px;
