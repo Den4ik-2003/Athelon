@@ -13,11 +13,13 @@ const ChevronIcon =
 const NAV_FILTER_KEY = "footerNavFilter";
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
+const ONLINE_URL = import.meta.env.VITE_ONLINE_API_URL;
 
 export default function Footer() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
+  const [onlineCount, setOnlineCount] = useState(0);
 
   useEffect(() => {
     fetch(API_URL, { headers: { "x-api-key": API_KEY } })
@@ -51,6 +53,19 @@ export default function Footer() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    const fetchOnline = () => {
+      fetch(`${ONLINE_URL}/api/online-count`)
+        .then((r) => r.json())
+        .then((data) => setOnlineCount(data.online || 0))
+        .catch(() => {});
+    };
+
+    fetchOnline();
+    const interval = setInterval(fetchOnline, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleFilterLink = (filter) => {
     if (filter) {
       localStorage.setItem(NAV_FILTER_KEY, JSON.stringify(filter));
@@ -76,6 +91,10 @@ export default function Footer() {
             Сучасний стиль, комфорт і якість. Екіпірування для футболу та
             спорту, для тих, хто обирає найкраще.
           </p>
+          <div className="online-indicator">
+            <span className="online-dot"></span>
+            <span className="online-text">Онлайн: {onlineCount}</span>
+          </div>
           <div className="social-icons">
             <a href="https://instagram.com/athelon.store" target="_blank" rel="noopener noreferrer">
               <img src={Instagram} alt="Instagram" />
