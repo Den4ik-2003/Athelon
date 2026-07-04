@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const ONLINE_URL = import.meta.env.VITE_ONLINE_API_URL;
+const ONLINE_URL = import.meta.env.VITE_API_URL;
 
 function getSessionId() {
   let id = localStorage.getItem("sessionId");
