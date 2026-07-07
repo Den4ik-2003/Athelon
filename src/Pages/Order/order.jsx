@@ -34,8 +34,6 @@ export default function Order() {
   const API_URL_ORDERS = import.meta.env.VITE_API_URL_ORDERS;
   const API_URL = import.meta.env.VITE_API_URL;
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const TELEGRAM_TOKEN = import.meta.env.VITE_TELEGRAM_TOKEN;
-  const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
   useEffect(() => {
     const savedTotal = JSON.parse(localStorage.getItem("totalPrice")) || 0;
@@ -122,21 +120,6 @@ export default function Order() {
           }),
         ),
       );
-
-      const message = cartItems
-        .map(
-          (item, index) =>
-            `Товар ${index + 1}\nID: ${item.id}\nНазва: ${item.name}\nЦіна: ${item.price} грн\nКількість: ${item.quantity}\nРозмір: ${item.size}`,
-        )
-        .join("\n\n");
-
-      const fullMessage = `🛒 НОВЕ ЗАМОВЛЕННЯ\n\n${message}\n\n👤 ${surname} ${name}\n📞 ${phone}\n📧 ${email || "—"}\n📦 ${carrier}\n🏙 ${city}\n🏤 Відділення: ${department}\n💳 Оплата: ${payment === "card" ? "Онлайн карткою" : "При отриманні"}\n💰 Сума: ${totalPrice} грн`;
-
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: fullMessage }),
-      });
 
       localStorage.removeItem("cartItems");
       localStorage.removeItem("totalPrice");
