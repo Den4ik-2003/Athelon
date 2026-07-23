@@ -94,11 +94,6 @@
     border-color 0.3s ease;
 }
 
-.review-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--color-green);
-}
-
 .review-top {
   display: flex;
   align-items: center;
@@ -188,10 +183,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.3s ease;
-}
-
-.review-product:hover .review-product-name {
-  color: var(--color-green);
 }
 
 .reviews-state {
