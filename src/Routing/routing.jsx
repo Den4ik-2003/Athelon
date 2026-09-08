@@ -33,7 +33,6 @@ export default function Routing() {
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/reviews" element={<Reviews />} />
           <Route path="/product/:id" element={<ProductInfo />} />
           <Route path="/like" element={<Liked />} />
           <Route path="/cart" element={<Basket />} />
