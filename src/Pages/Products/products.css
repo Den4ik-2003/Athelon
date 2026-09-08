@@ -363,6 +363,11 @@
   font-family: inherit;
 }
 
+.filter-show-more:hover {
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 .sidebar-overlay {
   display: none;
   position: fixed;
