@@ -97,13 +97,7 @@ export default function Header({ openModal }) {
             >
               Про нас
             </NavLink>
-            <NavLink
-              className={linkClass}
-              to="/reviews"
-              onClick={() => setMenuOpen(false)}
-            >
-              Відгуки
-            </NavLink>
+            
             <NavLink
               className={linkClass}
               to="/contact"
