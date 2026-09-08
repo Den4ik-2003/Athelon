@@ -11,7 +11,6 @@ import Footer from "../Components/Footer/footer";
 import Basket from "../Pages/Basket/basket";
 import NotFound from "../Pages/NotFound/notfound";
 import Order from "../Pages/Order/order";
-import Reviews from "../Pages/Reviews/reviews";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
